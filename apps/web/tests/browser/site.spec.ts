@@ -109,7 +109,7 @@ test('Miguel audio plays only while M, I, and G are held', async ({ page }) => {
     page.evaluate(
       () =>
         (
-          window as Window & {
+          window as unknown as {
             __audioTestState: { playCount: number; pauseCount: number };
           }
         ).__audioTestState,
