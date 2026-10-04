@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { pageMetadata } from '@/lib/metadata';
 import PageHero from '@/components/PageHero';
+import { contactEmail } from '@/content/site';
 
 export const metadata: Metadata = pageMetadata({
   title: 'Accessibility statement',
@@ -22,8 +23,8 @@ export default function Page() {
         <div className="shell-narrow prose">
           <p className="notice">
             <strong>Status:</strong> This is an initial statement for a
-            pre-release local website. A formal assessment date and production
-            contact route are still required.
+            pre-release local website. A formal assessment date is still
+            required.
           </p>
           <h2>Our target</h2>
           <p>
@@ -43,25 +44,17 @@ export default function Page() {
           <h2>Known limitations</h2>
           <ul>
             <li>
-              The final professional contact route for accessibility feedback is
-              not yet confirmed.
-            </li>
-            <li>
               A dated audit with assistive-technology users has not yet been
               completed.
-            </li>
-            <li>
-              The demonstration forms do not deliver messages until a production
-              provider is approved and configured.
             </li>
           </ul>
           <h2>Report a problem</h2>
           <p>
-            If you encounter a barrier, please use the{' '}
-            <a href="/contact">contact page</a> once a professional email is
-            configured. Include the page, what you were trying to do, your
-            browser or assistive technology if you are comfortable sharing it,
-            and the format you need.
+            If you encounter a barrier, email{' '}
+            <a href={`mailto:${contactEmail}`}>{contactEmail}</a>. Include the
+            page, what you were trying to do, your browser or assistive
+            technology if you are comfortable sharing it, and the format you
+            need.
           </p>
           <h2>Assessment details</h2>
           <p>

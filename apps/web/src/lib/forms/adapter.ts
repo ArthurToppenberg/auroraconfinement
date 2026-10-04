@@ -2,7 +2,6 @@ import type { InterestSubmission } from './validation';
 
 export interface SubmissionResult {
   ok: boolean;
-  mode: 'demo' | 'configured';
   message: string;
 }
 
@@ -10,13 +9,14 @@ export interface SubmissionAdapter {
   submit(submission: InterestSubmission): Promise<SubmissionResult>;
 }
 
-export const demonstrationAdapter: SubmissionAdapter = {
+export const submissionAdapter: SubmissionAdapter = {
   async submit(_submission) {
+    // TODO: Replace this boundary with the approved production form endpoint.
+    // Return ok: true only after that endpoint confirms successful delivery.
     return {
       ok: false,
-      mode: 'demo',
       message:
-        'This form is not connected to a submission service. Your information was not retained or sent.',
+        'We could not send your enquiry. Please try again later or email auroraconfinement@gmail.com.',
     };
   },
 };

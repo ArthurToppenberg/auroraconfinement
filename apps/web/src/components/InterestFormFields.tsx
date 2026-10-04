@@ -2,14 +2,15 @@
 
 import { useEffect, useRef, useState } from 'react';
 import type { FormEvent, ReactNode } from 'react';
-import { demonstrationAdapter } from '@/lib/forms/adapter';
+import { submissionAdapter } from '@/lib/forms/adapter';
 import {
   interestAreas,
   isSpam,
   normaliseSubmission,
+  submissionTypes,
   validateSubmission,
 } from '@/lib/forms/validation';
-import type { FieldErrors } from '@/lib/forms/validation';
+import type { FieldErrors, SubmissionType } from '@/lib/forms/validation';
 
 interface InterestFormFieldsProps {
   variant: 'contact' | 'nff';
@@ -28,7 +29,6 @@ interface FieldProps {
   name: keyof FieldErrors & string;
   label: string;
   requirement: string;
-  /** Validation errors from the last submit, or null before any submit. */
   errors: FieldErrors | null;
   wide?: boolean;
   help?: string;
@@ -57,6 +57,7 @@ function Field({
   const describedBy = [help ? `${id}-help` : '', `${id}-error`]
     .filter(Boolean)
     .join(' ');
+
   return (
     <div className={wide ? 'field field-wide' : 'field'}>
       <label htmlFor={id}>
@@ -93,21 +94,60 @@ export default function InterestFormFields({
   const [errors, setErrors] = useState<FieldErrors | null>(null);
   const [status, setStatus] = useState<Status | null>(null);
   const [busy, setBusy] = useState(false);
+  const [submissionType, setSubmissionType] =
+    useState<SubmissionType>('product-interest');
+  const [requestedInterest, setRequestedInterest] = useState('');
 
-  // Product calls to action link here with ?interest=<area>.
+  const isProductInterest = !isNff && submissionType === 'product-interest';
+  const isCollaboration = !isNff && submissionType === 'collaboration';
+  const isGeneralEnquiry = !isNff && submissionType === 'general-enquiry';
+
   useEffect(() => {
     const requested = new URL(window.location.href).searchParams.get(
       'interest',
     );
+    if (
+      !requested ||
+      !interestAreas.some((interest) => interest === requested)
+    ) {
+      return;
+    }
+
+    if (!isNff) {
+      if (
+        requested === 'research-collaboration' ||
+        requested === 'investment-partnership'
+      ) {
+        setSubmissionType('collaboration');
+      } else if (requested === 'general-enquiry') {
+        setSubmissionType('general-enquiry');
+      } else {
+        setSubmissionType('product-interest');
+      }
+    }
+    setRequestedInterest(requested);
+  }, [isNff]);
+
+  useEffect(() => {
+    if (!requestedInterest) return;
     const control = formRef.current?.elements.namedItem('interest');
     if (
       control instanceof HTMLSelectElement &&
-      requested &&
-      interestAreas.some((interest) => interest === requested)
+      Array.from(control.options).some(
+        (option) => option.value === requestedInterest,
+      )
     ) {
-      control.value = requested;
+      control.value = requestedInterest;
     }
-  }, []);
+  }, [requestedInterest, submissionType]);
+
+  function chooseSubmissionType(value: string) {
+    if (!submissionTypes.some((type) => type === value)) return;
+    setSubmissionType(value as SubmissionType);
+    setRequestedInterest('');
+    setErrors(null);
+    setStatus(null);
+  }
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -124,7 +164,6 @@ export default function InterestFormFields({
         state: 'error',
         message: 'Please correct the highlighted fields.',
       });
-      // Focus the first invalid control in document order.
       const firstInvalid = Array.from(
         form.querySelectorAll<HTMLElement>('[data-error-for]'),
       )
@@ -136,14 +175,14 @@ export default function InterestFormFields({
     }
 
     if (isSpam(data)) {
-      setStatus({ state: 'error', message: 'Unable to check this enquiry.' });
+      setStatus({ state: 'error', message: 'Unable to submit this enquiry.' });
       return;
     }
 
     submitting.current = true;
     setBusy(true);
     try {
-      const result = await demonstrationAdapter.submit(data);
+      const result = await submissionAdapter.submit(data);
       setStatus({
         state: result.ok ? 'success' : 'error',
         message:
@@ -163,6 +202,122 @@ export default function InterestFormFields({
     }
   }
 
+  const nameField = (
+    <Field
+      prefix={prefix}
+      errors={errors}
+      name="name"
+      label="Name"
+      requirement="required"
+    >
+      {(props) => (
+        <input
+          {...props}
+          type="text"
+          autoComplete="name"
+          maxLength={100}
+          required
+        />
+      )}
+    </Field>
+  );
+
+  const emailField = (
+    <Field
+      prefix={prefix}
+      errors={errors}
+      name="email"
+      label="Work email"
+      requirement="required"
+    >
+      {(props) => (
+        <input
+          {...props}
+          type="email"
+          inputMode="email"
+          autoComplete="email"
+          maxLength={254}
+          required
+        />
+      )}
+    </Field>
+  );
+
+  const organisationField = (required: boolean) => (
+    <Field
+      prefix={prefix}
+      errors={errors}
+      name="organisation"
+      label="Organisation"
+      requirement={required ? 'required' : 'optional'}
+    >
+      {(props) => (
+        <input
+          {...props}
+          type="text"
+          autoComplete="organization"
+          maxLength={160}
+          required={required}
+        />
+      )}
+    </Field>
+  );
+
+  const roleField = (required: boolean) => (
+    <Field
+      prefix={prefix}
+      errors={errors}
+      name="role"
+      label="Role"
+      requirement={required ? 'required' : 'optional'}
+    >
+      {(props) => (
+        <input
+          {...props}
+          type="text"
+          autoComplete="organization-title"
+          maxLength={120}
+          required={required}
+        />
+      )}
+    </Field>
+  );
+
+  const intendedApplicationField = (
+    <Field
+      prefix={prefix}
+      errors={errors}
+      name="intendedApplication"
+      label="Intended application"
+      requirement="required"
+      wide
+      help="Briefly describe how your organisation may use the product or collaboration."
+    >
+      {(props) => <textarea {...props} rows={4} maxLength={600} required />}
+    </Field>
+  );
+
+  const timeframeField = (
+    <Field
+      prefix={prefix}
+      errors={errors}
+      name="timeframe"
+      label="Approximate timeframe"
+      requirement="required"
+      wide
+    >
+      {(props) => (
+        <select {...props} required defaultValue="">
+          <option value="">Choose one</option>
+          <option value="as-soon-as-available">As soon as available</option>
+          <option value="within-12-months">Within 12 months</option>
+          <option value="within-1-to-3-years">Within 1 to 3 years</option>
+          <option value="exploring-future">Exploring for the future</option>
+        </select>
+      )}
+    </Field>
+  );
+
   return (
     <form
       ref={formRef}
@@ -173,170 +328,219 @@ export default function InterestFormFields({
       onSubmit={onSubmit}
     >
       <input type="hidden" name="source" value={source} />
+      {isNff ? (
+        <input type="hidden" name="submissionType" value="product-interest" />
+      ) : (
+        <fieldset className="submission-type">
+          <legend>What would you like to do?</legend>
+          <div className="submission-options">
+            <label>
+              <input
+                type="radio"
+                name="submissionType"
+                value="product-interest"
+                checked={submissionType === 'product-interest'}
+                onChange={(event) =>
+                  chooseSubmissionType(event.currentTarget.value)
+                }
+              />
+              <span>Register product interest</span>
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="submissionType"
+                value="collaboration"
+                checked={submissionType === 'collaboration'}
+                onChange={(event) =>
+                  chooseSubmissionType(event.currentTarget.value)
+                }
+              />
+              <span>Discuss a collaboration</span>
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="submissionType"
+                value="general-enquiry"
+                checked={submissionType === 'general-enquiry'}
+                onChange={(event) =>
+                  chooseSubmissionType(event.currentTarget.value)
+                }
+              />
+              <span>Send a general enquiry</span>
+            </label>
+          </div>
+          <p
+            className="field-error"
+            id={`${prefix}-submissionType-error`}
+            data-error-for="submissionType"
+          >
+            {errors?.submissionType ?? ''}
+          </p>
+        </fieldset>
+      )}
+
       <div className="form-grid">
-        <Field
-          prefix={prefix}
-          errors={errors}
-          name="name"
-          label="Name"
-          requirement="required"
-        >
-          {(props) => (
-            <input
-              {...props}
-              type="text"
-              autoComplete="name"
-              maxLength={100}
-              required
-            />
-          )}
-        </Field>
-        <Field
-          prefix={prefix}
-          errors={errors}
-          name="email"
-          label="Work email"
-          requirement="required"
-        >
-          {(props) => (
-            <input
-              {...props}
-              type="email"
-              inputMode="email"
-              autoComplete="email"
-              maxLength={254}
-              required
-            />
-          )}
-        </Field>
-        <Field
-          prefix={prefix}
-          errors={errors}
-          name="organisation"
-          label="Organisation"
-          requirement={isNff ? 'required' : 'optional'}
-        >
-          {(props) => (
-            <input
-              {...props}
-              type="text"
-              autoComplete="organization"
-              maxLength={160}
-              required={isNff}
-            />
-          )}
-        </Field>
-        <Field
-          prefix={prefix}
-          errors={errors}
-          name="role"
-          label="Role"
-          requirement={isNff ? 'required' : 'optional'}
-        >
-          {(props) => (
-            <input
-              {...props}
-              type="text"
-              autoComplete="organization-title"
-              maxLength={120}
-              required={isNff}
-            />
-          )}
-        </Field>
-        <Field
-          prefix={prefix}
-          errors={errors}
-          name="interest"
-          label="Area of interest"
-          requirement="required"
-          wide
-        >
-          {(props) => (
-            <select {...props} required defaultValue="">
-              <option value="">Choose one</option>
-              <option value="exhibition-model">
-                Tabletop exhibition model
-              </option>
-              <option value="research-platform">
-                Experimental research platform
-              </option>
-              {isNff && (
-                <option value="pilot-demonstration">
-                  Pilot or demonstration
-                </option>
-              )}
-              <option value="research-collaboration">
-                Research collaboration
-              </option>
-              <option value="investment-partnership">
-                Investment or strategic partnership
-              </option>
-              {!isNff && (
-                <option value="general-enquiry">General enquiry</option>
-              )}
-            </select>
-          )}
-        </Field>
-        {isNff && (
+        {isNff ? (
           <>
+            {nameField}
+            {emailField}
+            {organisationField(true)}
+            {roleField(true)}
             <Field
               prefix={prefix}
               errors={errors}
-              name="intendedApplication"
-              label="Intended application"
-              requirement="required"
-              wide
-              help="Briefly describe how your organisation may use the product or collaboration."
-            >
-              {(props) => (
-                <textarea {...props} rows={4} maxLength={600} required />
-              )}
-            </Field>
-            <Field
-              prefix={prefix}
-              errors={errors}
-              name="timeframe"
-              label="Approximate timeframe"
+              name="interest"
+              label="Area of interest"
               requirement="required"
               wide
             >
               {(props) => (
                 <select {...props} required defaultValue="">
                   <option value="">Choose one</option>
-                  <option value="as-soon-as-available">
-                    As soon as available
+                  <option value="exhibition-model">
+                    Tabletop exhibition model
                   </option>
-                  <option value="within-12-months">Within 12 months</option>
-                  <option value="within-1-to-3-years">
-                    Within 1 to 3 years
+                  <option value="research-platform">
+                    Experimental research platform
                   </option>
-                  <option value="exploring-future">
-                    Exploring for the future
+                  <option value="pilot-demonstration">
+                    Pilot or demonstration
+                  </option>
+                  <option value="research-collaboration">
+                    Research collaboration
+                  </option>
+                  <option value="investment-partnership">
+                    Investment or strategic partnership
                   </option>
                 </select>
               )}
             </Field>
+            {intendedApplicationField}
+            {timeframeField}
+            <Field
+              prefix={prefix}
+              errors={errors}
+              name="message"
+              label="What would you like to discuss?"
+              requirement="optional"
+              wide
+              help="Please avoid confidential or patent-sensitive details."
+            >
+              {(props) => <textarea {...props} rows={4} maxLength={1500} />}
+            </Field>
+          </>
+        ) : (
+          <>
+            {nameField}
+            {(isProductInterest || isCollaboration) &&
+              organisationField(isProductInterest)}
+            {(isProductInterest || isCollaboration) &&
+              roleField(isProductInterest)}
+            {emailField}
+
+            {isProductInterest && (
+              <>
+                <Field
+                  prefix={prefix}
+                  errors={errors}
+                  name="interest"
+                  label="Product of interest"
+                  requirement="required"
+                  wide
+                >
+                  {(props) => (
+                    <select {...props} required defaultValue="">
+                      <option value="">Choose one</option>
+                      <option value="exhibition-model">
+                        Tabletop exhibition model
+                      </option>
+                      <option value="research-platform">
+                        Experimental stellarator platform
+                      </option>
+                      <option value="both-product-directions">
+                        Both product directions
+                      </option>
+                    </select>
+                  )}
+                </Field>
+                {intendedApplicationField}
+                {timeframeField}
+                <Field
+                  prefix={prefix}
+                  errors={errors}
+                  name="message"
+                  label="Message"
+                  requirement="optional"
+                  wide
+                  help="Please avoid confidential or patent-sensitive details."
+                >
+                  {(props) => <textarea {...props} rows={4} maxLength={1500} />}
+                </Field>
+              </>
+            )}
+
+            {isCollaboration && (
+              <>
+                <Field
+                  prefix={prefix}
+                  errors={errors}
+                  name="interest"
+                  label="Collaboration area"
+                  requirement="required"
+                  wide
+                >
+                  {(props) => (
+                    <select {...props} required defaultValue="">
+                      <option value="">Choose one</option>
+                      <option value="research-collaboration">
+                        Research collaboration
+                      </option>
+                      <option value="investment-partnership">
+                        Investment or strategic collaboration
+                      </option>
+                    </select>
+                  )}
+                </Field>
+                <Field
+                  prefix={prefix}
+                  errors={errors}
+                  name="message"
+                  label="What would you like to discuss?"
+                  requirement="required"
+                  wide
+                  help="Please avoid confidential or patent-sensitive details."
+                >
+                  {(props) => (
+                    <textarea {...props} rows={5} maxLength={1500} required />
+                  )}
+                </Field>
+              </>
+            )}
+
+            {isGeneralEnquiry && (
+              <>
+                <input type="hidden" name="interest" value="general-enquiry" />
+                <Field
+                  prefix={prefix}
+                  errors={errors}
+                  name="message"
+                  label="What would you like to discuss?"
+                  requirement="required"
+                  wide
+                  help="Please avoid confidential or patent-sensitive details."
+                >
+                  {(props) => (
+                    <textarea {...props} rows={5} maxLength={1500} required />
+                  )}
+                </Field>
+              </>
+            )}
           </>
         )}
-        <Field
-          prefix={prefix}
-          errors={errors}
-          name="message"
-          label="What would you like to discuss?"
-          requirement={isNff ? 'optional' : 'required'}
-          wide
-          help="Please avoid confidential or patent-sensitive details."
-        >
-          {(props) => (
-            <textarea
-              {...props}
-              rows={isNff ? 4 : 6}
-              maxLength={1500}
-              required={!isNff}
-            />
-          )}
-        </Field>
       </div>
+
       <div className="honeypot" aria-hidden="true">
         <label htmlFor={`${prefix}-website`}>Website</label>
         <input
@@ -354,9 +558,15 @@ export default function InterestFormFields({
         See our <a href="/privacy">Privacy Notice</a>.
       </p>
       <button className="button primary" type="submit" disabled={busy}>
-        {isNff ? 'Register institutional interest' : 'Check this enquiry'}
+        {busy
+          ? isNff || isProductInterest
+            ? 'Registering…'
+            : 'Sending…'
+          : isNff || isProductInterest
+            ? 'Register your interest'
+            : 'Send enquiry'}
       </button>
-      {isNff && (
+      {(isNff || isProductInterest) && (
         <p className="form-terms post-submit-note">
           Submitting this form is a non-binding expression of interest and does
           not create an obligation to purchase.

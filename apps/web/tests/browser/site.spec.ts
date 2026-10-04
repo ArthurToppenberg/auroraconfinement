@@ -133,31 +133,59 @@ test('Miguel audio plays only while M, I, and G are held', async ({ page }) => {
   await page.keyboard.up('g');
 });
 
-test('contact form provides accessible validation and an honest demo result', async ({
+test('contact form provides accessible validation and an honest failure result', async ({
   page,
 }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/contact/');
-  await page.getByRole('button', { name: 'Check this enquiry' }).click();
+  await page.getByRole('button', { name: 'Register your interest' }).click();
   await expect(page.getByLabel('Name')).toHaveAttribute('aria-invalid', 'true');
   await expect(
     page.getByText('Please correct the highlighted fields.'),
   ).toBeVisible();
 
-  await page.getByLabel('Name').fill('Test Researcher');
-  await page.getByLabel('Work email').fill('researcher@example.org');
+  await page.getByLabel('Discuss a collaboration').check();
+  await page.getByLabel('Name (required)').fill('Test Researcher');
+  await page.getByLabel('Work email (required)').fill('researcher@example.org');
   await page
-    .getByLabel('Area of interest')
+    .getByLabel('Collaboration area (required)')
     .selectOption('research-collaboration');
   await page
     .getByLabel('What would you like to discuss?')
     .fill('A discussion about an experimental research platform.');
-  await page.getByRole('button', { name: 'Check this enquiry' }).click();
+  await page.getByRole('button', { name: 'Send enquiry' }).click();
   await expect(
     page.getByText(
-      'This form is not connected to a submission service. Your information was not retained or sent.',
+      'We could not send your enquiry. Please try again later or email auroraconfinement@gmail.com.',
     ),
   ).toBeVisible();
+});
+
+test('contact enquiry types remain distinct', async ({ page }) => {
+  await page.goto('/contact/');
+  const form = page.locator('[data-interest-form]');
+
+  await expect(form.getByLabel('Register product interest')).toBeChecked();
+  await expect(form.getByLabel('Product of interest (required)')).toBeVisible();
+  await expect(
+    form.getByText(
+      'Submitting this form is a non-binding expression of interest and does not create an obligation to purchase.',
+    ),
+  ).toBeVisible();
+
+  await form.getByLabel('Send a general enquiry').check();
+  await expect(form.getByLabel('Product of interest (required)')).toHaveCount(
+    0,
+  );
+  await expect(form.locator('input[name="interest"]')).toHaveValue(
+    'general-enquiry',
+  );
+  await expect(
+    form.getByRole('button', { name: 'Send enquiry' }),
+  ).toBeVisible();
+  await expect(
+    form.getByText('non-binding expression of interest'),
+  ).toHaveCount(0);
 });
 
 test('NFF form validates institutional interest without false storage success', async ({
@@ -168,9 +196,7 @@ test('NFF form validates institutional interest without false storage success', 
   await expect(form.locator('input[name="source"]')).toHaveValue(
     'nordic-fusion-forum-2026',
   );
-  await form
-    .getByRole('button', { name: 'Register institutional interest' })
-    .click();
+  await form.getByRole('button', { name: 'Register your interest' }).click();
   await expect(form.getByLabel('Organisation (required)')).toHaveAttribute(
     'aria-invalid',
     'true',
@@ -189,13 +215,11 @@ test('NFF form validates institutional interest without false storage success', 
   await form
     .getByLabel('Approximate timeframe (required)')
     .selectOption('within-1-to-3-years');
-  await form
-    .getByRole('button', { name: 'Register institutional interest' })
-    .click();
+  await form.getByRole('button', { name: 'Register your interest' }).click();
 
   await expect(
     form.getByText(
-      'This form is not connected to a submission service. Your information was not retained or sent.',
+      'We could not send your enquiry. Please try again later or email auroraconfinement@gmail.com.',
     ),
   ).toBeVisible();
   await expect(
@@ -206,15 +230,59 @@ test('NFF form validates institutional interest without false storage success', 
 test('product CTAs preserve and apply their interest context', async ({
   page,
 }) => {
+  await page.goto('/products/');
+  await expect(
+    page.getByRole('link', { name: 'Discuss an exhibition model' }),
+  ).toHaveAttribute('href', '/contact?interest=exhibition-model');
+  await expect(
+    page.getByRole('link', { name: 'Discuss a research partnership' }),
+  ).toHaveAttribute('href', '/contact?interest=research-platform');
+
   await page.goto('/contact/?interest=exhibition-model');
-  await expect(page.getByLabel('Area of interest')).toHaveValue(
+  await expect(page.getByLabel('Product of interest (required)')).toHaveValue(
     'exhibition-model',
   );
 
-  await page.goto('/contact/?interest=research-collaboration');
-  await expect(page.getByLabel('Area of interest')).toHaveValue(
-    'research-collaboration',
+  await page.goto('/contact/?interest=research-platform');
+  await expect(page.getByLabel('Product of interest (required)')).toHaveValue(
+    'research-platform',
   );
+});
+
+test('contact and NFF desktop headings align', async ({ page }) => {
+  for (const width of [1024, 1440]) {
+    await page.setViewportSize({ width, height: 1000 });
+
+    await page.goto('/contact/');
+    const contactHeadings = await Promise.all([
+      page
+        .getByRole('heading', { name: 'Tell us what you are exploring.' })
+        .boundingBox(),
+      page
+        .getByRole('heading', { name: 'Register your interest.' })
+        .boundingBox(),
+    ]);
+    expect(contactHeadings[0]).not.toBeNull();
+    expect(contactHeadings[1]).not.toBeNull();
+    expect(
+      Math.abs(contactHeadings[0]!.y - contactHeadings[1]!.y),
+    ).toBeLessThanOrEqual(1);
+
+    await page.goto('/nff/');
+    const nffHeadings = await Promise.all([
+      page
+        .getByRole('heading', { name: 'Thank you for the conversation.' })
+        .boundingBox(),
+      page
+        .getByRole('heading', { name: 'Continue the conversation' })
+        .boundingBox(),
+    ]);
+    expect(nffHeadings[0]).not.toBeNull();
+    expect(nffHeadings[1]).not.toBeNull();
+    expect(Math.abs(nffHeadings[0]!.y - nffHeadings[1]!.y)).toBeLessThanOrEqual(
+      1,
+    );
+  }
 });
 
 test('concept images always carry the exact visible caption', async ({

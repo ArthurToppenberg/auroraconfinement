@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { pageMetadata } from '@/lib/metadata';
-import PageHero from '@/components/PageHero';
 import ProductFigure from '@/components/ProductFigure';
+import TechnicalIcon from '@/components/TechnicalIcon';
 
 export const metadata: Metadata = pageMetadata({
   title: 'Products',
@@ -13,35 +13,81 @@ export const metadata: Metadata = pageMetadata({
 export default function Page() {
   return (
     <>
-      <PageHero
-        eyebrow="Products"
-        title="Physical tools for stellarator research and communication."
-        intro="Aurora Confinement is developing two product directions for organisations that need to investigate, communicate, exhibit, or teach stellarator technology."
-      />
+      <section className="products-intro">
+        <div className="focused-shell">
+          <p className="eyebrow">OUR PRODUCTS</p>
+          <h1>
+            Physical tools for communicating and researching stellarators.
+          </h1>
+          <p>
+            We are developing two active product directions: tabletop models
+            that make stellarator technology tangible, and experimental
+            platforms designed to lower the barriers to hands-on research.
+          </p>
+        </div>
+      </section>
 
-      <section className="section" id="tabletop">
-        <div className="shell split-section product-detail">
-          <ProductFigure kind="tabletop" eager />
-          <div className="split-copy">
-            <span className="status-label">Current focus · In development</span>
-            <p className="eyebrow">01 / Exhibition and communication</p>
+      <section className="product-section" id="tabletop">
+        <div className="focused-shell product-layout">
+          <header className="product-heading">
+            <p className="eyebrow">01 / EXHIBITION AND COMMUNICATION</p>
+            <span className="status-label">CURRENT FOCUS · IN DEVELOPMENT</span>
             <h2>Tabletop stellarator models</h2>
-            <p>
-              Physical models designed to help fusion companies, research
-              institutions, and universities communicate stellarator technology
-              at exhibitions, visitor facilities, and introductory lectures.
+            <p className="product-value">
+              Make complex stellarator technology easier to see, explain and
+              remember.
             </p>
-            <h3>Who it is for</h3>
-            <p>
-              Fusion companies, research institutions, universities,
-              conferences, visitor facilities, and public-engagement teams.
+            <p className="product-intro-copy">
+              Physical models designed for organisations that need to
+              communicate stellarator technology clearly in exhibitions,
+              meetings, visitor facilities and introductory teaching.
             </p>
-            <h3>Problem addressed</h3>
-            <p>
-              Stellarator geometry is difficult to communicate through flat
-              media alone. A physical model can make technical conversations and
-              public engagement more tangible, with introductory teaching as a
-              secondary application.
+          </header>
+          <div className="product-visual">
+            <ProductFigure kind="tabletop" eager />
+          </div>
+          <div className="product-details">
+            <div className="product-list-group">
+              <h3>Designed for</h3>
+              <ul className="icon-list">
+                <li>
+                  <TechnicalIcon name="industry" />
+                  <span>Fusion companies and industry exhibitions</span>
+                </li>
+                <li>
+                  <TechnicalIcon name="communication" />
+                  <span>Research institutions and public engagement</span>
+                </li>
+                <li>
+                  <TechnicalIcon name="education" />
+                  <span>Universities and introductory teaching</span>
+                </li>
+              </ul>
+            </div>
+            <div className="product-list-group">
+              <h3>What it enables</h3>
+              <ul className="icon-list">
+                <li>
+                  <TechnicalIcon name="visibility" />
+                  <span>Create a memorable focal point at conferences</span>
+                </li>
+                <li>
+                  <TechnicalIcon name="model" />
+                  <span>
+                    Explain complex three-dimensional geometry physically
+                  </span>
+                </li>
+                <li>
+                  <TechnicalIcon name="collaboration" />
+                  <span>
+                    Support conversations with students, visitors and
+                    stakeholders
+                  </span>
+                </li>
+              </ul>
+            </div>
+            <p className="product-clarification">
+              Purpose: communication and teaching, not experimental research
             </p>
             <a
               className="button cta-button"
@@ -53,36 +99,94 @@ export default function Page() {
         </div>
       </section>
 
-      <section className="section" id="research">
-        <div className="shell split-section reverse product-detail">
-          <ProductFigure kind="research" />
-          <div className="split-copy">
+      <section className="product-section" id="research">
+        <div className="focused-shell product-layout product-layout-reverse">
+          <header className="product-heading">
+            <p className="eyebrow">02 / EXPERIMENTAL RESEARCH</p>
             <span className="status-label">
-              Current focus · Early-stage development
+              CURRENT FOCUS · EARLY-STAGE DEVELOPMENT
             </span>
-            <p className="eyebrow">02 / Experimental research</p>
             <h2>Experimental stellarator platforms</h2>
-            <p>
-              Compact experimental systems designed to lower the cost and
-              infrastructure barriers to hands-on stellarator research.
+            <p className="product-value">
+              Bring hands-on stellarator experimentation within reach of more
+              research teams.
             </p>
-            <h3>Who it is for</h3>
-            <p>
-              Universities, startups, and research teams seeking a more
-              accessible route into experimental work.
+            <p className="product-intro-copy">
+              Compact experimental systems being developed for universities,
+              startups and research teams facing high acquisition and
+              infrastructure barriers.
             </p>
-            <h3>Problem addressed</h3>
-            <p>
-              Hands-on stellarator research can require substantial capital,
-              specialist infrastructure, and engineering resources. The platform
-              is being developed to reduce those barriers and may also support
-              laboratory courses, student projects, and researcher training.
+          </header>
+          <div className="product-visual">
+            <ProductFigure kind="research" />
+          </div>
+          <div className="product-details">
+            <div className="product-list-group">
+              <h3>Designed for</h3>
+              <ul className="icon-list">
+                <li>
+                  <TechnicalIcon name="experiment" />
+                  <span>University plasma and fusion laboratories</span>
+                </li>
+                <li>
+                  <TechnicalIcon name="research" />
+                  <span>Fusion startups and research teams</span>
+                </li>
+                <li>
+                  <TechnicalIcon name="education" />
+                  <span>Student projects and researcher training</span>
+                </li>
+              </ul>
+            </div>
+            <div className="product-list-group">
+              <h3>What it is intended to enable</h3>
+              <ul className="icon-list">
+                <li>
+                  <TechnicalIcon name="access" />
+                  <span>More accessible hands-on stellarator experiments</span>
+                </li>
+                <li>
+                  <TechnicalIcon name="training" />
+                  <span>
+                    Training in diagnostics, controls and plasma research
+                  </span>
+                </li>
+                <li>
+                  <TechnicalIcon name="industry" />
+                  <span>Research without power-plant-scale infrastructure</span>
+                </li>
+              </ul>
+            </div>
+            <p className="product-clarification">
+              Current stage: early-stage development through research
+              collaboration
             </p>
             <a
               className="button cta-button"
-              href="/contact?interest=research-collaboration"
+              href="/contact?interest=research-platform"
             >
               Discuss a research partnership
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section className="products-final">
+        <div className="focused-shell callout">
+          <h2>Could one of these directions fit your organisation?</h2>
+          <p>
+            Tell us what you are exploring, and we will continue the
+            conversation from there.
+          </p>
+          <div className="button-row">
+            <a
+              className="button primary"
+              href="/contact?interest=general-enquiry#contact-form"
+            >
+              Register your interest
+            </a>
+            <a className="button" href="/contact">
+              Contact the team
             </a>
           </div>
         </div>

@@ -2,20 +2,20 @@
 
 ## Current behaviour
 
-The contact and Nordic Fusion Forum forms run in a clearly labelled local demonstration mode. They normalise and validate fields in the browser, expose errors accessibly, check a hidden honeypot field, and then report that nothing was retained or sent.
+The contact and Nordic Fusion Forum forms normalise and validate fields in the browser, expose errors accessibly, and check a hidden honeypot field. The provider-neutral submission adapter currently returns a normal failure response and offers the confirmed contact email as an alternative. It does not transmit or retain submissions and never reports false success.
 
-The NFF form includes the internal source value `nff2026`. The general form uses `contact`. Neither value creates a cookie or visitor identifier.
+The NFF form includes the internal source value `nordic-fusion-forum-2026`. The general form uses `contact`. Neither value creates a cookie or visitor identifier.
 
 ## Shared form code
 
 - `apps/web/src/lib/forms/validation.ts` contains field limits, allowlisted values, normalisation, validation, and honeypot detection.
-- `apps/web/src/lib/forms/adapter.ts` defines the provider-neutral adapter interface and the non-transmitting demonstration adapter.
-- `apps/web/src/components/InterestForm.tsx` (server component) wraps the demonstration notice and email fallback, and `apps/web/src/components/InterestFormFields.tsx` (client component) provides the accessible form interface and submit handling.
+- `apps/web/src/lib/forms/adapter.ts` defines the provider-neutral adapter interface and marks the production backend integration point.
+- `apps/web/src/components/InterestForm.tsx` (server component) wraps the form and email fallback, and `apps/web/src/components/InterestFormFields.tsx` (client component) provides the accessible form interface and submit handling.
 - `apps/web/src/lib/forms/validation.test.ts` covers normalisation, required fields, allowlists, and honeypot detection.
 
 ## Before production
 
-Do not remove the demonstration notice or imply delivery until all of these are complete:
+Do not make the adapter return success or imply delivery until all of these are complete:
 
 1. Approve a hosting architecture and form/email delivery provider.
 2. Add a same-origin server endpoint; never place provider secrets in browser code.

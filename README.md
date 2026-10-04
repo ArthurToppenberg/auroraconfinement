@@ -74,7 +74,7 @@ A static export cannot resize images at request time, so the responsive WebP var
 
 ## Form behaviour
 
-The forms are deliberately unconfigured. In demonstration mode they validate input in the browser, show accessible errors, and then state that nothing was retained or transmitted. See `docs/FORM_CONFIGURATION.md` before connecting any service.
+The forms are deliberately unconfigured. They validate input in the browser, show accessible errors, return an honest failure state, and provide the confirmed contact email as an alternative. See `docs/FORM_CONFIGURATION.md` before connecting any service.
 
 ## Environment values
 
@@ -104,6 +104,5 @@ Read:
 - `docs/DEPLOYMENT.md` for preparation and rollback.
 
 The team must still approve a domain, host, professional email, data controller, processor, retention policy, form endpoint, public team details, product claims, technical disclosures, and sharing image. Automated checks do not make the site legally compliant, fully accessible, secure in every deployment, or production-ready.
-
 
 pnpm i && pnpm dev

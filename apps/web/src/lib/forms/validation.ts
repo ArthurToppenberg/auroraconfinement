@@ -1,6 +1,7 @@
 export const interestAreas = [
   'exhibition-model',
   'research-platform',
+  'both-product-directions',
   'pilot-demonstration',
   'research-collaboration',
   'investment-partnership',
@@ -8,6 +9,14 @@ export const interestAreas = [
 ] as const;
 
 export type InterestArea = (typeof interestAreas)[number];
+
+export const submissionTypes = [
+  'product-interest',
+  'collaboration',
+  'general-enquiry',
+] as const;
+
+export type SubmissionType = (typeof submissionTypes)[number];
 
 export const interestTimeframes = [
   'as-soon-as-available',
@@ -19,6 +28,7 @@ export const interestTimeframes = [
 export type InterestTimeframe = (typeof interestTimeframes)[number];
 
 export interface InterestSubmission {
+  submissionType: SubmissionType | '';
   name: string;
   email: string;
   organisation: string;
@@ -54,11 +64,15 @@ function allowed<T extends readonly string[]>(
 }
 
 export function normaliseSubmission(formData: FormData): InterestSubmission {
+  const submissionType = clean(formData.get('submissionType'));
   const interest = clean(formData.get('interest'));
   const timeframe = clean(formData.get('timeframe'));
   const source = clean(formData.get('source'));
 
   return {
+    submissionType: allowed(submissionType, submissionTypes)
+      ? submissionType
+      : '',
     name: clean(formData.get('name')),
     email: clean(formData.get('email')).toLowerCase(),
     organisation: clean(formData.get('organisation')),
@@ -91,6 +105,8 @@ export function validateSubmission(data: InterestSubmission): FieldErrors {
     errors.organisation = `Use ${limits.organisation} characters or fewer.`;
   if (data.role.length > limits.role)
     errors.role = `Use ${limits.role} characters or fewer.`;
+  if (!data.submissionType)
+    errors.submissionType = 'Choose what you would like to do.';
   if (!data.interest) errors.interest = 'Choose an area of interest.';
   if (data.intendedApplication.length > limits.intendedApplication)
     errors.intendedApplication = `Use ${limits.intendedApplication} characters or fewer.`;
@@ -103,8 +119,36 @@ export function validateSubmission(data: InterestSubmission): FieldErrors {
     if (!data.intendedApplication)
       errors.intendedApplication = 'Describe the intended application.';
     if (!data.timeframe) errors.timeframe = 'Choose an approximate timeframe.';
-  } else if (!data.message) {
-    errors.message = 'Tell us briefly what you would like to discuss.';
+  } else if (data.submissionType === 'product-interest') {
+    if (!data.organisation) errors.organisation = 'Enter your organisation.';
+    if (!data.role) errors.role = 'Enter your role.';
+    if (
+      ![
+        'exhibition-model',
+        'research-platform',
+        'both-product-directions',
+      ].includes(data.interest)
+    ) {
+      errors.interest = 'Choose a product of interest.';
+    }
+    if (!data.intendedApplication)
+      errors.intendedApplication = 'Describe the intended application.';
+    if (!data.timeframe) errors.timeframe = 'Choose an approximate timeframe.';
+  } else if (data.submissionType === 'collaboration') {
+    if (
+      !['research-collaboration', 'investment-partnership'].includes(
+        data.interest,
+      )
+    ) {
+      errors.interest = 'Choose a collaboration area.';
+    }
+    if (!data.message)
+      errors.message = 'Tell us briefly what you would like to discuss.';
+  } else if (data.submissionType === 'general-enquiry') {
+    if (data.interest !== 'general-enquiry')
+      errors.interest = 'Choose a general enquiry.';
+    if (!data.message)
+      errors.message = 'Tell us briefly what you would like to discuss.';
   }
 
   return errors;

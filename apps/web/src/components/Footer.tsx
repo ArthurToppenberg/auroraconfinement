@@ -1,4 +1,4 @@
-import { contactEmail, isContactEmailConfigured } from '@/content/site';
+import { contactEmail } from '@/content/site';
 
 export default function Footer() {
   return (
@@ -48,11 +48,7 @@ export default function Footer() {
         </nav>
         <div>
           <h2>Contact</h2>
-          {isContactEmailConfigured ? (
-            <a href={`mailto:${contactEmail}`}>{contactEmail}</a>
-          ) : (
-            <p className="muted">Professional email pending confirmation.</p>
-          )}
+          <a href={`mailto:${contactEmail}`}>{contactEmail}</a>
           <ul className="legal-links">
             <li>
               <a href="/privacy">Privacy</a>

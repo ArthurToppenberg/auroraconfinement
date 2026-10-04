@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import PrintButton from '@/components/PrintButton';
 import { pageMetadata } from '@/lib/metadata';
-import { contactEmail, isContactEmailConfigured } from '@/content/site';
+import { contactEmail } from '@/content/site';
 
 export const metadata: Metadata = pageMetadata({
   title: 'One-page overview',
@@ -104,10 +104,7 @@ export default function Page() {
         <section className="brief-contact">
           <h2>Continue the conversation</h2>
           <p>
-            {isContactEmailConfigured
-              ? contactEmail
-              : 'Professional contact email pending confirmation'}{' '}
-            · auroraconfinement.com domain pending confirmation
+            <a href={`mailto:${contactEmail}`}>{contactEmail}</a>
           </p>
           <p>Expressions of interest are non-binding. No payment is taken.</p>
         </section>

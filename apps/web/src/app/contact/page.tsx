@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { pageMetadata } from '@/lib/metadata';
-import PageHero from '@/components/PageHero';
 import InterestForm from '@/components/InterestForm';
+import TechnicalIcon from '@/components/TechnicalIcon';
 
 export const metadata: Metadata = pageMetadata({
   title: 'Contact',
@@ -12,32 +12,42 @@ export const metadata: Metadata = pageMetadata({
 
 export default function Page() {
   return (
-    <>
-      <PageHero
-        eyebrow="Contact"
-        title="Start with what you need."
-        intro="Register non-binding interest in a product or collaboration. Please keep your message concise and non-confidential."
-        compact
-      />
-      <section className="section" id="contact-form">
-        <div className="shell contact-layout">
-          <aside>
-            <p className="eyebrow">Useful starting points</p>
-            <h2>What should we discuss?</h2>
-            <ul className="check-list">
-              <li>Tabletop exhibition model</li>
-              <li>Experimental research platform</li>
-              <li>Research collaboration</li>
-              <li>Investment or strategic partnership</li>
-            </ul>
-            <p className="notice">
-              The form is not connected to a delivery provider. In local
-              demonstration mode, nothing is retained or transmitted.
+    <section className="contact-page" id="contact-form">
+      <div className="focused-shell contact-page-grid">
+        <div className="contact-intro">
+          <p className="eyebrow">CONTACT</p>
+          <h1>Tell us what you are exploring.</h1>
+          <p className="contact-lead">
+            Register your interest in one of our products, discuss a
+            collaboration or send us a general enquiry.
+          </p>
+          <div className="contact-categories" aria-label="Conversation topics">
+            <div>
+              <TechnicalIcon name="model" />
+              <span>Tabletop exhibition models</span>
+            </div>
+            <div>
+              <TechnicalIcon name="experiment" />
+              <span>Experimental research platforms</span>
+            </div>
+            <div>
+              <TechnicalIcon name="investment" />
+              <span>Research, investment or strategic collaboration</span>
+            </div>
+          </div>
+        </div>
+        <div className="contact-form-column">
+          <div className="contact-form-heading">
+            <p className="eyebrow">CONTINUE THE CONVERSATION</p>
+            <h2>Register your interest.</h2>
+            <p>
+              Tell us how one of our products could be relevant to your
+              organisation.
             </p>
-          </aside>
+          </div>
           <InterestForm />
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   );
 }

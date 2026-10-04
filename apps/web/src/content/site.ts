@@ -23,8 +23,4 @@ export const siteOrigin = process.env['PUBLIC_SITE_URL']?.replace(/\/$/, '');
 export const socialImage = process.env['PUBLIC_SOCIAL_IMAGE'];
 
 export const contactEmail =
-  process.env['PUBLIC_CONTACT_EMAIL'] || 'contact@example.com';
-
-export const isContactEmailConfigured = Boolean(
-  process.env['PUBLIC_CONTACT_EMAIL'],
-);
+  process.env['PUBLIC_CONTACT_EMAIL'] || 'auroraconfinement@gmail.com';

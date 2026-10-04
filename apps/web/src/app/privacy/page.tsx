@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { pageMetadata } from '@/lib/metadata';
 import PageHero from '@/components/PageHero';
+import { contactEmail } from '@/content/site';
 
 export const metadata: Metadata = pageMetadata({
   title: 'Privacy notice',
@@ -98,15 +99,6 @@ export default function Page() {
             restricted logs, and documented deletion procedures. Security
             controls reduce risk but cannot guarantee absolute security.
           </p>
-          <h2>Current demonstration forms</h2>
-          <p>
-            The current forms validate in the browser and do not transmit or
-            retain submissions. No production submission endpoint, form
-            processor, email transport, or database is connected. The site does
-            not use analytics, advertising pixels, tracking cookies, CAPTCHA,
-            browser fingerprinting, local storage, session storage, or visitor
-            profiles.
-          </p>
           <h2>Marketing communication</h2>
           <p>
             A form submission permits a response to the specific enquiry only.
@@ -125,9 +117,8 @@ export default function Page() {
           </p>
           <h2>Privacy requests</h2>
           <p>
-            <strong>REQUIRES CONFIRMATION: PRIVACY CONTACT ROUTE</strong>
-            <br />A working contact route for privacy requests must be published
-            before production collection begins.
+            Email privacy requests to{' '}
+            <a href={`mailto:${contactEmail}`}>{contactEmail}</a>.
           </p>
         </div>
       </section>
