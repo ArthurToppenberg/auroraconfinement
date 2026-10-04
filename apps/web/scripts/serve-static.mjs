@@ -25,6 +25,7 @@ const types = {
   '.svg': 'image/svg+xml',
   '.ico': 'image/x-icon',
   '.woff2': 'font/woff2',
+  '.mp3': 'audio/mpeg',
 };
 
 // Apply the `/*` block of dist/_headers so previews enforce the real CSP.
@@ -78,10 +79,32 @@ createServer(async (request, response) => {
       status = 404;
     }
     const body = await readFile(file);
-    response.writeHead(status, {
+    const headers = {
       ...globalHeaders,
       'Content-Type': types[extname(file)] ?? 'application/octet-stream',
-    });
+      'Accept-Ranges': 'bytes',
+    };
+    // Media elements (Safari especially) require byte-range support.
+    const range = /^bytes=(\d*)-(\d*)$/.exec(request.headers.range ?? '');
+    if (range && status === 200 && (range[1] || range[2])) {
+      const last = body.length - 1;
+      const start = range[1] ? Number(range[1]) : last + 1 - Number(range[2]);
+      const end = range[1] && range[2] ? Math.min(Number(range[2]), last) : last;
+      if (start > end || start < 0 || start > last) {
+        response
+          .writeHead(416, { ...headers, 'Content-Range': `bytes */${body.length}` })
+          .end();
+        return;
+      }
+      response.writeHead(206, {
+        ...headers,
+        'Content-Range': `bytes ${start}-${end}/${body.length}`,
+        'Content-Length': end - start + 1,
+      });
+      response.end(request.method === 'HEAD' ? undefined : body.subarray(start, end + 1));
+      return;
+    }
+    response.writeHead(status, headers);
     response.end(request.method === 'HEAD' ? undefined : body);
   } catch {
     response.writeHead(500).end('Internal error');
