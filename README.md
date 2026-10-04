@@ -104,3 +104,6 @@ Read:
 - `docs/DEPLOYMENT.md` for preparation and rollback.
 
 The team must still approve a domain, host, professional email, data controller, processor, retention policy, form endpoint, public team details, product claims, technical disclosures, and sharing image. Automated checks do not make the site legally compliant, fully accessible, secure in every deployment, or production-ready.
+
+
+pnpm i && pnpm dev
