@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import type { ReactNode } from 'react';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
+import MiguelEasterEgg from '@/components/MiguelEasterEgg';
 import { siteName, siteOrigin } from '@/content/site';
 import '@/styles/global.css';
 
@@ -28,6 +29,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           {children}
         </main>
         <Footer />
+        <MiguelEasterEgg />
       </body>
     </html>
   );
