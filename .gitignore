@@ -1,0 +1,30 @@
+# dependencies
+node_modules/
+.pnpm-debug.log*
+npm-debug.log*
+
+# next.js build output (distDir is `dist`)
+.next/
+dist/
+
+# turbo
+.turbo
+
+# env
+.env
+.env.*
+!.env.example
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# tests and tooling
+coverage/
+playwright-report/
+test-results/
+blob-report/
+
+# misc
+.DS_Store
+*.pem

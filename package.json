@@ -1,0 +1,25 @@
+{
+  "name": "aurora-confinement",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.4.1",
+  "engines": {
+    "node": ">=22.18.0"
+  },
+  "scripts": {
+    "dev": "pnpm exec turbo run dev",
+    "build": "pnpm exec turbo run build",
+    "preview": "pnpm --filter web preview",
+    "check": "pnpm exec turbo run check",
+    "test": "pnpm exec turbo run test",
+    "test:browser": "pnpm --filter web test:browser",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "clean": "pnpm exec turbo run clean && rm -rf .turbo"
+  },
+  "devDependencies": {
+    "prettier": "3.6.2",
+    "turbo": "2.11.7"
+  }
+}

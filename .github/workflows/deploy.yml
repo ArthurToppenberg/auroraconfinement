@@ -1,0 +1,41 @@
+name: Deploy
+
+on:
+  workflow_run:
+    workflows: ['Build']
+    types: [completed]
+  # Lets you redeploy the currently-pushed :latest image without forcing a
+  # rebuild (e.g. after a manual VPS-side change was reverted).
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-aurora
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    # Only cascade from a Build run that was itself triggered by a push to
+    # main — not from a pull_request build (never deploys unmerged code) and
+    # not from a manual "build only" run (that's the whole point of being
+    # able to trigger Build on its own).
+    if: |
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.workflow_run.conclusion == 'success' &&
+       github.event.workflow_run.event == 'push' &&
+       github.event.workflow_run.head_branch == 'main')
+    steps:
+      - name: Deploy to VPS
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.VPS_DEPLOY_KEY }}
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "$SSH_PRIVATE_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          cat >> ~/.ssh/known_hosts <<'EOF'
+          169.58.80.104 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOPkkGk87JKT7O5D2ecm3tpGH7ehNgKtRKoafPxFa1q6
+          EOF
+          ssh -T -i ~/.ssh/deploy_key -o StrictHostKeyChecking=yes root@169.58.80.104
+
+      - name: Verify
+        run: curl -sf -o /dev/null -w "%{http_code}\n" https://auroraconfinement.com
