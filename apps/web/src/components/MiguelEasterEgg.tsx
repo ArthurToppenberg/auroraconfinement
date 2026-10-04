@@ -24,6 +24,12 @@ export default function MiguelEasterEgg() {
       audio.play().catch(() => {});
     };
 
+    const stop = () => {
+      if (!audio) return;
+      audio.pause();
+      audio.currentTime = 0;
+    };
+
     const onKeyDown = (event: KeyboardEvent) => {
       const letter = letterOf(event);
       if (!letter) return;
@@ -35,11 +41,15 @@ export default function MiguelEasterEgg() {
     const onKeyUp = (event: KeyboardEvent) => {
       const letter = letterOf(event);
       if (letter) held.delete(letter);
-      if (!letters.every((l) => held.has(l))) fired = false;
+      if (!letters.every((l) => held.has(l))) {
+        fired = false;
+        stop();
+      }
     };
     const reset = () => {
       held.clear();
       fired = false;
+      stop();
     };
 
     // Preload so playback starts immediately when the chord is completed.
@@ -55,6 +65,7 @@ export default function MiguelEasterEgg() {
       window.removeEventListener('keyup', onKeyUp, true);
       window.removeEventListener('blur', reset);
       document.removeEventListener('visibilitychange', reset);
+      stop();
     };
   }, []);
 

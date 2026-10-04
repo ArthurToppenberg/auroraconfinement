@@ -93,6 +93,46 @@ test('mobile navigation supports keyboard state and focus', async ({
   await expect(menuButton).toBeFocused();
 });
 
+test('Miguel audio plays only while M, I, and G are held', async ({ page }) => {
+  await page.addInitScript(() => {
+    const state = { playCount: 0, pauseCount: 0 };
+    Object.defineProperty(window, '__audioTestState', { value: state });
+    HTMLMediaElement.prototype.play = function () {
+      state.playCount += 1;
+      return Promise.resolve();
+    };
+    HTMLMediaElement.prototype.pause = function () {
+      state.pauseCount += 1;
+    };
+  });
+  const audioState = () =>
+    page.evaluate(
+      () =>
+        (
+          window as Window & {
+            __audioTestState: { playCount: number; pauseCount: number };
+          }
+        ).__audioTestState,
+    );
+
+  await page.goto('/');
+  await page.keyboard.down('m');
+  await page.keyboard.down('i');
+  expect((await audioState()).playCount).toBe(0);
+
+  await page.keyboard.down('g');
+  expect((await audioState()).playCount).toBe(1);
+
+  await page.keyboard.up('i');
+  expect((await audioState()).pauseCount).toBe(1);
+
+  await page.keyboard.down('i');
+  expect((await audioState()).playCount).toBe(2);
+  await page.keyboard.up('m');
+  await page.keyboard.up('i');
+  await page.keyboard.up('g');
+});
+
 test('contact form provides accessible validation and an honest demo result', async ({
   page,
 }) => {
