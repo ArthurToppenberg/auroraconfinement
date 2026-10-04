@@ -1,5 +1,5 @@
 export const homeHero = {
-  eyebrow: 'FOUNDED BY DTU STUDENTS · COPENHAGEN · FUSION TECHNOLOGY',
+  eyebrow: 'FOUNDED BY DTU STUDENTS · FUSION TECHNOLOGY · COPENHAGEN',
   headline: 'Stellarator research should be within reach.',
   supporting:
     'Aurora Confinement is developing compact experimental platforms designed to reduce the cost and infrastructure required for hands-on stellarator research, together with physical models that make the technology easier to communicate and teach.',
