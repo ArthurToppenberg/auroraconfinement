@@ -1204,6 +1204,10 @@ main:focus {
   color: var(--ink-muted);
 }
 
+.team-cta {
+  margin-top: 2rem;
+}
+
 @media (min-width: 40rem) {
   .hero-copy h1 {
     max-width: 18ch;

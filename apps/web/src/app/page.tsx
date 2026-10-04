@@ -129,10 +129,6 @@ export default function Page() {
               <p className="eyebrow">Team and stage</p>
               <h2>A multidisciplinary student team.</h2>
             </div>
-            <p>
-              Thirteen DTU students bring together physics, engineering, product
-              development, operations, and communication.
-            </p>
           </div>
           <div className="fact-strip" aria-label="Project status">
             <div>
@@ -152,7 +148,7 @@ export default function Page() {
             {projectStatus} No DTU endorsement or institutional partnership is
             implied.
           </p>
-          <a className="button cta-button" href="/about">
+          <a className="button cta-button team-cta" href="/about">
             About the team
           </a>
         </div>
