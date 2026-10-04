@@ -32,7 +32,7 @@ Never store delivery credentials in a `PUBLIC_` variable. Client components cann
 
 The `apps/web/public/_headers` file documents the intended restrictive headers. Confirm that the chosen host applies them; file-based header syntax is provider-dependent.
 
-Next.js inlines small scripts into every exported page. `npm run build` therefore rewrites `dist/_headers` so `script-src` also lists the SHA-256 hash of each inline script (`apps/web/scripts/write-csp-hashes.mjs`). The container serves the generated `dist/_headers` automatically (`scripts/serve-static.mjs`), not `public/_headers`; hashes change whenever the build output changes. If the host cannot serve file-based headers, the same CSP must be configured there with the hashes from the generated file.
+Next.js inlines small scripts into every exported page. `pnpm build` therefore rewrites `dist/_headers` so `script-src` also lists the SHA-256 hash of each inline script (`apps/web/scripts/write-csp-hashes.mjs`). The container serves the generated `dist/_headers` automatically (`scripts/serve-static.mjs`), not `public/_headers`; hashes change whenever the build output changes. If the host cannot serve file-based headers, the same CSP must be configured there with the hashes from the generated file.
 
 ## Release procedure
 
@@ -46,4 +46,4 @@ Next.js inlines small scripts into every exported page. `npm run build` therefor
 
 ## Rollback
 
-Use the hosting provider's atomic deployment history to restore the last verified build. If that feature is unavailable, retain the previous verified `dist/` artifact and its source revision, redeploy it, then verify the home, contact, NFF, privacy, and accessibility routes. Do not roll back form code without also restoring its matching validation, privacy wording, and server configuration.
+Set `AURORA_TAG=<previous-git-sha>` in `~/apps/aurora/.env` and run `docker compose up -d` from `~/apps/aurora`, then verify the home, contact, NFF, privacy, and accessibility routes. Do not roll back form code without also restoring its matching validation, privacy wording, and server configuration.

@@ -1,6 +1,6 @@
 # Aurora Confinement website
 
-A mobile-first, static Next.js website for the student-led Aurora Confinement initiative. This is a local pre-release build; it has not been deployed and the forms do not transmit data.
+A mobile-first, static Next.js website for the student-led Aurora Confinement initiative. It deploys from `main` via CI, but the forms are in demonstration mode and do not transmit data.
 
 ## Requirements
 
