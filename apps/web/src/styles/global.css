@@ -965,12 +965,25 @@ main:focus {
   color: var(--ink);
 }
 
-.muted {
-  color: var(--ink-muted) !important;
+.site-footer a {
+  text-decoration: none;
+  transition: color 160ms ease;
 }
 
-.legal-links {
-  margin-top: 1.5rem !important;
+.site-footer a:hover {
+  color: var(--cyan);
+}
+
+.footer-contact a {
+  overflow-wrap: anywhere;
+}
+
+.footer-legal a {
+  color: var(--ink-muted);
+}
+
+.muted {
+  color: var(--ink-muted) !important;
 }
 
 .footer-base {
@@ -1006,13 +1019,21 @@ main:focus {
   }
 
   .footer-grid {
-    grid-template-columns: minmax(0, 2fr) 1fr 1fr;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
     gap: 3rem;
   }
 
   .footer-base {
     flex-direction: row;
     justify-content: space-between;
+  }
+}
+
+@media (min-width: 64rem) {
+  .footer-grid {
+    grid-template-columns:
+      minmax(0, 2fr) minmax(0, 0.8fr) minmax(0, 1.35fr)
+      minmax(0, 0.75fr);
   }
 }
 

@@ -8,7 +8,6 @@ import { contactHrefs } from '@/content/site';
 const links = [
   { href: '/products', label: 'Products' },
   { href: '/about', label: 'About' },
-  { href: '/privacy', label: 'Privacy' },
 ] as const;
 
 export default function Header() {

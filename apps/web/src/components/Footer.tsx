@@ -47,15 +47,18 @@ export default function Footer() {
             </li>
           </ul>
         </nav>
-        <div>
+        <div className="footer-contact">
           <h2>Contact</h2>
           <a href={`mailto:${contactEmail}`}>{contactEmail}</a>
-          <ul className="legal-links">
+        </div>
+        <nav className="footer-legal" aria-label="Legal">
+          <h2>Legal</h2>
+          <ul>
             <li>
-              <a href="/privacy">Privacy</a>
+              <Link href="/privacy">Privacy Notice</Link>
             </li>
           </ul>
-        </div>
+        </nav>
       </div>
       <div className="shell footer-base">
         <p>&copy; {new Date().getFullYear()} Aurora Confinement</p>
