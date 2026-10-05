@@ -559,7 +559,6 @@ export default function InterestFormFields({
           autoComplete="off"
         />
       </div>
-      <InterestDisclaimer includeNonBinding={isNff || isProductInterest} />
       <button className="button primary" type="submit" disabled={busy}>
         {busy
           ? isNff || isProductInterest
@@ -569,6 +568,7 @@ export default function InterestFormFields({
             ? 'Register your interest'
             : 'Send enquiry'}
       </button>
+      <InterestDisclaimer />
       <div
         ref={statusRef}
         className="form-status"

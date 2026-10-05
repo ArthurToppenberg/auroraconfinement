@@ -1,26 +1,12 @@
-interface InterestDisclaimerProps {
-  includeNonBinding?: boolean;
-}
-
-export default function InterestDisclaimer({
-  includeNonBinding = true,
-}: InterestDisclaimerProps) {
+export default function InterestDisclaimer() {
   return (
-    <ul className="interest-disclaimers">
-      {includeNonBinding && (
-        <li>
-          <span>
-            <strong>Non-binding</strong>: Expresses early interest only and
-            helps validate institutional demand for our research platforms.
-          </span>
-        </li>
-      )}
-      <li>
-        <span>
-          <strong>Data privacy</strong>: Used solely to respond to your enquiry.
-          See our <a href="/privacy">Privacy Notice</a>.
-        </span>
-      </li>
-    </ul>
+    <p className="interest-disclaimer">
+      <strong>Registering interest is non-binding</strong> and{' '}
+      <strong>helps validate demand</strong> for our research platforms.
+      <span>
+        Learn how we handle your data in our{' '}
+        <a href="/privacy">Privacy Notice</a>.
+      </span>
+    </p>
   );
 }

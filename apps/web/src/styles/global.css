@@ -856,31 +856,32 @@ main:focus {
   font-size: 0.82rem;
 }
 
-.interest-disclaimers {
-  display: grid;
-  gap: 0.25rem;
+p.interest-disclaimer {
   max-width: 42rem;
-  margin: 1rem 0;
-  padding: 0;
+  margin: 0.75rem 0 0;
   color: var(--ink-muted);
-  font-size: 0.8rem;
-  line-height: 1.45;
-  list-style: none;
+  font-size: 0.75rem;
+  line-height: 1.5;
 }
 
-.interest-disclaimers li {
-  display: grid;
-  grid-template-columns: 0.65rem minmax(0, 1fr);
-  gap: 0.25rem;
-}
-
-.interest-disclaimers li::before {
-  color: var(--ink-muted);
-  content: '•';
-}
-
-.interest-disclaimers strong {
+.interest-disclaimer strong {
   color: var(--ink-soft);
+  font-weight: 600;
+}
+
+.interest-disclaimer span {
+  display: block;
+  margin-top: 0.25rem;
+}
+
+.interest-disclaimer a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 160ms ease;
+}
+
+.interest-disclaimer a:hover {
+  color: var(--cyan);
 }
 
 .form-status:not(:empty) {
@@ -1250,10 +1251,6 @@ main:focus {
   margin-top: 1.25rem;
 }
 
-.hero-copy .interest-disclaimers + .button-row {
-  margin-top: 1rem;
-}
-
 .hero-copy .button {
   min-width: 0;
   padding-inline: 0.6rem;
@@ -1386,10 +1383,6 @@ main:focus {
 
 .home-product-footer {
   margin-top: auto;
-}
-
-.home-product-footer .interest-disclaimers {
-  margin: 1.25rem 0 1rem;
 }
 
 .home-card-actions {
@@ -1611,11 +1604,7 @@ main:focus {
 
 .product-interest-actions {
   display: grid;
-  gap: 1rem;
-}
-
-.product-interest-actions .interest-disclaimers {
-  margin: 0;
+  gap: 0;
 }
 
 .product-card-actions {
@@ -1649,10 +1638,6 @@ main:focus {
   display: grid;
   gap: 0.75rem;
   margin-top: 2rem;
-}
-
-.products-final .interest-disclaimers + .products-final-actions {
-  margin-top: 1rem;
 }
 
 .products-final-actions .button {

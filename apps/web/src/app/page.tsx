@@ -22,7 +22,6 @@ export default function Page() {
             <p className="eyebrow">{homeHero.eyebrow}</p>
             <h1>{homeHero.headline}</h1>
             <p className="hero-supporting">{homeHero.supporting}</p>
-            <InterestDisclaimer />
             <div className="button-row">
               <Link className="button primary" href={homeHero.primaryHref}>
                 {homeHero.primaryLabel}
@@ -31,6 +30,7 @@ export default function Page() {
                 {homeHero.secondaryLabel}
               </Link>
             </div>
+            <InterestDisclaimer />
           </div>
           <div className="hero-mark" aria-hidden="true">
             <div className="orbit orbit-one"></div>
@@ -126,7 +126,6 @@ export default function Page() {
               </div>
               <ProductFigure kind="tabletop" />
               <div className="home-product-footer">
-                <InterestDisclaimer />
                 <div className="home-card-actions">
                   <Link
                     className="button primary"
@@ -141,6 +140,7 @@ export default function Page() {
                     Explore product <span aria-hidden="true">→</span>
                   </Link>
                 </div>
+                <InterestDisclaimer />
               </div>
             </article>
             <article className="card violet product-card home-product-card">
@@ -174,7 +174,6 @@ export default function Page() {
               </div>
               <ProductFigure kind="research" />
               <div className="home-product-footer">
-                <InterestDisclaimer />
                 <div className="home-card-actions">
                   <Link
                     className="button primary"
@@ -189,6 +188,7 @@ export default function Page() {
                     Explore product <span aria-hidden="true">→</span>
                   </Link>
                 </div>
+                <InterestDisclaimer />
               </div>
             </article>
           </div>

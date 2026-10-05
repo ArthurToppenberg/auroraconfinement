@@ -88,7 +88,7 @@ export default function Header() {
             ))}
             <li>
               <Link
-                href={contactHrefs.generalEnquiry}
+                href={contactHrefs.productInterest}
                 className="nav-cta"
                 aria-current={path === '/contact' ? 'page' : undefined}
               >

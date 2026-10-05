@@ -85,7 +85,6 @@ export default function Page() {
               Purpose: communication and teaching, not experimental research
             </p>
             <div className="product-interest-actions">
-              <InterestDisclaimer />
               <div className="product-card-actions">
                 <Link
                   className="button primary"
@@ -97,6 +96,7 @@ export default function Page() {
                   Discuss an exhibition model
                 </Link>
               </div>
+              <InterestDisclaimer />
             </div>
           </div>
         </div>
@@ -162,7 +162,6 @@ export default function Page() {
               collaboration
             </p>
             <div className="product-interest-actions">
-              <InterestDisclaimer />
               <div className="product-card-actions">
                 <Link
                   className="button primary"
@@ -174,6 +173,7 @@ export default function Page() {
                   Discuss a research partnership
                 </Link>
               </div>
+              <InterestDisclaimer />
             </div>
           </div>
         </div>
@@ -186,7 +186,6 @@ export default function Page() {
             Tell us what you are exploring, and we will continue the
             conversation from there.
           </p>
-          <InterestDisclaimer />
           <div className="products-final-actions">
             <Link
               className="button primary"
@@ -198,6 +197,7 @@ export default function Page() {
               Contact the team
             </Link>
           </div>
+          <InterestDisclaimer />
         </div>
       </section>
     </>
