@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { pageMetadata } from '@/lib/metadata';
 import PageHero from '@/components/PageHero';
+import { contactHrefs } from '@/content/site';
 
 export const metadata: Metadata = pageMetadata({
   title: 'Join',
@@ -96,12 +98,9 @@ export default function Page() {
             detailed application. We will only present opportunities publicly
             once their status is confirmed.
           </p>
-          <a
-            className="button primary"
-            href="/contact?interest=other-partnership"
-          >
+          <Link className="button primary" href={contactHrefs.generalEnquiry}>
             Request a conversation
-          </a>
+          </Link>
         </div>
       </section>
     </>

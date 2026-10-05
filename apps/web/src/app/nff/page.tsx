@@ -99,8 +99,7 @@ export default function Page() {
               <p className="eyebrow">REGISTER INTEREST</p>
               <h2>Continue the conversation</h2>
               <p>
-                Register a non-binding expression of interest and tell us how
-                our work could be relevant to your organisation.
+                Tell us how our work could be relevant to your organisation.
               </p>
             </div>
             <InterestForm variant="nff" />

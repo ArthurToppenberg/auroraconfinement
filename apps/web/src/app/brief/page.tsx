@@ -1,7 +1,8 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import PrintButton from '@/components/PrintButton';
 import { pageMetadata } from '@/lib/metadata';
-import { contactEmail } from '@/content/site';
+import { contactEmail, contactHrefs } from '@/content/site';
 
 export const metadata: Metadata = pageMetadata({
   title: 'One-page overview',
@@ -110,9 +111,9 @@ export default function Page() {
         </section>
         <p className="no-print">
           <PrintButton />
-          <a className="button" href="/contact">
+          <Link className="button" href={contactHrefs.generalEnquiry}>
             Contact us
-          </a>
+          </Link>
         </p>
       </article>
     </>

@@ -1,7 +1,10 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { pageMetadata } from '@/lib/metadata';
 import ProductFigure from '@/components/ProductFigure';
 import TechnicalIcon from '@/components/TechnicalIcon';
+import InterestDisclaimer from '@/components/InterestDisclaimer';
+import { contactHrefs } from '@/content/site';
 
 export const metadata: Metadata = pageMetadata({
   title: 'Products',
@@ -34,13 +37,8 @@ export default function Page() {
             <span className="status-label">CURRENT FOCUS · IN DEVELOPMENT</span>
             <h2>Tabletop stellarator models</h2>
             <p className="product-value">
-              Make complex stellarator technology easier to see, explain and
-              remember.
-            </p>
-            <p className="product-intro-copy">
-              Physical models designed for organisations that need to
-              communicate stellarator technology clearly in exhibitions,
-              meetings, visitor facilities and introductory teaching.
+              Compact physical models engineered to make complex magnetic field
+              geometry clear, tangible, and visually compelling.
             </p>
           </header>
           <div className="product-visual">
@@ -52,15 +50,15 @@ export default function Page() {
               <ul className="icon-list">
                 <li>
                   <TechnicalIcon name="industry" />
-                  <span>Fusion companies and industry exhibitions</span>
+                  <span>Industry exhibitions &amp; investor meetings</span>
                 </li>
                 <li>
                   <TechnicalIcon name="communication" />
-                  <span>Research institutions and public engagement</span>
+                  <span>Science centres &amp; public visitor facilities</span>
                 </li>
                 <li>
                   <TechnicalIcon name="education" />
-                  <span>Universities and introductory teaching</span>
+                  <span>Universities &amp; introductory plasma lectures</span>
                 </li>
               </ul>
             </div>
@@ -69,19 +67,16 @@ export default function Page() {
               <ul className="icon-list">
                 <li>
                   <TechnicalIcon name="visibility" />
-                  <span>Create a memorable focal point at conferences</span>
+                  <span>High-impact display anchor for events</span>
                 </li>
                 <li>
                   <TechnicalIcon name="model" />
-                  <span>
-                    Explain complex three-dimensional geometry physically
-                  </span>
+                  <span>Intuitive physical demonstration of 3D geometry</span>
                 </li>
                 <li>
                   <TechnicalIcon name="collaboration" />
                   <span>
-                    Support conversations with students, visitors and
-                    stakeholders
+                    Clear communication with non-specialist stakeholders
                   </span>
                 </li>
               </ul>
@@ -89,12 +84,20 @@ export default function Page() {
             <p className="product-clarification">
               Purpose: communication and teaching, not experimental research
             </p>
-            <a
-              className="button cta-button"
-              href="/contact?interest=exhibition-model"
-            >
-              Discuss an exhibition model
-            </a>
+            <div className="product-interest-actions">
+              <InterestDisclaimer />
+              <div className="product-card-actions">
+                <Link
+                  className="button primary"
+                  href={contactHrefs.productInterest}
+                >
+                  Register your interest
+                </Link>
+                <Link className="button" href={contactHrefs.collaboration}>
+                  Discuss an exhibition model
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -108,13 +111,8 @@ export default function Page() {
             </span>
             <h2>Experimental stellarator platforms</h2>
             <p className="product-value">
-              Bring hands-on stellarator experimentation within reach of more
-              research teams.
-            </p>
-            <p className="product-intro-copy">
-              Compact experimental systems being developed for universities,
-              startups and research teams facing high acquisition and
-              infrastructure barriers.
+              Modular research systems engineered to lower financial and
+              technical barriers for hands-on stellarator experimentation.
             </p>
           </header>
           <div className="product-visual">
@@ -125,16 +123,16 @@ export default function Page() {
               <h3>Designed for</h3>
               <ul className="icon-list">
                 <li>
-                  <TechnicalIcon name="experiment" />
-                  <span>University plasma and fusion laboratories</span>
-                </li>
-                <li>
                   <TechnicalIcon name="research" />
-                  <span>Fusion startups and research teams</span>
+                  <span>Academic plasma research labs</span>
                 </li>
                 <li>
-                  <TechnicalIcon name="education" />
-                  <span>Student projects and researcher training</span>
+                  <TechnicalIcon name="industry" />
+                  <span>Early-stage fusion startups</span>
+                </li>
+                <li>
+                  <TechnicalIcon name="training" />
+                  <span>Researcher &amp; student training programs</span>
                 </li>
               </ul>
             </div>
@@ -143,17 +141,19 @@ export default function Page() {
               <ul className="icon-list">
                 <li>
                   <TechnicalIcon name="access" />
-                  <span>More accessible hands-on stellarator experiments</span>
-                </li>
-                <li>
-                  <TechnicalIcon name="training" />
                   <span>
-                    Training in diagnostics, controls and plasma research
+                    Hands-on experiment without full-scale facility costs
                   </span>
                 </li>
                 <li>
-                  <TechnicalIcon name="industry" />
-                  <span>Research without power-plant-scale infrastructure</span>
+                  <TechnicalIcon name="experiment" />
+                  <span>Fast-turnaround testbed for diagnostic development</span>
+                </li>
+                <li>
+                  <TechnicalIcon name="education" />
+                  <span>
+                    Direct practical training for future fusion engineers
+                  </span>
                 </li>
               </ul>
             </div>
@@ -161,12 +161,20 @@ export default function Page() {
               Current stage: early-stage development through research
               collaboration
             </p>
-            <a
-              className="button cta-button"
-              href="/contact?interest=research-platform"
-            >
-              Discuss a research partnership
-            </a>
+            <div className="product-interest-actions">
+              <InterestDisclaimer />
+              <div className="product-card-actions">
+                <Link
+                  className="button primary"
+                  href={contactHrefs.productInterest}
+                >
+                  Register your interest
+                </Link>
+                <Link className="button" href={contactHrefs.collaboration}>
+                  Discuss a research partnership
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -178,16 +186,17 @@ export default function Page() {
             Tell us what you are exploring, and we will continue the
             conversation from there.
           </p>
-          <div className="button-row">
-            <a
+          <InterestDisclaimer />
+          <div className="products-final-actions">
+            <Link
               className="button primary"
-              href="/contact?interest=general-enquiry#contact-form"
+              href={contactHrefs.productInterest}
             >
               Register your interest
-            </a>
-            <a className="button" href="/contact">
+            </Link>
+            <Link className="button" href={contactHrefs.generalEnquiry}>
               Contact the team
-            </a>
+            </Link>
           </div>
         </div>
       </section>

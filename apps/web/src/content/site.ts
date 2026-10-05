@@ -1,10 +1,16 @@
+export const contactHrefs = {
+  productInterest: '/contact?intent=product-interest',
+  collaboration: '/contact?intent=collaboration',
+  generalEnquiry: '/contact?intent=general-enquiry',
+} as const;
+
 export const homeHero = {
   eyebrow: 'FOUNDED BY DTU STUDENTS · FUSION TECHNOLOGY · COPENHAGEN',
   headline: 'Stellarator research should be within reach.',
   supporting:
     'Aurora Confinement is developing compact experimental platforms designed to reduce the cost and infrastructure required for hands-on stellarator research, together with physical models that make the technology easier to communicate and teach.',
   primaryLabel: 'Register institutional interest',
-  primaryHref: '/nff#interest',
+  primaryHref: contactHrefs.productInterest,
   secondaryLabel: 'Explore our products',
   secondaryHref: '/products',
 } as const;

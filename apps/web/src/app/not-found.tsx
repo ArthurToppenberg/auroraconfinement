@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { pageMetadata } from '@/lib/metadata';
+import { contactHrefs } from '@/content/site';
 
 export const metadata: Metadata = pageMetadata({
   title: 'Page not found',
@@ -21,9 +23,9 @@ export default function NotFound() {
           <a className="button primary" href="/">
             Return home
           </a>
-          <a className="button" href="/contact">
+          <Link className="button" href={contactHrefs.generalEnquiry}>
             Contact us
-          </a>
+          </Link>
         </div>
       </div>
     </section>

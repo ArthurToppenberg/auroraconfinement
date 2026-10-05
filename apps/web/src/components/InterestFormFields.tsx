@@ -2,7 +2,9 @@
 
 import { useEffect, useRef, useState } from 'react';
 import type { FormEvent, ReactNode } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { submissionAdapter } from '@/lib/forms/adapter';
+import InterestDisclaimer from '@/components/InterestDisclaimer';
 import {
   interestAreas,
   isSpam,
@@ -87,6 +89,7 @@ export default function InterestFormFields({
   const isNff = variant === 'nff';
   const source = isNff ? 'nordic-fusion-forum-2026' : 'contact';
   const prefix = isNff ? 'nff' : 'contact';
+  const searchParams = useSearchParams();
 
   const formRef = useRef<HTMLFormElement>(null);
   const statusRef = useRef<HTMLDivElement>(null);
@@ -103,30 +106,35 @@ export default function InterestFormFields({
   const isGeneralEnquiry = !isNff && submissionType === 'general-enquiry';
 
   useEffect(() => {
-    const requested = new URL(window.location.href).searchParams.get(
-      'interest',
-    );
-    if (
-      !requested ||
-      !interestAreas.some((interest) => interest === requested)
-    ) {
-      return;
-    }
+    const intent = searchParams.get('intent');
+    const requested = searchParams.get('interest');
+    const validInterest =
+      requested && interestAreas.some((interest) => interest === requested)
+        ? requested
+        : '';
 
     if (!isNff) {
-      if (
-        requested === 'research-collaboration' ||
-        requested === 'investment-partnership'
+      if (intent === 'product-interest') {
+        setSubmissionType('product-interest');
+      } else if (intent === 'collaboration') {
+        setSubmissionType('collaboration');
+      } else if (intent === 'general-enquiry') {
+        setSubmissionType('general-enquiry');
+      } else if (
+        validInterest === 'research-collaboration' ||
+        validInterest === 'investment-partnership'
       ) {
         setSubmissionType('collaboration');
-      } else if (requested === 'general-enquiry') {
+      } else if (validInterest === 'general-enquiry') {
         setSubmissionType('general-enquiry');
+      } else if (validInterest) {
+        setSubmissionType('product-interest');
       } else {
         setSubmissionType('product-interest');
       }
     }
-    setRequestedInterest(requested);
-  }, [isNff]);
+    setRequestedInterest(validInterest);
+  }, [isNff, searchParams]);
 
   useEffect(() => {
     if (!requestedInterest) return;
@@ -551,12 +559,7 @@ export default function InterestFormFields({
           autoComplete="off"
         />
       </div>
-      <p className="form-terms">
-        {isNff
-          ? 'We use your information to respond to your enquiry and evaluate institutional interest. '
-          : 'We use your information only to respond to your enquiry and manage any resulting conversation. '}
-        See our <a href="/privacy">Privacy Notice</a>.
-      </p>
+      <InterestDisclaimer includeNonBinding={isNff || isProductInterest} />
       <button className="button primary" type="submit" disabled={busy}>
         {busy
           ? isNff || isProductInterest
@@ -566,12 +569,6 @@ export default function InterestFormFields({
             ? 'Register your interest'
             : 'Send enquiry'}
       </button>
-      {(isNff || isProductInterest) && (
-        <p className="form-terms post-submit-note">
-          Submitting this form is a non-binding expression of interest and does
-          not create an obligation to purchase.
-        </p>
-      )}
       <div
         ref={statusRef}
         className="form-status"

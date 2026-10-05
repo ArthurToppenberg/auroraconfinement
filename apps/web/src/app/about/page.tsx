@@ -1,7 +1,8 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { pageMetadata } from '@/lib/metadata';
 import PageHero from '@/components/PageHero';
-import { projectStatus } from '@/content/site';
+import { contactHrefs, projectStatus } from '@/content/site';
 
 export const metadata: Metadata = pageMetadata({
   title: 'About',
@@ -82,9 +83,9 @@ export default function Page() {
             customer relationship, formal institutional partnership, or
             regulatory approval is claimed.
           </p>
-          <a className="button primary" href="/contact">
+          <Link className="button primary" href={contactHrefs.generalEnquiry}>
             Talk with the team
-          </a>
+          </Link>
         </div>
       </section>
     </>

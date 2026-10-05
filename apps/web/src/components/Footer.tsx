@@ -1,4 +1,5 @@
-import { contactEmail } from '@/content/site';
+import Link from 'next/link';
+import { contactEmail, contactHrefs } from '@/content/site';
 
 export default function Footer() {
   return (
@@ -42,7 +43,7 @@ export default function Footer() {
               <a href="/about">About</a>
             </li>
             <li>
-              <a href="/contact">Contact</a>
+              <Link href={contactHrefs.generalEnquiry}>Contact</Link>
             </li>
           </ul>
         </nav>

@@ -1,7 +1,10 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { pageMetadata } from '@/lib/metadata';
 import ProductFigure from '@/components/ProductFigure';
-import { homeHero, projectStatus } from '@/content/site';
+import TechnicalIcon from '@/components/TechnicalIcon';
+import InterestDisclaimer from '@/components/InterestDisclaimer';
+import { contactHrefs, homeHero, projectStatus } from '@/content/site';
 
 export const metadata: Metadata = pageMetadata({
   title: 'Aurora Confinement',
@@ -19,13 +22,14 @@ export default function Page() {
             <p className="eyebrow">{homeHero.eyebrow}</p>
             <h1>{homeHero.headline}</h1>
             <p className="hero-supporting">{homeHero.supporting}</p>
+            <InterestDisclaimer />
             <div className="button-row">
-              <a className="button primary" href={homeHero.primaryHref}>
+              <Link className="button primary" href={homeHero.primaryHref}>
                 {homeHero.primaryLabel}
-              </a>
-              <a className="button" href={homeHero.secondaryHref}>
+              </Link>
+              <Link className="button" href={homeHero.secondaryHref}>
                 {homeHero.secondaryLabel}
-              </a>
+              </Link>
             </div>
           </div>
           <div className="hero-mark" aria-hidden="true">
@@ -41,28 +45,41 @@ export default function Page() {
         </div>
       </section>
 
-      <section className="section">
-        <div className="shell split-section">
-          <div>
+      <section className="section home-barrier">
+        <div className="shell">
+          <div className="home-section-heading">
             <p className="eyebrow">The barrier</p>
             <h2>
               Hands-on stellarator research requires substantial resources.
             </h2>
           </div>
-          <div className="split-copy">
-            <p>
-              Experimental stellarator work can require substantial capital,
-              specialist infrastructure, and engineering resources. These
-              barriers limit what many universities, startups, and smaller
-              research teams can investigate directly.
-            </p>
-            <p>
-              Aurora Confinement is developing compact experimental platforms
-              intended to lower the barrier to hands-on research, alongside
-              tabletop models that make stellarator technology easier to
-              communicate and teach.
-            </p>
+          <div className="barrier-grid">
+            <article className="barrier-card">
+              <TechnicalIcon name="investment" />
+              <div>
+                <h3>High capital cost</h3>
+                <p>Heavy financial investment limits entry.</p>
+              </div>
+            </article>
+            <article className="barrier-card">
+              <TechnicalIcon name="industry" />
+              <div>
+                <h3>Specialist infrastructure</h3>
+                <p>Demands complex, specialized facilities.</p>
+              </div>
+            </article>
+            <article className="barrier-card">
+              <TechnicalIcon name="access" />
+              <div>
+                <h3>Restricted access</h3>
+                <p>Limits hands-on research to a few large institutions.</p>
+              </div>
+            </article>
           </div>
+          <p className="barrier-bridge">
+            Aurora Confinement is developing compact platforms and physical
+            models intended to lower these barriers.
+          </p>
         </div>
       </section>
 
@@ -79,44 +96,100 @@ export default function Page() {
             </p>
           </div>
           <div className="product-grid">
-            <article className="card product-card">
-              <p className="card-index">01 / Exhibition and communication</p>
-              <span className="status-label">
-                Current focus · In development
-              </span>
-              <h3>Tabletop stellarator models</h3>
-              <p>
-                Physical models designed to help fusion companies, research
-                institutions, and universities communicate stellarator
-                technology at exhibitions, visitor facilities, and introductory
-                lectures.
-              </p>
+            <article className="card product-card home-product-card">
+              <div className="home-product-content">
+                <p className="card-index">01 / Exhibition and communication</p>
+                <span className="status-label">
+                  Current focus · In development
+                </span>
+                <h3>Tabletop stellarator models</h3>
+                <ul className="home-feature-list">
+                  <li>
+                    <TechnicalIcon name="visibility" />
+                    <div>
+                      <strong>Tangible &amp; visible</strong>
+                      <span>
+                        Makes complex 3D geometry physical and intuitive.
+                      </span>
+                    </div>
+                  </li>
+                  <li>
+                    <TechnicalIcon name="education" />
+                    <div>
+                      <strong>Education &amp; outreach</strong>
+                      <span>
+                        Built for exhibitions, conferences and lectures.
+                      </span>
+                    </div>
+                  </li>
+                </ul>
+              </div>
               <ProductFigure kind="tabletop" />
-              <a
-                className="button cta-button"
-                href="/contact?interest=exhibition-model"
-              >
-                Discuss an exhibition model
-              </a>
+              <div className="home-product-footer">
+                <InterestDisclaimer />
+                <div className="home-card-actions">
+                  <Link
+                    className="button primary"
+                    href={contactHrefs.productInterest}
+                  >
+                    Register your interest
+                  </Link>
+                  <Link
+                    className="button home-card-secondary"
+                    href="/products"
+                  >
+                    Explore product <span aria-hidden="true">→</span>
+                  </Link>
+                </div>
+              </div>
             </article>
-            <article className="card violet product-card">
-              <p className="card-index">02 / Experimental research</p>
-              <span className="status-label">
-                Current focus · Early-stage development
-              </span>
-              <h3>Experimental stellarator platforms</h3>
-              <p>
-                Compact experimental systems designed to lower the cost and
-                infrastructure barriers to hands-on stellarator research for
-                universities, startups, and research teams.
-              </p>
+            <article className="card violet product-card home-product-card">
+              <div className="home-product-content">
+                <p className="card-index">02 / Experimental research</p>
+                <span className="status-label">
+                  Current focus · Early-stage development
+                </span>
+                <h3>Experimental stellarator platforms</h3>
+                <ul className="home-feature-list">
+                  <li>
+                    <TechnicalIcon name="experiment" />
+                    <div>
+                      <strong>Hands-on research</strong>
+                      <span>
+                        Enables direct experimentation and training without huge
+                        facilities.
+                      </span>
+                    </div>
+                  </li>
+                  <li>
+                    <TechnicalIcon name="access" />
+                    <div>
+                      <strong>Lower barriers</strong>
+                      <span>
+                        Designed to reduce capital and infrastructure costs.
+                      </span>
+                    </div>
+                  </li>
+                </ul>
+              </div>
               <ProductFigure kind="research" />
-              <a
-                className="button cta-button"
-                href="/contact?interest=research-collaboration"
-              >
-                Discuss a research partnership
-              </a>
+              <div className="home-product-footer">
+                <InterestDisclaimer />
+                <div className="home-card-actions">
+                  <Link
+                    className="button primary"
+                    href={contactHrefs.productInterest}
+                  >
+                    Register your interest
+                  </Link>
+                  <Link
+                    className="button home-card-secondary"
+                    href="/products"
+                  >
+                    Explore product <span aria-hidden="true">→</span>
+                  </Link>
+                </div>
+              </div>
             </article>
           </div>
         </div>
@@ -163,9 +236,9 @@ export default function Page() {
             universities, fusion companies, collaborators, and strategic
             partners.
           </p>
-          <a className="button primary" href="/contact">
+          <Link className="button primary" href={contactHrefs.generalEnquiry}>
             Start a conversation
-          </a>
+          </Link>
         </div>
       </section>
     </>

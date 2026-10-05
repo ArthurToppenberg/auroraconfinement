@@ -1,7 +1,9 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { pageMetadata } from '@/lib/metadata';
 import PageHero from '@/components/PageHero';
 import ProductFigure from '@/components/ProductFigure';
+import { contactHrefs } from '@/content/site';
 
 export const metadata: Metadata = pageMetadata({
   title: 'Technology',
@@ -67,12 +69,9 @@ export default function Page() {
               No completed model is currently offered for immediate sale.
               Pricing discussions are indicative and non-binding.
             </p>
-            <a
-              className="button primary"
-              href="/contact?interest=exhibition-model"
-            >
+            <Link className="button primary" href={contactHrefs.collaboration}>
               Discuss an exhibition model
-            </a>
+            </Link>
           </div>
         </div>
       </section>
@@ -102,12 +101,9 @@ export default function Page() {
               This direction is in early-stage development. No performance,
               readiness, regulatory, or delivery claims are made.
             </p>
-            <a
-              className="button primary"
-              href="/contact?interest=research-collaboration"
-            >
+            <Link className="button primary" href={contactHrefs.collaboration}>
               Discuss a research partnership
-            </a>
+            </Link>
           </div>
         </div>
       </section>
@@ -122,9 +118,9 @@ export default function Page() {
             expectations, and where each physical tool could be genuinely
             valuable.
           </p>
-          <a className="button" href="/contact">
+          <Link className="button" href={contactHrefs.generalEnquiry}>
             Start a conversation
-          </a>
+          </Link>
         </div>
       </section>
     </>

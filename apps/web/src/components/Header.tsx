@@ -1,7 +1,9 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { contactHrefs } from '@/content/site';
 
 const links = [
   { href: '/products', label: 'Products' },
@@ -86,13 +88,13 @@ export default function Header() {
               </li>
             ))}
             <li>
-              <a
-                href="/contact"
+              <Link
+                href={contactHrefs.generalEnquiry}
                 className="nav-cta"
                 aria-current={path === '/contact' ? 'page' : undefined}
               >
                 Contact
-              </a>
+              </Link>
             </li>
           </ul>
         </nav>

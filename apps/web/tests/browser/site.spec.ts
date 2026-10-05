@@ -227,26 +227,25 @@ test('NFF form validates institutional interest without false storage success', 
   ).toHaveCount(0);
 });
 
-test('product CTAs preserve and apply their interest context', async ({
+test('contact CTAs preserve and apply their intent context', async ({
   page,
 }) => {
   await page.goto('/products/');
   await expect(
     page.getByRole('link', { name: 'Discuss an exhibition model' }),
-  ).toHaveAttribute('href', '/contact?interest=exhibition-model');
+  ).toHaveAttribute('href', '/contact?intent=collaboration');
   await expect(
     page.getByRole('link', { name: 'Discuss a research partnership' }),
-  ).toHaveAttribute('href', '/contact?interest=research-platform');
+  ).toHaveAttribute('href', '/contact?intent=collaboration');
 
-  await page.goto('/contact/?interest=exhibition-model');
-  await expect(page.getByLabel('Product of interest (required)')).toHaveValue(
-    'exhibition-model',
-  );
+  await page.goto('/contact/?intent=product-interest');
+  await expect(page.getByLabel('Register product interest')).toBeChecked();
 
-  await page.goto('/contact/?interest=research-platform');
-  await expect(page.getByLabel('Product of interest (required)')).toHaveValue(
-    'research-platform',
-  );
+  await page.goto('/contact/?intent=collaboration');
+  await expect(page.getByLabel('Discuss a collaboration')).toBeChecked();
+
+  await page.goto('/contact/?intent=general-enquiry');
+  await expect(page.getByLabel('Send a general enquiry')).toBeChecked();
 });
 
 test('contact and NFF desktop headings align', async ({ page }) => {
