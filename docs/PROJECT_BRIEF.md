@@ -17,17 +17,17 @@ This is a public, non-confidential website. It must not disclose patent-sensitiv
 
 Aurora Confinement is currently:
 
-- A student-led initiative comprising 13 DTU students.
+- A student-led research initiative bringing together talent from DTU and KU.
 - Based in the Copenhagen/Lyngby area of Denmark.
 - Pre-incorporation and does not yet have a CVR number.
 - Pre-funding.
 - Preparing for possible incubation support and advice concerning intellectual property.
 
-Do not describe Aurora Confinement as an incorporated company, DTU spinout, DTU company, DTU Skylab-incubated company, funded startup, or formal partner of any institution unless the team later supplies written confirmation.
+Do not describe Aurora Confinement as an incorporated company, university spinout, university-affiliated company, DTU Skylab-incubated company, funded startup, or formal partner of any institution unless the team later supplies written confirmation.
 
 An appropriate temporary description is:
 
-> Aurora Confinement is a student-led initiative formed by 13 students at the Technical University of Denmark.
+> Aurora Confinement is a student-led research initiative bringing together talent from DTU (Technical University of Denmark) and KU (University of Copenhagen).
 
 An appropriate temporary footer status is:
 
@@ -47,7 +47,7 @@ Possible primary positioning:
 
 Possible supporting statement:
 
-> Aurora Confinement is a 13-person student team at DTU developing physical stellarator models for education and exhibition—and exploring research-scale platforms for universities and fusion R&D.
+> Aurora Confinement is a multidisciplinary student-led team bringing together talent from DTU and KU, developing physical stellarator models for education and exhibition while exploring research-scale platforms for universities and fusion R&D.
 
 This wording is provisional and should remain easy to edit.
 
@@ -159,9 +159,9 @@ Do not use **Buy now** unless a genuine product can be ordered and fulfilled und
 ### About and team
 
 - Tell the project's origin story.
-- Introduce the 13-person multidisciplinary team.
+- Introduce the multidisciplinary student-led team.
 - Include team names, roles, biographies, photographs, and external profile links only after each person approves publication.
-- State the relationship to DTU accurately without implying endorsement.
+- State the relationship to DTU and KU accurately without implying endorsement.
 - Explain values such as scientific integrity, safety, responsible engineering, and openness to collaboration.
 
 ### News

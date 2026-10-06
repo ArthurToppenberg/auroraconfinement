@@ -205,8 +205,8 @@ export default function Page() {
           </div>
           <div className="fact-strip" aria-label="Project status">
             <div>
-              <strong>13 students</strong>
-              <span>Multidisciplinary team</span>
+              <strong>Student-led team</strong>
+              <span>Talent from DTU and KU</span>
             </div>
             <div>
               <strong>Two active directions</strong>
@@ -218,8 +218,8 @@ export default function Page() {
             </div>
           </div>
           <p className="status-copy">
-            {projectStatus} No DTU endorsement or institutional partnership is
-            implied.
+            {projectStatus} No DTU or KU endorsement or institutional
+            partnership is implied.
           </p>
           <a className="button cta-button team-cta" href="/about">
             About the team

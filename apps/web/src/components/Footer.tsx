@@ -23,11 +23,11 @@ export default function Footer() {
             </span>
           </a>
           <p>
-            A 13-person student-led project developing physical tools for
-            stellarator research and communication.
+            A student-led project bringing together talent from DTU and KU to
+            develop physical tools for stellarator research and communication.
           </p>
           <p className="muted">
-            No DTU endorsement or institutional partnership is implied.
+            No DTU or KU endorsement or institutional partnership is implied.
           </p>
         </div>
         <nav aria-label="Footer">

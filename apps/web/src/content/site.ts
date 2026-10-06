@@ -5,7 +5,7 @@ export const contactHrefs = {
 } as const;
 
 export const homeHero = {
-  eyebrow: 'FOUNDED BY DTU STUDENTS · FUSION TECHNOLOGY · COPENHAGEN',
+  eyebrow: 'STUDENT-LED · DTU & KU TALENT · COPENHAGEN',
   headline: 'Stellarator research should be within reach.',
   supporting:
     'Aurora Confinement is developing compact experimental platforms designed to reduce the cost and infrastructure required for hands-on stellarator research, together with physical models that make the technology easier to communicate and teach.',
@@ -16,7 +16,7 @@ export const homeHero = {
 } as const;
 
 export const projectStatus =
-  'Aurora Confinement is a student-led initiative formed by 13 students at the Technical University of Denmark. The project is pre-incorporation and at an early stage of development.';
+  'Aurora Confinement is a student-led research initiative bringing together talent from DTU (Technical University of Denmark) and KU (University of Copenhagen). The project is pre-incorporation and at an early stage of development.';
 
 export const conceptCaption =
   'Concept illustration. Not the actual product or final design. The depicted magnetic-field configuration does not represent Aurora Confinement’s technology.';

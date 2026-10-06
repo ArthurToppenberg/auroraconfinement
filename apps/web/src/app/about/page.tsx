@@ -7,7 +7,7 @@ import { contactHrefs, projectStatus } from '@/content/site';
 export const metadata: Metadata = pageMetadata({
   title: 'About',
   description:
-    'Aurora Confinement is a 13-person student-led DTU initiative developing physical tools for stellarator research, communication, and teaching.',
+    'Aurora Confinement is a student-led research initiative bringing together talent from DTU and KU to develop physical tools for stellarator research, communication, and teaching.',
   path: '/about/',
 });
 
@@ -17,7 +17,7 @@ export default function Page() {
       <PageHero
         eyebrow="About"
         title="A multidisciplinary team focused on access."
-        intro="Aurora Confinement is a team of 13 DTU students working to make stellarator technology more accessible for communication, education, and experimental research."
+        intro="Aurora Confinement is a student-led research initiative bringing together talent from DTU (Technical University of Denmark) and KU (University of Copenhagen) to make stellarator technology more accessible for communication, education, and experimental research."
       />
 
       <section className="section">
@@ -58,11 +58,11 @@ export default function Page() {
           </div>
           <div className="fact-strip">
             <div>
-              <strong>13 students</strong>
-              <span>Multidisciplinary team</span>
+              <strong>Student-led</strong>
+              <span>Multidisciplinary project team</span>
             </div>
             <div>
-              <strong>DTU students</strong>
+              <strong>DTU and KU talent</strong>
               <span>No institutional endorsement implied</span>
             </div>
             <div>
@@ -80,8 +80,8 @@ export default function Page() {
           <p>
             {projectStatus} Both product directions are current priorities at
             different levels of technical maturity. No completed product,
-            customer relationship, formal institutional partnership, or
-            regulatory approval is claimed.
+            customer relationship, formal institutional partnership, DTU or KU
+            endorsement, or regulatory approval is claimed.
           </p>
           <Link className="button primary" href={contactHrefs.generalEnquiry}>
             Talk with the team

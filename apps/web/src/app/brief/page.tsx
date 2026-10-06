@@ -76,9 +76,10 @@ export default function Page() {
           <div>
             <h2>The team</h2>
             <p>
-              A multidisciplinary, student-led initiative formed by 13 students
-              at the Technical University of Denmark and based in Kongens
-              Lyngby. No DTU endorsement is implied.
+              A multidisciplinary, student-led research initiative bringing
+              together talent from DTU (Technical University of Denmark) and KU
+              (University of Copenhagen), based in the Copenhagen area. No DTU
+              or KU endorsement is implied.
             </p>
           </div>
         </section>
