@@ -4,6 +4,7 @@ import { pageMetadata } from '@/lib/metadata';
 import ProductFigure from '@/components/ProductFigure';
 import TechnicalIcon from '@/components/TechnicalIcon';
 import InterestDisclaimer from '@/components/InterestDisclaimer';
+import HeroHelicalField from '@/components/HeroHelicalField';
 import { contactHrefs, homeHero, projectStatus } from '@/content/site';
 
 export const metadata: Metadata = pageMetadata({
@@ -33,8 +34,7 @@ export default function Page() {
             <InterestDisclaimer />
           </div>
           <div className="hero-mark" aria-hidden="true">
-            <div className="orbit orbit-one"></div>
-            <div className="orbit orbit-two"></div>
+            <HeroHelicalField />
             <img
               src="/images/logo-symbol.png"
               alt=""

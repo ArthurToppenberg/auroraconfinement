@@ -1193,7 +1193,7 @@ p.interest-disclaimer {
   display: grid;
   min-height: calc(100svh - var(--header-height));
   align-items: center;
-  overflow: hidden;
+  overflow: visible;
   border-bottom: 1px solid var(--line);
 }
 
@@ -1213,6 +1213,7 @@ p.interest-disclaimer {
 .home-hero-grid {
   display: grid;
   gap: 1.5rem;
+  overflow: visible;
   padding-block: clamp(2rem, 7vh, 6rem);
 }
 
@@ -1240,7 +1241,8 @@ p.interest-disclaimer {
   right: -7rem;
   bottom: -6rem;
   width: min(22rem, 72vw);
-  opacity: 0.18;
+  overflow: visible;
+  opacity: 0.3;
   pointer-events: none;
 }
 
@@ -1258,21 +1260,45 @@ p.interest-disclaimer {
 }
 
 .hero-mark img {
+  position: relative;
+  z-index: 1;
+  display: block;
   width: 100%;
 }
 
-.orbit {
+.hero-helical-field {
   position: absolute;
-  inset: -8%;
-  border: 1px solid rgba(105, 245, 229, 0.4);
-  border-radius: 48% 52% 44% 56%;
-  transform: rotate(18deg);
+  top: 53%;
+  left: 50%;
+  z-index: 0;
+  width: 165%;
+  max-width: none;
+  height: 165%;
+  overflow: visible;
+  backface-visibility: hidden;
+  transform: translate(-50%, -50%);
 }
 
-.orbit-two {
-  inset: -18%;
-  border-color: rgba(181, 155, 255, 0.32);
-  transform: rotate(-22deg);
+.hero-helical-aura,
+.hero-helical-core {
+  fill: none;
+  stroke: url('#hero-helical-gradient');
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.hero-helical-aura {
+  stroke-width: 4.5;
+  opacity: 0.28;
+  filter: blur(2px);
+}
+
+.hero-helical-core {
+  stroke-width: 2;
+  opacity: 0.95;
+  filter: drop-shadow(0 0 10px rgba(45, 212, 191, 0.8));
+  will-change: filter, opacity;
 }
 
 .product-card {
