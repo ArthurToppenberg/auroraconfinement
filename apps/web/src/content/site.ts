@@ -29,4 +29,4 @@ export const siteOrigin = process.env['PUBLIC_SITE_URL']?.replace(/\/$/, '');
 export const socialImage = process.env['PUBLIC_SOCIAL_IMAGE'];
 
 export const contactEmail =
-  process.env['PUBLIC_CONTACT_EMAIL'] || 'auroraconfinement@gmail.com';
+  process.env['PUBLIC_CONTACT_EMAIL'] || 'contact@auroraconfinement.com';

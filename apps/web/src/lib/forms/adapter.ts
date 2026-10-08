@@ -16,7 +16,7 @@ export const submissionAdapter: SubmissionAdapter = {
     return {
       ok: false,
       message:
-        'We could not send your enquiry. Please try again later or email auroraconfinement@gmail.com.',
+        'We could not send your enquiry. Please try again later or email contact@auroraconfinement.com.',
     };
   },
 };

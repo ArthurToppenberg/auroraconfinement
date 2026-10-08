@@ -156,7 +156,7 @@ test('contact form provides accessible validation and an honest failure result',
   await page.getByRole('button', { name: 'Send enquiry' }).click();
   await expect(
     page.getByText(
-      'We could not send your enquiry. Please try again later or email auroraconfinement@gmail.com.',
+      'We could not send your enquiry. Please try again later or email contact@auroraconfinement.com.',
     ),
   ).toBeVisible();
 });
@@ -219,7 +219,7 @@ test('NFF form validates institutional interest without false storage success', 
 
   await expect(
     form.getByText(
-      'We could not send your enquiry. Please try again later or email auroraconfinement@gmail.com.',
+      'We could not send your enquiry. Please try again later or email contact@auroraconfinement.com.',
     ),
   ).toBeVisible();
   await expect(
