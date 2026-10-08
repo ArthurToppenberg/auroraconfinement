@@ -96,11 +96,7 @@ export default function HeroHelicalField() {
   }, []);
 
   return (
-    <svg
-      className="hero-helical-field"
-      viewBox="0 0 480 480"
-      focusable="false"
-    >
+    <svg className="hero-helical-field" viewBox="0 0 480 480" focusable="false">
       <defs>
         <linearGradient
           id="hero-helical-gradient"

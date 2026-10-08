@@ -26,7 +26,7 @@ pnpm dev
 
 Open `http://localhost:4321` in a browser. Stop the server with `Ctrl+C`.
 
-`pnpm build` exports the site to `apps/web/dist`; `pnpm preview` serves that output (with the security headers applied) on the same port. `pnpm test:browser` runs against the preview server, so build first.
+`pnpm build` writes the Next.js build to `apps/web/dist`; `pnpm preview` runs `next start` on the same port. `pnpm test:browser` runs against the preview server, so build first. `/admin` is server-rendered per request and needs `ADMIN_KODE` and `DATABASE_URL` in the environment (`pnpm dev` and `pnpm preview` read neither from the repo-root `.env` unless you export them, e.g. `node --env-file=../../.env`).
 
 ## Run checks
 

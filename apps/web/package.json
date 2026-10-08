@@ -6,13 +6,14 @@
   "scripts": {
     "dev": "next dev --port 4321",
     "build": "next build && node ./scripts/write-csp-hashes.mjs",
-    "preview": "node ./scripts/serve-static.mjs dist",
+    "preview": "next start --port 4321",
     "check": "tsc --noEmit",
-    "test": "node --test src/lib/forms/validation.test.ts",
+    "test": "node --test src/lib/forms/validation.test.ts src/lib/forms/handler.test.ts",
     "test:browser": "playwright test",
     "clean": "rm -rf .next dist .turbo node_modules"
   },
   "dependencies": {
+    "@aurora/db": "workspace:^",
     "marked": "18.0.14",
     "next": "catalog:",
     "react": "catalog:",

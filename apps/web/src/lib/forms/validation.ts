@@ -10,6 +10,15 @@ export const interestAreas = [
 
 export type InterestArea = (typeof interestAreas)[number];
 
+/** The "Area of interest" options on /nff. */
+export const nffInterestAreas = [
+  'exhibition-model',
+  'research-platform',
+  'pilot-demonstration',
+  'research-collaboration',
+  'investment-partnership',
+] as const satisfies readonly InterestArea[];
+
 export const submissionTypes = [
   'product-interest',
   'collaboration',
@@ -119,6 +128,8 @@ export function validateSubmission(data: InterestSubmission): FieldErrors {
     if (!data.intendedApplication)
       errors.intendedApplication = 'Describe the intended application.';
     if (!data.timeframe) errors.timeframe = 'Choose an approximate timeframe.';
+    if (data.interest && !allowed(data.interest, nffInterestAreas))
+      errors.interest = 'Choose an area of interest.';
   } else if (data.submissionType === 'product-interest') {
     if (!data.organisation) errors.organisation = 'Enter your organisation.';
     if (!data.role) errors.role = 'Enter your role.';
@@ -156,4 +167,28 @@ export function validateSubmission(data: InterestSubmission): FieldErrors {
 
 export function isSpam(data: InterestSubmission): boolean {
   return data.website.length > 0;
+}
+
+/** One endpoint per form: /api/forms/<key>/ (keys match the database tables). */
+export const formEndpoints = {
+  'contact-product-interest': '/api/forms/contact-product-interest/',
+  'contact-collaboration': '/api/forms/contact-collaboration/',
+  'contact-general-enquiry': '/api/forms/contact-general-enquiry/',
+  'nff-interest': '/api/forms/nff-interest/',
+} as const;
+
+export type FormKey = keyof typeof formEndpoints;
+
+export function formKeyFor(data: InterestSubmission): FormKey | null {
+  if (data.source === 'nordic-fusion-forum-2026') return 'nff-interest';
+  switch (data.submissionType) {
+    case 'product-interest':
+      return 'contact-product-interest';
+    case 'collaboration':
+      return 'contact-collaboration';
+    case 'general-enquiry':
+      return 'contact-general-enquiry';
+    default:
+      return null;
+  }
 }

@@ -5,3 +5,4 @@ dist/
 next-env.d.ts
 *.png
 pnpm-lock.yaml
+packages/db/src/generated

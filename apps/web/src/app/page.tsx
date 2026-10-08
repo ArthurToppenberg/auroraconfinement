@@ -133,10 +133,7 @@ export default function Page() {
                   >
                     Register your interest
                   </Link>
-                  <Link
-                    className="button home-card-secondary"
-                    href="/products"
-                  >
+                  <Link className="button home-card-secondary" href="/products">
                     Explore product <span aria-hidden="true">→</span>
                   </Link>
                 </div>
@@ -181,10 +178,7 @@ export default function Page() {
                   >
                     Register your interest
                   </Link>
-                  <Link
-                    className="button home-card-secondary"
-                    href="/products"
-                  >
+                  <Link className="button home-card-secondary" href="/products">
                     Explore product <span aria-hidden="true">→</span>
                   </Link>
                 </div>

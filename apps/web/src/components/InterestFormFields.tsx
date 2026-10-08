@@ -157,6 +157,16 @@ export default function InterestFormFields({
     setStatus(null);
   }
 
+  function focusFirstInvalid(form: HTMLFormElement, found: FieldErrors) {
+    const firstInvalid = Array.from(
+      form.querySelectorAll<HTMLElement>('[data-error-for]'),
+    )
+      .map((element) => element.dataset['errorFor'] as keyof FieldErrors)
+      .find((field) => found[field]);
+    const control = firstInvalid && form.elements.namedItem(firstInvalid);
+    if (control instanceof HTMLElement) control.focus();
+  }
+
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (submitting.current) return;
@@ -172,13 +182,7 @@ export default function InterestFormFields({
         state: 'error',
         message: 'Please correct the highlighted fields.',
       });
-      const firstInvalid = Array.from(
-        form.querySelectorAll<HTMLElement>('[data-error-for]'),
-      )
-        .map((element) => element.dataset['errorFor'] as keyof FieldErrors)
-        .find((field) => found[field]);
-      const control = firstInvalid && form.elements.namedItem(firstInvalid);
-      if (control instanceof HTMLElement) control.focus();
+      focusFirstInvalid(form, found);
       return;
     }
 
@@ -189,6 +193,7 @@ export default function InterestFormFields({
 
     submitting.current = true;
     setBusy(true);
+    let serverErrors: FieldErrors | undefined;
     try {
       const result = await submissionAdapter.submit(data);
       setStatus({
@@ -198,6 +203,20 @@ export default function InterestFormFields({
             ? institutionalInterestSuccessMessage
             : result.message,
       });
+      if (result.ok) {
+        // Clear typed values; the hidden source/type inputs keep their values.
+        form
+          .querySelectorAll<
+            HTMLInputElement | HTMLTextAreaElement
+          >('input:not([type="hidden"]):not([type="radio"]), textarea')
+          .forEach((control) => (control.value = ''));
+        form
+          .querySelectorAll<HTMLSelectElement>('select')
+          .forEach((control) => (control.value = ''));
+      } else if (result.errors && Object.keys(result.errors).length > 0) {
+        serverErrors = result.errors;
+        setErrors(result.errors);
+      }
     } catch {
       setStatus({
         state: 'error',
@@ -206,7 +225,8 @@ export default function InterestFormFields({
     } finally {
       submitting.current = false;
       setBusy(false);
-      statusRef.current?.focus();
+      if (serverErrors) focusFirstInvalid(form, serverErrors);
+      else statusRef.current?.focus();
     }
   }
 

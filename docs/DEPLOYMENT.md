@@ -30,15 +30,19 @@ Copy `apps/web/.env.example` to an untracked `apps/web/.env` only for local test
 
 Never store delivery credentials in a `PUBLIC_` variable. Client components cannot read these variables; pass values from a server component as props. A future server adapter must read secrets only from the host's secret store.
 
-The `apps/web/public/_headers` file documents the intended restrictive headers. Confirm that the chosen host applies them; file-based header syntax is provider-dependent.
+Security headers: static ones are set in `apps/web/next.config.mjs`; the Content-Security-Policy is set per request by `apps/web/src/proxy.ts`.
 
-Next.js inlines small scripts into every exported page. `pnpm build` therefore rewrites `dist/_headers` so `script-src` also lists the SHA-256 hash of each inline script (`apps/web/scripts/write-csp-hashes.mjs`). The container serves the generated `dist/_headers` automatically (`scripts/serve-static.mjs`), not `public/_headers`; hashes change whenever the build output changes. If the host cannot serve file-based headers, the same CSP must be configured there with the hashes from the generated file.
+Prerendered pages inline small scripts, and the CSP forbids `'unsafe-inline'`. `pnpm build` therefore writes the SHA-256 hash of each one to `dist/csp-hashes.json` (`apps/web/scripts/write-csp-hashes.mjs`), which `src/proxy.ts` reads at runtime. `/admin` is rendered per request and uses a per-request nonce instead. Hashes change whenever the build output changes, so always deploy `dist/` as built.
+
+## Admin page
+
+`/admin` is server-rendered on every request: it verifies a signed session cookie, then reads aggregate form counts through `@aurora/db` (Prisma). The container needs runtime environment variables `ADMIN_KODE` (the password; if unset, nobody can sign in) and `DATABASE_URL`, set in `~/apps/aurora/.env` and passed through `docker-compose.yml`. Apply table changes with `pnpm --filter @aurora/db db:migrate`.
 
 ## Release procedure
 
 1. Install the pinned dependencies with `pnpm install --frozen-lockfile`.
 2. Run `pnpm format:check`, `pnpm check`, `pnpm test`, and `pnpm build`.
-3. Preview `apps/web/dist` with `pnpm preview` (a small local static server that applies the headers in `dist/_headers`) and repeat browser, keyboard, reduced-motion, accessibility, link, and external-request checks.
+3. Preview the build with `pnpm preview` (`next start`, which applies the headers and CSP) and repeat browser, keyboard, reduced-motion, accessibility, link, and external-request checks.
 4. Test `/nff` and its QR code on multiple real phones.
 5. Verify the production environment values and headers.
 6. Merge to `main`; the pipeline above publishes the build.

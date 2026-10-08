@@ -1,5 +1,6 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
+import type { Page } from '@playwright/test';
 
 const routes = [
   '/',
@@ -9,6 +10,24 @@ const routes = [
   '/nff/',
   '/privacy/',
 ] as const;
+
+// Form endpoints write to the real database, so browser tests always intercept them.
+async function stubFormEndpoint(
+  page: Page,
+  form: string,
+  response: { status: number; body?: object },
+) {
+  const requests: URLSearchParams[] = [];
+  await page.route(`**/api/forms/${form}/`, async (route) => {
+    requests.push(new URLSearchParams(route.request().postData() ?? ''));
+    await route.fulfill({
+      status: response.status,
+      contentType: 'application/json',
+      body: JSON.stringify(response.body ?? {}),
+    });
+  });
+  return requests;
+}
 
 const viewports = [
   { width: 320, height: 568 },
@@ -136,6 +155,9 @@ test('Miguel audio plays only while M, I, and G are held', async ({ page }) => {
 test('contact form provides accessible validation and an honest failure result', async ({
   page,
 }) => {
+  const requests = await stubFormEndpoint(page, 'contact-collaboration', {
+    status: 500,
+  });
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/contact/');
   await page.getByRole('button', { name: 'Register your interest' }).click();
@@ -159,6 +181,8 @@ test('contact form provides accessible validation and an honest failure result',
       'We could not send your enquiry. Please try again later or email contact@auroraconfinement.com.',
     ),
   ).toBeVisible();
+  expect(requests).toHaveLength(1);
+  expect(requests[0]?.get('interest')).toBe('research-collaboration');
 });
 
 test('contact enquiry types remain distinct', async ({ page }) => {
@@ -191,6 +215,7 @@ test('contact enquiry types remain distinct', async ({ page }) => {
 test('NFF form validates institutional interest without false storage success', async ({
   page,
 }) => {
+  await stubFormEndpoint(page, 'nff-interest', { status: 500 });
   await page.goto('/nff/');
   const form = page.locator('[data-interest-form]');
   await expect(form.locator('input[name="source"]')).toHaveValue(
@@ -225,6 +250,56 @@ test('NFF form validates institutional interest without false storage success', 
   await expect(
     form.getByText('Thank you. We have recorded your interest'),
   ).toHaveCount(0);
+});
+
+test('a stored submission shows success and clears the form', async ({
+  page,
+}) => {
+  const requests = await stubFormEndpoint(page, 'contact-general-enquiry', {
+    status: 200,
+    body: { ok: true, message: 'Thank you. We have received your message.' },
+  });
+  await page.goto('/contact/');
+  const form = page.locator('[data-interest-form]');
+  await form.getByLabel('Send a general enquiry').check();
+  await form.getByLabel('Name (required)').fill('Test Researcher');
+  await form.getByLabel('Work email (required)').fill('researcher@example.org');
+  await form
+    .getByLabel('What would you like to discuss?')
+    .fill('A question about the initiative.');
+  await form.getByRole('button', { name: 'Send enquiry' }).click();
+
+  await expect(
+    form.getByText('Thank you. We have received your message.'),
+  ).toBeVisible();
+  await expect(form.getByLabel('Name (required)')).toHaveValue('');
+  expect(requests[0]?.get('submissionType')).toBe('general-enquiry');
+});
+
+test('server field errors are shown on the matching field', async ({
+  page,
+}) => {
+  await stubFormEndpoint(page, 'contact-general-enquiry', {
+    status: 422,
+    body: {
+      ok: false,
+      message: 'Please correct the highlighted fields.',
+      errors: { email: 'Enter a valid email address.' },
+    },
+  });
+  await page.goto('/contact/');
+  const form = page.locator('[data-interest-form]');
+  await form.getByLabel('Send a general enquiry').check();
+  await form.getByLabel('Name (required)').fill('Test Researcher');
+  await form.getByLabel('Work email (required)').fill('researcher@example.org');
+  await form
+    .getByLabel('What would you like to discuss?')
+    .fill('A question about the initiative.');
+  await form.getByRole('button', { name: 'Send enquiry' }).click();
+
+  const email = form.getByLabel('Work email (required)');
+  await expect(email).toHaveAttribute('aria-invalid', 'true');
+  await expect(email).toBeFocused();
 });
 
 test('contact CTAs preserve and apply their intent context', async ({

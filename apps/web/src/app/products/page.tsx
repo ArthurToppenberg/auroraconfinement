@@ -147,7 +147,9 @@ export default function Page() {
                 </li>
                 <li>
                   <TechnicalIcon name="experiment" />
-                  <span>Fast-turnaround testbed for diagnostic development</span>
+                  <span>
+                    Fast-turnaround testbed for diagnostic development
+                  </span>
                 </li>
                 <li>
                   <TechnicalIcon name="education" />

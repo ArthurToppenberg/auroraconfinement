@@ -1,0 +1,25 @@
+{
+  "name": "@aurora/db",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "generate": "prisma generate",
+    "check": "prisma generate && tsc --noEmit",
+    "db:test": "node --env-file=../../.env scripts/test-connection.ts",
+    "db:migrate": "prisma migrate dev",
+    "clean": "rm -rf .turbo node_modules src/generated"
+  },
+  "devDependencies": {
+    "@types/node": "26.6.4",
+    "prisma": "7.10.0",
+    "typescript": "5.9.2"
+  },
+  "dependencies": {
+    "@prisma/adapter-pg": "7.10.0",
+    "@prisma/client": "7.10.0"
+  }
+}

@@ -1,0 +1,102 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// Enum values map to the strings used by the site's form markup.
+// The honeypot field ("website") is never stored. Expressions of interest are non-binding.
+
+/// "Product of interest" select on /contact.
+enum ContactProductArea {
+  EXHIBITION_MODEL        @map("exhibition-model")
+  RESEARCH_PLATFORM       @map("research-platform")
+  BOTH_PRODUCT_DIRECTIONS @map("both-product-directions")
+}
+
+/// "Area of interest" select on /nff.
+enum NffInterestArea {
+  EXHIBITION_MODEL       @map("exhibition-model")
+  RESEARCH_PLATFORM      @map("research-platform")
+  PILOT_DEMONSTRATION    @map("pilot-demonstration")
+  RESEARCH_COLLABORATION @map("research-collaboration")
+  INVESTMENT_PARTNERSHIP @map("investment-partnership")
+}
+
+/// "Collaboration area" select on /contact.
+enum CollaborationArea {
+  RESEARCH_COLLABORATION @map("research-collaboration")
+  INVESTMENT_PARTNERSHIP @map("investment-partnership")
+}
+
+/// "Approximate timeframe" select, shared by all forms.
+enum InterestTimeframe {
+  AS_SOON_AS_AVAILABLE @map("as-soon-as-available")
+  WITHIN_12_MONTHS     @map("within-12-months")
+  WITHIN_1_TO_3_YEARS  @map("within-1-to-3-years")
+  EXPLORING_FUTURE     @map("exploring-future")
+}
+
+/// /contact, "Register product interest" (submissionType=product-interest).
+model ContactProductInterest {
+  id                  String             @id @default(cuid())
+  createdAt           DateTime           @default(now())
+  name                String             @db.VarChar(100)
+  email               String             @db.VarChar(254)
+  organisation        String             @db.VarChar(160)
+  role                String             @db.VarChar(120)
+  interest            ContactProductArea
+  intendedApplication String             @db.VarChar(600)
+  timeframe           InterestTimeframe
+  message             String?            @db.VarChar(1500)
+
+  @@index([createdAt])
+  @@index([email])
+}
+
+/// /contact, "Discuss a collaboration" (submissionType=collaboration).
+model ContactCollaboration {
+  id           String            @id @default(cuid())
+  createdAt    DateTime          @default(now())
+  name         String            @db.VarChar(100)
+  email        String            @db.VarChar(254)
+  organisation String?           @db.VarChar(160)
+  role         String?           @db.VarChar(120)
+  interest     CollaborationArea
+  message      String            @db.VarChar(1500)
+
+  @@index([createdAt])
+  @@index([email])
+}
+
+/// /contact, "Send a general enquiry" (submissionType=general-enquiry).
+model ContactGeneralEnquiry {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  name      String   @db.VarChar(100)
+  email     String   @db.VarChar(254)
+  message   String   @db.VarChar(1500)
+
+  @@index([createdAt])
+  @@index([email])
+}
+
+/// /nff, Nordic Fusion Forum 2026 (source=nordic-fusion-forum-2026).
+model NffInterest {
+  id                  String            @id @default(cuid())
+  createdAt           DateTime          @default(now())
+  name                String            @db.VarChar(100)
+  email               String            @db.VarChar(254)
+  organisation        String            @db.VarChar(160)
+  role                String            @db.VarChar(120)
+  interest            NffInterestArea
+  intendedApplication String            @db.VarChar(600)
+  timeframe           InterestTimeframe
+  message             String?           @db.VarChar(1500)
+
+  @@index([createdAt])
+  @@index([email])
+}

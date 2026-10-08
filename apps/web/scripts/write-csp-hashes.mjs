@@ -1,13 +1,13 @@
-// Next.js static export inlines small scripts (React bootstrap and flight
-// payloads) into every page. The site's CSP forbids 'unsafe-inline', so after
-// the build we allow exactly those scripts by SHA-256 hash in dist/_headers.
+// Prerendered pages inline small scripts (React bootstrap and flight payloads).
+// The site's CSP forbids 'unsafe-inline', so after the build we list exactly
+// those scripts by SHA-256 hash in dist/csp-hashes.json, which src/proxy.ts
+// reads at runtime. Per-request pages (/admin) use a nonce instead.
 import { createHash } from 'node:crypto';
 import { readdir, readFile, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 
 const root = 'dist';
-const headersFile = join(root, '_headers');
-const directive = "script-src 'self'";
+const pages = join(root, 'server', 'app');
 
 async function* htmlFiles(directory) {
   for (const entry of await readdir(directory, { withFileTypes: true })) {
@@ -19,7 +19,7 @@ async function* htmlFiles(directory) {
 
 const hashes = new Set();
 const inlineScript = /<script(?![^>]*\ssrc=)[^>]*>([\s\S]*?)<\/script>/g;
-for await (const file of htmlFiles(root)) {
+for await (const file of htmlFiles(pages)) {
   for (const [, source] of (await readFile(file, 'utf8')).matchAll(
     inlineScript,
   )) {
@@ -30,11 +30,6 @@ for await (const file of htmlFiles(root)) {
   }
 }
 
-const headers = await readFile(headersFile, 'utf8');
-if (!headers.includes(directive))
-  throw new Error(`${headersFile} has no "${directive}" directive to extend`);
-await writeFile(
-  headersFile,
-  headers.replace(directive, `${directive} ${[...hashes].sort().join(' ')}`),
-);
-console.log(`Allowed ${hashes.size} inline scripts by hash in ${headersFile}`);
+const file = join(root, 'csp-hashes.json');
+await writeFile(file, JSON.stringify([...hashes].sort()));
+console.log(`Allowed ${hashes.size} inline scripts by hash in ${file}`);
