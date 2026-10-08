@@ -2086,6 +2086,10 @@ body:has(.admin-page)::before {
   display: none;
 }
 
+body:has(.admin-page) .site-footer {
+  background: transparent;
+}
+
 .admin-page .button {
   min-height: 2.25rem;
   padding: 0.4rem 0.9rem;
