@@ -1306,6 +1306,10 @@ p.interest-disclaimer {
   flex-direction: column;
 }
 
+.home-product-content {
+  min-height: clamp(25.5rem, calc(74rem - 200vw), 34rem);
+}
+
 .home-section-heading {
   max-width: 46rem;
   margin-bottom: clamp(1.75rem, 6vw, 3rem);
@@ -1451,6 +1455,10 @@ p.interest-disclaimer {
 }
 
 @media (min-width: 40rem) {
+  .home-product-content {
+    min-height: clamp(35rem, calc(68rem - 75vw), 38rem);
+  }
+
   .barrier-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
@@ -1488,9 +1496,15 @@ p.interest-disclaimer {
   }
 }
 
+@media (min-width: 44rem) {
+  .home-product-content {
+    min-height: clamp(29.25rem, calc(98.25rem - 143.75vw), 35rem);
+  }
+}
+
 @media (min-width: 48rem) {
   .home-product-content {
-    min-height: 21rem;
+    min-height: 29.25rem;
   }
 
   .home-card-actions {
@@ -1500,7 +1514,7 @@ p.interest-disclaimer {
 
 @media (min-width: 60rem) {
   .home-product-content {
-    min-height: 18rem;
+    min-height: clamp(20rem, calc(30.5rem - 11.5vw), 23.5rem);
   }
 
   .home-hero-grid {

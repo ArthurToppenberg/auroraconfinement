@@ -9,7 +9,7 @@ import { contactHrefs } from '@/content/site';
 export const metadata: Metadata = pageMetadata({
   title: 'Products',
   description:
-    'Tabletop stellarator models for exhibition and communication, and compact experimental stellarator platforms for more accessible hands-on research.',
+    'Exhibition stellarator models for communication and teaching, and compact experimental stellarator platforms for more accessible hands-on research.',
   path: '/products/',
 });
 
@@ -23,9 +23,10 @@ export default function Page() {
             Physical tools for communicating and researching stellarators.
           </h1>
           <p>
-            We are developing two active product directions: tabletop models
-            that make stellarator technology tangible, and experimental
-            platforms designed to lower the barriers to hands-on research.
+            We are developing two active product directions: exhibition
+            stellarator models that make the technology tangible, and
+            experimental platforms designed to lower the barriers to hands-on
+            research.
           </p>
         </div>
       </section>
@@ -35,10 +36,12 @@ export default function Page() {
           <header className="product-heading">
             <p className="eyebrow">01 / EXHIBITION AND COMMUNICATION</p>
             <span className="status-label">CURRENT FOCUS · IN DEVELOPMENT</span>
-            <h2>Tabletop stellarator models</h2>
+            <h2>Exhibition stellarator models</h2>
             <p className="product-value">
-              Compact physical models engineered to make complex magnetic field
-              geometry clear, tangible, and visually compelling.
+              Compact, active models use real plasma to bring stellarator
+              principles to life. In a format that fits on a regular table, they
+              make plasma shaping and magnetic fields intuitive for investors,
+              partners, and university educators.
             </p>
           </header>
           <div className="product-visual">
@@ -67,11 +70,14 @@ export default function Page() {
               <ul className="icon-list">
                 <li>
                   <TechnicalIcon name="visibility" />
-                  <span>High-impact display anchor for events</span>
+                  <span>Intuitive visualization of stellarator mechanics</span>
                 </li>
                 <li>
                   <TechnicalIcon name="model" />
-                  <span>Intuitive physical demonstration of 3D geometry</span>
+                  <span>
+                    Accessible plasma demonstrations that fit on a regular desk
+                    or table.
+                  </span>
                 </li>
                 <li>
                   <TechnicalIcon name="collaboration" />
@@ -82,7 +88,8 @@ export default function Page() {
               </ul>
             </div>
             <p className="product-clarification">
-              Purpose: communication and teaching, not experimental research
+              Purpose: intuitive communication, university teaching, and
+              stakeholder demonstrations, not advanced experimental research.
             </p>
             <div className="product-interest-actions">
               <div className="product-card-actions">

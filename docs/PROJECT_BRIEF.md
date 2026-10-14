@@ -53,9 +53,9 @@ This wording is provisional and should remain easy to edit.
 
 ## Product directions
 
-### Tabletop exhibition models
+### Exhibition stellarator models
 
-Physical stellarator models intended for uses such as:
+Exhibition stellarator models intended for uses such as:
 
 - University teaching and outreach.
 - Fusion conferences and exhibitions.
@@ -144,7 +144,7 @@ Do not use **Buy now** unless a genuine product can be ordered and fulfilled und
 ### Technology
 
 - Explain stellarators in accessible language.
-- Present the tabletop and research-platform tracks separately.
+- Present the exhibition-model and research-platform tracks separately.
 - Describe intended use cases and development stage.
 - Provide enough scientific substance to establish credibility without publishing confidential or patent-sensitive details.
 - Invite researchers and industry specialists to discuss requirements.
@@ -278,7 +278,7 @@ The dark lettering in `logowithtext.png` may have insufficient contrast on dark 
 
 The initial website may use these generated concept sketches:
 
-- `assets/images/tabletop-stellarator-concept.png` — tabletop exhibition model with a deliberately visible purple plasma volume for educational communication.
+- `assets/images/tabletop-stellarator-concept.png` — concept for the exhibition stellarator models with a deliberately visible purple plasma volume for educational communication.
 - `assets/images/research-stellarator-concept.png` — research-scale platform with the plasma fully hidden inside an opaque vessel/shell.
 
 Use them on the Home and Technology pages beside their respective product descriptions. Present them as conceptual illustrations, not photographs, engineering drawings, final product designs, representations of the actual magnetic-field geometry, or representations of achieved technical performance.
@@ -289,7 +289,7 @@ Show this exact visible caption directly beneath **each** illustration wherever 
 
 Suggested alternative text:
 
-- Tabletop image: `Concept illustration of a tabletop stellarator exhibition model with visible plasma geometry.`
+- Exhibition-model image: `Concept illustration representing the exhibition stellarator models, with visible plasma geometry.`
 - Research image: `Concept illustration of a research-scale stellarator platform with an enclosed plasma vessel.`
 
 Do not derive technical dimensions, magnetic-field geometry, component claims, performance claims, or construction details from these generated images. Replace or revise them when approved CAD or product imagery becomes available.

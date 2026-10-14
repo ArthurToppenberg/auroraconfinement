@@ -151,7 +151,7 @@ export default function Page() {
                 <ProductIcon name="visibility" />
                 <p className="eyebrow">EXHIBITION AND COMMUNICATION</p>
               </div>
-              <h3>Tabletop stellarator models</h3>
+              <h3>Exhibition stellarator models</h3>
               <p className="nff-card-intro">
                 Physical models that make complex stellarator technology easier
                 to see and explain.

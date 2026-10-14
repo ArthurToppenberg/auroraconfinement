@@ -36,7 +36,7 @@ export default function Page() {
         </section>
         <section className="brief-grid">
           <div>
-            <h2>Tabletop stellarator models</h2>
+            <h2>Exhibition stellarator models</h2>
             <p>
               <strong>Current focus, in development.</strong> Physical models
               designed for fusion companies, research institutions, and

@@ -428,7 +428,7 @@ export default function InterestFormFields({
                 <select {...props} required defaultValue="">
                   <option value="">Choose one</option>
                   <option value="exhibition-model">
-                    Tabletop exhibition model
+                    Exhibition stellarator models
                   </option>
                   <option value="research-platform">
                     Experimental research platform
@@ -482,7 +482,7 @@ export default function InterestFormFields({
                     <select {...props} required defaultValue="">
                       <option value="">Choose one</option>
                       <option value="exhibition-model">
-                        Tabletop exhibition model
+                        Exhibition stellarator models
                       </option>
                       <option value="research-platform">
                         Experimental stellarator platform

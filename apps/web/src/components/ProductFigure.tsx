@@ -13,7 +13,7 @@ const intrinsicSize = 1254;
 
 const alts = {
   tabletop:
-    'Concept illustration of a tabletop stellarator exhibition model with visible plasma geometry.',
+    'Concept illustration representing the exhibition stellarator models, with visible plasma geometry.',
   research:
     'Concept illustration of an experimental stellarator research platform with an enclosed plasma vessel.',
 } as const;

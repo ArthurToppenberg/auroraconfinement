@@ -6,7 +6,7 @@ publishedDate: 2026-10-03
 
 Aurora Confinement is a student-led research initiative bringing together talent from DTU (Technical University of Denmark) and KU (University of Copenhagen). We are developing physical tools that make stellarator technology more tangible and accessible.
 
-Our work currently follows two active directions: tabletop stellarator models for exhibitions, visitor facilities, public engagement, and introductory lectures; and compact experimental platforms for universities, startups, and research teams seeking more accessible hands-on stellarator research.
+Our work currently follows two active directions: exhibition stellarator models for visitor facilities, public engagement, and introductory lectures; and compact experimental platforms for universities, startups, and research teams seeking more accessible hands-on stellarator research.
 
 The initiative is in formation, pre-incorporation, and pre-funding. Participation by students from DTU and KU does not imply endorsement or an institutional partnership with either university. Both product directions are current priorities, although the experimental platform is at an earlier stage of technical maturity. We are speaking with fusion companies, research institutions, universities, and other organisations to understand where these physical tools could be most useful.
 

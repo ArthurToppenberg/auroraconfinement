@@ -18,7 +18,7 @@ export default function Page() {
       <PageHero
         eyebrow="Technology"
         title="Physical tools for stellarator communication and research."
-        intro="We are developing tabletop models for exhibition and communication, alongside experimental platforms for hands-on stellarator research and advanced teaching."
+        intro="We are developing exhibition stellarator models for communication and teaching, alongside experimental platforms for hands-on research and advanced teaching."
       />
 
       <section className="section">
@@ -51,7 +51,7 @@ export default function Page() {
           <div className="split-copy">
             <span className="status-label">Current focus · In development</span>
             <p className="eyebrow">Direction 01</p>
-            <h2>Tabletop stellarator models</h2>
+            <h2>Exhibition stellarator models</h2>
             <p>
               Physical models designed to help fusion companies, research
               institutions, and universities communicate stellarator technology

@@ -6,7 +6,7 @@ import TechnicalIcon from '@/components/TechnicalIcon';
 export const metadata: Metadata = pageMetadata({
   title: 'Contact',
   description:
-    "Register non-binding interest in Aurora Confinement's tabletop models, experimental research platforms, or potential collaboration.",
+    "Register non-binding interest in Aurora Confinement's exhibition stellarator models, experimental research platforms, or potential collaboration.",
   path: '/contact/',
 });
 
@@ -24,7 +24,7 @@ export default function Page() {
           <div className="contact-categories" aria-label="Conversation topics">
             <div>
               <TechnicalIcon name="model" />
-              <span>Tabletop exhibition models</span>
+              <span>Exhibition stellarator models</span>
             </div>
             <div>
               <TechnicalIcon name="experiment" />
