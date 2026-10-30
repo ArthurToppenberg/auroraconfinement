@@ -78,7 +78,7 @@ export default function Page() {
             </article>
             <article className="card nff-product-card">
               <p className="status-label">Exhibition and communication</p>
-              <h3>Tabletop stellarator models</h3>
+              <h3>Exhibition stellarator models</h3>
               <p className="nff-card-intro">
                 Physical models that make complex stellarator technology easier
                 to see and explain.
@@ -113,7 +113,10 @@ export default function Page() {
         </div>
       </section>
 
-      <section className="section field-deep" aria-labelledby="nff-photos-title">
+      <section
+        className="section field-deep"
+        aria-labelledby="nff-photos-title"
+      >
         <div className="shell">
           <div className="section-heading">
             <h2 id="nff-photos-title">From the forum.</h2>

@@ -75,10 +75,9 @@ export default function Page() {
           <div className="split-copy">
             <h2>Communicate with tangible models.</h2>
             <p>
-              We are developing tabletop stellarator models for exhibitions,
-              visitor facilities, public engagement, and technical
-              communication. They can also serve as visual aids in introductory
-              university lectures.
+              We are developing exhibition stellarator models for visitor
+              facilities, public engagement, and technical communication. They
+              can also serve as visual aids in introductory university lectures.
             </p>
           </div>
           <div className="split-copy">

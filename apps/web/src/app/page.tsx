@@ -11,7 +11,7 @@ import { contactHrefs, homeHero, projectStatus } from '@/content/site';
 export const metadata: Metadata = pageMetadata({
   title: 'Aurora Confinement',
   description:
-    'Aurora Confinement is developing compact experimental stellarator platforms for more accessible hands-on research, together with tabletop models for communication and teaching.',
+    'Aurora Confinement is developing compact experimental stellarator platforms for more accessible hands-on research, together with exhibition stellarator models for communication and teaching.',
   path: '/',
 });
 
@@ -81,21 +81,24 @@ export default function Page() {
           <div className="product-grid">
             <article className="card home-product-card">
               <div className="home-product-content">
-                <h3>Tabletop stellarator models</h3>
+                <h3>Exhibition stellarator models</h3>
                 <span className="status-label">
                   Current focus: in development
                 </span>
                 <ul className="home-feature-list">
                   <li>
-                    <strong>Tangible &amp; visible</strong>
+                    <strong>Real working principles</strong>
                     <span>
-                      Makes complex 3D geometry physical and intuitive.
+                      Features real plasma to intuitively visualize how a
+                      stellarator works in a model that fits on a regular table.
                     </span>
                   </li>
                   <li>
-                    <strong>Education &amp; outreach</strong>
+                    <strong>Communication &amp; teaching</strong>
                     <span>
-                      Built for exhibitions, conferences and lectures.
+                      Integrated electrical diagnostics make complex physics
+                      easy to grasp for investor demonstrations and university
+                      teaching.
                     </span>
                   </li>
                 </ul>

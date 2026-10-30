@@ -5,7 +5,7 @@ import InterestForm from '@/components/InterestForm';
 export const metadata: Metadata = pageMetadata({
   title: 'Contact',
   description:
-    "Register non-binding interest in Aurora Confinement's tabletop models, experimental research platforms, or potential collaboration.",
+    "Register non-binding interest in Aurora Confinement's exhibition stellarator models, experimental research platforms, or potential collaboration.",
   path: '/contact/',
 });
 
@@ -21,7 +21,7 @@ export default function Page() {
           </p>
           <div className="contact-categories" aria-label="Conversation topics">
             <div>
-              <span>Tabletop exhibition models</span>
+              <span>Exhibition stellarator models</span>
             </div>
             <div>
               <span>Experimental research platforms</span>

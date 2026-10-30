@@ -18,7 +18,7 @@ export default function Page() {
       <PageHero
         field="deep"
         title="Physical tools for stellarators."
-        intro="We are developing tabletop models for exhibition and communication, alongside experimental platforms for hands-on stellarator research and advanced teaching."
+        intro="We are developing exhibition stellarator models for communication and teaching, alongside experimental platforms for hands-on research and advanced teaching."
       />
 
       <section className="section field-night">
@@ -46,7 +46,7 @@ export default function Page() {
         <div className="shell split-section">
           <ProductFigure kind="tabletop" eager />
           <div className="split-copy">
-            <h2>Tabletop stellarator models</h2>
+            <h2>Exhibition stellarator models</h2>
             <span className="status-label">Current focus: in development</span>
             <p>
               Physical models designed to help fusion companies, research

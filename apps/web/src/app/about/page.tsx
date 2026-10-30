@@ -51,8 +51,8 @@ export default function Page() {
               to reduce those barriers.
             </p>
             <p>
-              Alongside this research direction, the team is developing tabletop
-              models for exhibition and communication, with introductory
+              Alongside this research direction, the team is developing
+              exhibition stellarator models for communication, with introductory
               teaching as an additional application.
             </p>
           </div>
