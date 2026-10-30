@@ -18,6 +18,14 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className="no-js">
+      <head>
+        <script
+          defer
+          src="https://stats.arthurtoppenberg.dk/script.js"
+          data-website-id="3ce6d2f4-48f9-4a70-89a2-ef126efebad2"
+          data-domains="auroraconfinement.com"
+        />
+      </head>
       <body itemScope itemType="https://schema.org/WebSite">
         <meta itemProp="name" content={siteName} />
         {siteOrigin && <meta itemProp="url" content={siteOrigin} />}

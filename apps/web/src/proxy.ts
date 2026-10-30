@@ -4,11 +4,14 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { sessionCookie, verifySession } from '@/lib/admin/session';
 
+// Self-hosted Umami (cookieless analytics): the only third-party origin allowed.
+const statsOrigin = 'https://stats.arthurtoppenberg.dk';
+
 const policy = (scriptSrc: string) =>
   [
     "default-src 'self'",
     "base-uri 'self'",
-    "connect-src 'self'",
+    `connect-src 'self' ${statsOrigin}`,
     "font-src 'self'",
     "form-action 'self'",
     "frame-ancestors 'none'",
@@ -25,14 +28,14 @@ let staticScriptSrc: string | undefined;
 function staticHashes(): string {
   if (staticScriptSrc) return staticScriptSrc;
   if (process.env.NODE_ENV !== 'production')
-    return "script-src 'self' 'unsafe-inline' 'unsafe-eval'";
+    return `script-src 'self' ${statsOrigin} 'unsafe-inline' 'unsafe-eval'`;
   try {
     const hashes = JSON.parse(
       readFileSync(join(process.cwd(), 'dist', 'csp-hashes.json'), 'utf8'),
     ) as string[];
-    return (staticScriptSrc = `script-src 'self' ${hashes.join(' ')}`);
+    return (staticScriptSrc = `script-src 'self' ${statsOrigin} ${hashes.join(' ')}`);
   } catch {
-    return "script-src 'self'";
+    return `script-src 'self' ${statsOrigin}`;
   }
 }
 
