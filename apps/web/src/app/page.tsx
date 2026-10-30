@@ -1,10 +1,11 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { pageMetadata } from '@/lib/metadata';
+import HeroPlasma from '@/components/HeroPlasma';
 import ProductFigure from '@/components/ProductFigure';
-import TechnicalIcon from '@/components/TechnicalIcon';
 import InterestDisclaimer from '@/components/InterestDisclaimer';
-import HeroHelicalField from '@/components/HeroHelicalField';
+import EventFigure from '@/components/EventFigure';
+import TeamGrid from '@/components/TeamGrid';
 import { contactHrefs, homeHero, projectStatus } from '@/content/site';
 
 export const metadata: Metadata = pageMetadata({
@@ -17,11 +18,19 @@ export const metadata: Metadata = pageMetadata({
 export default function Page() {
   return (
     <>
-      <section className="home-hero">
+      <section className="home-hero chapter field-cyan">
+        <HeroPlasma />
         <div className="shell home-hero-grid">
+          <h1 className="hero-name">
+            <span className="line">
+              <span>Aurora</span>
+            </span>
+            <span className="line">
+              <span>Confinement</span>
+            </span>
+          </h1>
           <div className="hero-copy">
-            <p className="eyebrow">{homeHero.eyebrow}</p>
-            <h1>{homeHero.headline}</h1>
+            <p className="lede">{homeHero.headline}</p>
             <p className="hero-supporting">{homeHero.supporting}</p>
             <div className="button-row">
               <Link className="button primary" href={homeHero.primaryHref}>
@@ -33,49 +42,26 @@ export default function Page() {
             </div>
             <InterestDisclaimer />
           </div>
-          <div className="hero-mark" aria-hidden="true">
-            <HeroHelicalField />
-            <img
-              src="/images/logo-symbol.png"
-              alt=""
-              width="480"
-              height="480"
-            />
-          </div>
         </div>
       </section>
 
-      <section className="section home-barrier">
+      <section className="section home-barrier field-night">
         <div className="shell">
-          <div className="home-section-heading">
-            <p className="eyebrow">The barrier</p>
-            <h2>
-              Hands-on stellarator research requires substantial resources.
-            </h2>
-          </div>
-          <div className="barrier-grid">
-            <article className="barrier-card">
-              <TechnicalIcon name="investment" />
-              <div>
-                <h3>High capital cost</h3>
-                <p>Heavy financial investment limits entry.</p>
-              </div>
-            </article>
-            <article className="barrier-card">
-              <TechnicalIcon name="industry" />
-              <div>
-                <h3>Specialist infrastructure</h3>
-                <p>Demands complex, specialized facilities.</p>
-              </div>
-            </article>
-            <article className="barrier-card">
-              <TechnicalIcon name="access" />
-              <div>
-                <h3>Restricted access</h3>
-                <p>Limits hands-on research to a few large institutions.</p>
-              </div>
-            </article>
-          </div>
+          <h2>Hands-on research is resource-heavy.</h2>
+          <ul className="barrier-list">
+            <li>
+              <h3>High capital cost</h3>
+              <p>Heavy financial investment limits entry.</p>
+            </li>
+            <li>
+              <h3>Specialist infrastructure</h3>
+              <p>Demands complex, specialized facilities.</p>
+            </li>
+            <li>
+              <h3>Restricted access</h3>
+              <p>Limits hands-on research to a few large institutions.</p>
+            </li>
+          </ul>
           <p className="barrier-bridge">
             Aurora Confinement is developing compact platforms and physical
             models intended to lower these barriers.
@@ -83,44 +69,34 @@ export default function Page() {
         </div>
       </section>
 
-      <section className="section" id="products">
+      <section className="section field-deep" id="products">
         <div className="shell">
           <div className="section-heading">
-            <div>
-              <p className="eyebrow">Two product directions</p>
-              <h2>Research access and technical communication.</h2>
-            </div>
+            <h2>Two product directions.</h2>
             <p>
               Both product directions are active areas of work, with different
               levels of technical maturity.
             </p>
           </div>
           <div className="product-grid">
-            <article className="card product-card home-product-card">
+            <article className="card home-product-card">
               <div className="home-product-content">
-                <p className="card-index">01 / Exhibition and communication</p>
-                <span className="status-label">
-                  Current focus · In development
-                </span>
                 <h3>Tabletop stellarator models</h3>
+                <span className="status-label">
+                  Current focus: in development
+                </span>
                 <ul className="home-feature-list">
                   <li>
-                    <TechnicalIcon name="visibility" />
-                    <div>
-                      <strong>Tangible &amp; visible</strong>
-                      <span>
-                        Makes complex 3D geometry physical and intuitive.
-                      </span>
-                    </div>
+                    <strong>Tangible &amp; visible</strong>
+                    <span>
+                      Makes complex 3D geometry physical and intuitive.
+                    </span>
                   </li>
                   <li>
-                    <TechnicalIcon name="education" />
-                    <div>
-                      <strong>Education &amp; outreach</strong>
-                      <span>
-                        Built for exhibitions, conferences and lectures.
-                      </span>
-                    </div>
+                    <strong>Education &amp; outreach</strong>
+                    <span>
+                      Built for exhibitions, conferences and lectures.
+                    </span>
                   </li>
                 </ul>
               </div>
@@ -140,32 +116,25 @@ export default function Page() {
                 <InterestDisclaimer />
               </div>
             </article>
-            <article className="card violet product-card home-product-card">
+            <article className="card home-product-card">
               <div className="home-product-content">
-                <p className="card-index">02 / Experimental research</p>
-                <span className="status-label">
-                  Current focus · Early-stage development
-                </span>
                 <h3>Experimental stellarator platforms</h3>
+                <span className="status-label">
+                  Current focus: early-stage development
+                </span>
                 <ul className="home-feature-list">
                   <li>
-                    <TechnicalIcon name="experiment" />
-                    <div>
-                      <strong>Hands-on research</strong>
-                      <span>
-                        Enables direct experimentation and training without huge
-                        facilities.
-                      </span>
-                    </div>
+                    <strong>Hands-on research</strong>
+                    <span>
+                      Enables direct experimentation and training without huge
+                      facilities.
+                    </span>
                   </li>
                   <li>
-                    <TechnicalIcon name="access" />
-                    <div>
-                      <strong>Lower barriers</strong>
-                      <span>
-                        Designed to reduce capital and infrastructure costs.
-                      </span>
-                    </div>
+                    <strong>Lower barriers</strong>
+                    <span>
+                      Designed to reduce capital and infrastructure costs.
+                    </span>
                   </li>
                 </ul>
               </div>
@@ -189,42 +158,104 @@ export default function Page() {
         </div>
       </section>
 
-      <section className="section tight">
+      <section className="section tight field-ice">
         <div className="shell">
           <div className="section-heading">
-            <div>
-              <p className="eyebrow">Team and stage</p>
-              <h2>A multidisciplinary student team.</h2>
-            </div>
+            <h2>Fusion is known, but not understood.</h2>
+            <p>
+              Awareness of fusion is broader than understanding. Physical,
+              visible tools can help close that gap, without claiming to replace
+              credible regulation, safety, and performance.
+            </p>
           </div>
-          <div className="fact-strip" aria-label="Project status">
-            <div>
-              <strong>Student-led team</strong>
-              <span>Talent from DTU and KU</span>
-            </div>
-            <div>
-              <strong>Two active directions</strong>
-              <span>Research and communication tools</span>
-            </div>
-            <div>
-              <strong>Early-stage</strong>
-              <span>Products remain in development</span>
-            </div>
-          </div>
+          <ul className="stat-row" aria-label="Public understanding of fusion">
+            <li>
+              <strong>65%</strong>
+              <span>had heard of fusion</span>
+            </li>
+            <li>
+              <strong>19%</strong>
+              <span>knew a fair amount or a lot</span>
+            </li>
+            <li>
+              <strong>5%</strong>
+              <span>said they knew a lot</span>
+            </li>
+          </ul>
           <p className="status-copy">
-            {projectStatus} No DTU or KU endorsement or institutional
-            partnership is implied.
+            Representative UK government survey of about 3,400 people, spring
+            2026:{' '}
+            <a
+              href="https://www.gov.uk/government/statistics/desnz-public-attitudes-tracker-spring-2026/desnz-public-attitudes-tracker-energy-infrastructure-and-energy-security-spring-2026-uk"
+              rel="noopener noreferrer"
+            >
+              DESNZ Public Attitudes Tracker
+            </a>
+            .
           </p>
-          <a className="button cta-button team-cta" href="/about">
-            About the team
+        </div>
+      </section>
+
+      <section className="section field-night">
+        <div className="shell">
+          <div className="section-heading">
+            <h2>A fusion lecture that sold out in 48 hours.</h2>
+          </div>
+          <div className="proof-grid">
+            <EventFigure
+              name="lecture-hall"
+              height={1200}
+              sizes="(min-width: 64rem) 56vw, 100vw"
+              alt="A full university auditorium during a fusion lunch lecture, with a presentation slide visible on the screens."
+              caption="Fusion lunch lecture at DTU, organised and promoted by Aurora Confinement."
+            />
+            <div className="proof-copy">
+              <ul className="stat-row stat-column">
+                <li>
+                  <strong>120</strong>
+                  <span>registrations within 48 hours</span>
+                </li>
+                <li>
+                  <strong>+20</strong>
+                  <span>more on the waiting list</span>
+                </li>
+                <li>
+                  <strong>5</strong>
+                  <span>
+                    non-binding expressions of interest around Nordic Fusion
+                    Forum 2026
+                  </span>
+                </li>
+              </ul>
+              <p>
+                The turnout shows interest in fusion education. Expressions of
+                interest are not letters of intent, orders, customers, or
+                commitments.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="section field-deep">
+        <div className="shell">
+          <div className="section-heading">
+            <h2>A multidisciplinary student team.</h2>
+            <p>
+              {projectStatus} No DTU or KU endorsement or institutional
+              partnership is implied.
+            </p>
+          </div>
+          <TeamGrid group="core" label="Core team" showRoles={false} />
+          <a className="button cta-button team-cta" href="/about/">
+            Meet the team
           </a>
         </div>
       </section>
 
-      <section className="section">
+      <section className="section field-magenta">
         <div className="shell callout">
-          <p className="eyebrow">Start a useful conversation</p>
-          <h2>Where could a physical stellarator tool help?</h2>
+          <h2>Where could a stellarator tool help?</h2>
           <p>
             We welcome non-binding conversations with research institutions,
             universities, fusion companies, collaborators, and strategic

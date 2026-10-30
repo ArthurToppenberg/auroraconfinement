@@ -6,3 +6,9 @@ next-env.d.ts
 *.png
 pnpm-lock.yaml
 packages/db/src/generated
+
+# taste-skill: installed skill and its working files
+.agents/
+.claude/skills/
+.taste-skill/
+skills-lock.json

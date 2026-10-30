@@ -28,3 +28,6 @@ blob-report/
 # misc
 .DS_Store
 *.pem
+
+# taste-skill working files (screenshots, reports)
+.taste-skill/

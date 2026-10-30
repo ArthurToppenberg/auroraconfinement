@@ -15,18 +15,15 @@ export default function Page() {
   return (
     <>
       <PageHero
-        eyebrow="Join the conversation"
-        title="Complex work needs different ways of thinking."
+        field="cyan"
+        title="Complex work needs many minds."
         intro="Aurora Confinement is student-led, multidisciplinary, and pre-funding. We are open to informal conversations, but no specific paid roles are being advertised."
       />
 
-      <section className="section">
+      <section className="section field-night">
         <div className="shell">
           <div className="section-heading">
-            <div>
-              <p className="eyebrow">Capabilities</p>
-              <h2>Where future contributions may fit.</h2>
-            </div>
+            <h2>Where future contributions may fit.</h2>
             <p>
               These are areas relevant to the project, not open-job listings.
               Scope, supervision, time commitment, location, and compensation
@@ -41,7 +38,7 @@ export default function Page() {
                 methods, and careful technical communication.
               </p>
             </article>
-            <article className="card violet">
+            <article className="card cyan">
               <h3>Engineering and prototyping</h3>
               <p>
                 Mechanical, electrical, controls, manufacturing, systems,
@@ -60,12 +57,9 @@ export default function Page() {
         </div>
       </section>
 
-      <section className="section">
+      <section className="section field-ice">
         <div className="shell split-section">
-          <div>
-            <p className="eyebrow">Before you enquire</p>
-            <h2>Know what is, and is not, on offer.</h2>
-          </div>
+          <h2>Know what is, and is not, on offer.</h2>
           <div className="split-copy">
             <ul className="check-list">
               <li>
@@ -89,9 +83,8 @@ export default function Page() {
         </div>
       </section>
 
-      <section className="section tight">
+      <section className="section tight field-magenta">
         <div className="shell callout">
-          <p className="eyebrow">Informal conversation</p>
           <h2>Tell us what you are curious about.</h2>
           <p>
             Please send a short, non-confidential note rather than a CV or

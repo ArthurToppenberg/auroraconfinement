@@ -363,7 +363,7 @@ test('concept images always carry the exact visible caption', async ({
   page,
 }) => {
   const caption =
-    'Concept illustration. Not the actual product or final design. The depicted magnetic-field configuration does not represent Aurora Confinement’s technology.';
+    'Concept illustration — not the actual product or final design. The magnetic-field configuration shown is illustrative and does not represent Aurora Confinement’s technology.';
   for (const route of ['/', '/products/']) {
     await page.goto(route);
     const figures = page.locator('.product-figure');

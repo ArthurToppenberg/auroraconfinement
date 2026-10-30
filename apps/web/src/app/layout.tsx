@@ -3,12 +3,13 @@ import type { ReactNode } from 'react';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import MiguelEasterEgg from '@/components/MiguelEasterEgg';
+import Reveal from '@/components/Reveal';
 import { siteName, siteOrigin } from '@/content/site';
 import '@/styles/global.css';
 
 export const viewport: Viewport = {
   width: 'device-width',
-  themeColor: '#050914',
+  themeColor: '#0a1030',
 };
 
 export const metadata: Metadata = {
@@ -30,6 +31,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         </main>
         <Footer />
         <MiguelEasterEgg />
+        <Reveal />
       </body>
     </html>
   );

@@ -37,12 +37,11 @@ export default async function NewsPostPage({ params }: NewsPostPageProps) {
   const { title, description, publishedDate, updatedDate, html } = post;
 
   return (
-    <article className="article shell-narrow">
+    <article className="article shell field-night">
       <header className="article-header">
         <a className="back-link" href="/news">
           Back to news
         </a>
-        <p className="eyebrow">Project update</p>
         <h1>{title}</h1>
         <p className="lede">{description}</p>
         <p className="article-date">

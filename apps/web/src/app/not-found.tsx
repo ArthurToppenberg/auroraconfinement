@@ -12,9 +12,8 @@ export const metadata: Metadata = pageMetadata({
 
 export default function NotFound() {
   return (
-    <section className="page-hero">
+    <section className="page-hero field-cyan">
       <div className="shell page-hero-inner">
-        <p className="eyebrow">404 · Page not found</p>
         <h1>This path is outside the field.</h1>
         <p className="lede">
           The page may have moved, or the address may be incomplete.

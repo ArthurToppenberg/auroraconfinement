@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { pageMetadata } from '@/lib/metadata';
 import ProductFigure from '@/components/ProductFigure';
-import TechnicalIcon from '@/components/TechnicalIcon';
 import InterestDisclaimer from '@/components/InterestDisclaimer';
 import { contactHrefs } from '@/content/site';
 
@@ -16,26 +15,22 @@ export const metadata: Metadata = pageMetadata({
 export default function Page() {
   return (
     <>
-      <section className="products-intro">
-        <div className="focused-shell">
-          <p className="eyebrow">OUR PRODUCTS</p>
-          <h1>
-            Physical tools for communicating and researching stellarators.
-          </h1>
-          <p>
-            We are developing two active product directions: tabletop models
-            that make stellarator technology tangible, and experimental
+      <section className="products-intro chapter field-cyan">
+        <div className="shell">
+          <h1>Two product directions.</h1>
+          <p className="lede">
+            Physical tools for communicating and researching stellarators:
+            tabletop models that make the technology tangible, and experimental
             platforms designed to lower the barriers to hands-on research.
           </p>
         </div>
       </section>
 
-      <section className="product-section" id="tabletop">
-        <div className="focused-shell product-layout">
+      <section className="product-section field-ice" id="tabletop">
+        <div className="shell product-layout">
           <header className="product-heading">
-            <p className="eyebrow">01 / EXHIBITION AND COMMUNICATION</p>
-            <span className="status-label">CURRENT FOCUS · IN DEVELOPMENT</span>
             <h2>Tabletop stellarator models</h2>
+            <span className="status-label">Current focus: in development</span>
             <p className="product-value">
               Compact physical models engineered to make complex magnetic field
               geometry clear, tangible, and visually compelling.
@@ -49,15 +44,12 @@ export default function Page() {
               <h3>Designed for</h3>
               <ul className="icon-list">
                 <li>
-                  <TechnicalIcon name="industry" />
                   <span>Industry exhibitions &amp; investor meetings</span>
                 </li>
                 <li>
-                  <TechnicalIcon name="communication" />
                   <span>Science centres &amp; public visitor facilities</span>
                 </li>
                 <li>
-                  <TechnicalIcon name="education" />
                   <span>Universities &amp; introductory plasma lectures</span>
                 </li>
               </ul>
@@ -66,15 +58,12 @@ export default function Page() {
               <h3>What it enables</h3>
               <ul className="icon-list">
                 <li>
-                  <TechnicalIcon name="visibility" />
                   <span>High-impact display anchor for events</span>
                 </li>
                 <li>
-                  <TechnicalIcon name="model" />
                   <span>Intuitive physical demonstration of 3D geometry</span>
                 </li>
                 <li>
-                  <TechnicalIcon name="collaboration" />
                   <span>
                     Clear communication with non-specialist stakeholders
                   </span>
@@ -102,14 +91,13 @@ export default function Page() {
         </div>
       </section>
 
-      <section className="product-section" id="research">
-        <div className="focused-shell product-layout product-layout-reverse">
+      <section className="product-section field-night" id="research">
+        <div className="shell product-layout product-layout-reverse">
           <header className="product-heading">
-            <p className="eyebrow">02 / EXPERIMENTAL RESEARCH</p>
-            <span className="status-label">
-              CURRENT FOCUS · EARLY-STAGE DEVELOPMENT
-            </span>
             <h2>Experimental stellarator platforms</h2>
+            <span className="status-label">
+              Current focus: early-stage development
+            </span>
             <p className="product-value">
               Modular research systems engineered to lower financial and
               technical barriers for hands-on stellarator experimentation.
@@ -123,15 +111,12 @@ export default function Page() {
               <h3>Designed for</h3>
               <ul className="icon-list">
                 <li>
-                  <TechnicalIcon name="research" />
                   <span>Academic plasma research labs</span>
                 </li>
                 <li>
-                  <TechnicalIcon name="industry" />
                   <span>Early-stage fusion startups</span>
                 </li>
                 <li>
-                  <TechnicalIcon name="training" />
                   <span>Researcher &amp; student training programs</span>
                 </li>
               </ul>
@@ -140,19 +125,16 @@ export default function Page() {
               <h3>What it is intended to enable</h3>
               <ul className="icon-list">
                 <li>
-                  <TechnicalIcon name="access" />
                   <span>
                     Hands-on experiment without full-scale facility costs
                   </span>
                 </li>
                 <li>
-                  <TechnicalIcon name="experiment" />
                   <span>
                     Fast-turnaround testbed for diagnostic development
                   </span>
                 </li>
                 <li>
-                  <TechnicalIcon name="education" />
                   <span>
                     Direct practical training for future fusion engineers
                   </span>
@@ -181,9 +163,9 @@ export default function Page() {
         </div>
       </section>
 
-      <section className="products-final">
-        <div className="focused-shell callout">
-          <h2>Could one of these directions fit your organisation?</h2>
+      <section className="products-final field-magenta">
+        <div className="shell callout">
+          <h2>Could one fit your organisation?</h2>
           <p>
             Tell us what you are exploring, and we will continue the
             conversation from there.

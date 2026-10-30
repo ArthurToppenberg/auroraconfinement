@@ -15,15 +15,14 @@ export default function Page() {
   return (
     <>
       <PageHero
-        eyebrow="Vision"
+        field="magenta"
         title="Broaden access. Build understanding."
         intro="Physical tools can make stellarator technology more tangible to communicate, explore, and investigate."
       />
 
-      <section className="section">
+      <section className="section field-night">
         <div className="shell grid-3">
           <article className="card">
-            <p className="card-index">01 / Learn</p>
             <h2 className="card-heading">From abstraction to intuition</h2>
             <p>
               Fusion concepts are often encountered through equations,
@@ -32,8 +31,7 @@ export default function Page() {
               subject.
             </p>
           </article>
-          <article className="card violet">
-            <p className="card-index">02 / Experiment</p>
+          <article className="card cyan">
             <h2 className="card-heading">More routes to practical work</h2>
             <p>
               Access to experimental stellarator hardware is limited. Compact
@@ -42,7 +40,6 @@ export default function Page() {
             </p>
           </article>
           <article className="card magenta">
-            <p className="card-index">03 / Collaborate</p>
             <h2 className="card-heading">Shared questions, earlier</h2>
             <p>
               Researchers, educators, and industry teams can identify useful
@@ -53,12 +50,9 @@ export default function Page() {
         </div>
       </section>
 
-      <section className="section">
+      <section className="section field-ice">
         <div className="shell split-section">
-          <div>
-            <p className="eyebrow">The access gap</p>
-            <h2>Important science can be difficult to encounter directly.</h2>
-          </div>
+          <h2>Science can be hard to reach directly.</h2>
           <div className="split-copy">
             <p>
               Stellarator research draws on specialised facilities,
@@ -76,10 +70,9 @@ export default function Page() {
         </div>
       </section>
 
-      <section className="section">
+      <section className="section field-deep">
         <div className="shell split-section">
           <div className="split-copy">
-            <p className="eyebrow">Current focus 01</p>
             <h2>Communicate with tangible models.</h2>
             <p>
               We are developing tabletop stellarator models for exhibitions,
@@ -89,7 +82,6 @@ export default function Page() {
             </p>
           </div>
           <div className="split-copy">
-            <p className="eyebrow">Current focus 02</p>
             <h2>Develop experimental research platforms.</h2>
             <p>
               We are also developing compact experimental stellarator platforms
@@ -104,10 +96,9 @@ export default function Page() {
         </div>
       </section>
 
-      <section className="section tight">
+      <section className="section tight field-cyan">
         <div className="shell callout">
-          <p className="eyebrow">Work with us</p>
-          <h2>Good access starts with real requirements.</h2>
+          <h2>Access starts with real requirements.</h2>
           <p>
             We welcome conversations about exhibition and communication needs,
             experimental research, responsible engineering, and potential

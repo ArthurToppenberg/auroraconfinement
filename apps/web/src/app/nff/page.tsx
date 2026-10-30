@@ -1,72 +1,7 @@
 import type { Metadata } from 'next';
-import type { ReactNode } from 'react';
 import { pageMetadata } from '@/lib/metadata';
 import InterestForm from '@/components/InterestForm';
-
-type IconName =
-  | 'experiment'
-  | 'access'
-  | 'collaboration'
-  | 'visibility'
-  | 'communication'
-  | 'education';
-
-function ProductIcon({ name }: { name: IconName }) {
-  const paths = {
-    experiment: (
-      <>
-        <path d="M9 3v4.5l-4 7A3 3 0 0 0 7.6 19h8.8a3 3 0 0 0 2.6-4.5l-4-7V3" />
-        <path d="M8 12h8M8 3h8" />
-      </>
-    ),
-    access: (
-      <>
-        <path d="M4 12h16M8 8l-4 4 4 4M16 8l4 4-4 4" />
-      </>
-    ),
-    collaboration: (
-      <>
-        <circle cx="6" cy="12" r="2" />
-        <circle cx="18" cy="6" r="2" />
-        <circle cx="18" cy="18" r="2" />
-        <path d="m8 11 8-4M8 13l8 4" />
-      </>
-    ),
-    visibility: (
-      <>
-        <path d="M2.5 12s3.5-5 9.5-5 9.5 5 9.5 5-3.5 5-9.5 5-9.5-5-9.5-5Z" />
-        <circle cx="12" cy="12" r="2.5" />
-      </>
-    ),
-    communication: (
-      <>
-        <path d="M4 5h16v11H9l-5 4V5Z" />
-        <path d="M8 9h8M8 12h5" />
-      </>
-    ),
-    education: (
-      <>
-        <path d="m3 8 9-4 9 4-9 4-9-4Z" />
-        <path d="M7 10.5V15c2.5 2 7.5 2 10 0v-4.5M21 8v6" />
-      </>
-    ),
-  } satisfies Record<IconName, ReactNode>;
-
-  return (
-    <svg
-      aria-hidden="true"
-      className="nff-icon"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.6"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      {paths[name]}
-    </svg>
-  );
-}
+import EventFigure from '@/components/EventFigure';
 
 export const metadata: Metadata = pageMetadata({
   title: 'Nordic Fusion Forum 2026',
@@ -78,10 +13,9 @@ export const metadata: Metadata = pageMetadata({
 export default function Page() {
   return (
     <>
-      <section className="nff-top">
-        <div className="nff-shell nff-top-grid">
+      <section className="nff-top chapter field-cyan">
+        <div className="shell nff-top-grid">
           <div className="nff-intro-copy">
-            <p className="eyebrow">NORDIC FUSION FORUM 2026</p>
             <h1>Thank you for the conversation.</h1>
             <p className="nff-intro-lead">
               It was a pleasure meeting you at Nordic Fusion Forum 2026. Aurora
@@ -96,7 +30,6 @@ export default function Page() {
           </div>
           <div className="nff-form-column" id="interest">
             <div className="nff-form-heading">
-              <p className="eyebrow">REGISTER INTEREST</p>
               <h2>Continue the conversation</h2>
               <p>
                 Tell us how our work could be relevant to your organisation.
@@ -107,15 +40,15 @@ export default function Page() {
         </div>
       </section>
 
-      <section className="nff-products" aria-labelledby="nff-products-title">
-        <div className="nff-shell">
+      <section
+        className="nff-products chapter field-night"
+        aria-labelledby="nff-products-title"
+      >
+        <div className="shell">
           <h2 id="nff-products-title">What we are building</h2>
           <div className="nff-product-grid">
             <article className="card nff-product-card">
-              <div className="nff-card-label">
-                <ProductIcon name="experiment" />
-                <p className="eyebrow">EXPERIMENTAL RESEARCH</p>
-              </div>
+              <p className="status-label">Experimental research</p>
               <h3>Accessible stellarator research platforms</h3>
               <p className="nff-card-intro">
                 Compact experimental systems designed for more accessible
@@ -123,19 +56,16 @@ export default function Page() {
               </p>
               <ul className="nff-benefits">
                 <li>
-                  <ProductIcon name="access" />
                   <span>
                     Designed to reduce infrastructure and acquisition barriers
                   </span>
                 </li>
                 <li>
-                  <ProductIcon name="experiment" />
                   <span>
                     Intended for experiments, training and student research
                   </span>
                 </li>
                 <li>
-                  <ProductIcon name="collaboration" />
                   <span>
                     Developed for universities, startups and research teams
                   </span>
@@ -147,10 +77,7 @@ export default function Page() {
               </p>
             </article>
             <article className="card nff-product-card">
-              <div className="nff-card-label">
-                <ProductIcon name="visibility" />
-                <p className="eyebrow">EXHIBITION AND COMMUNICATION</p>
-              </div>
+              <p className="status-label">Exhibition and communication</p>
               <h3>Tabletop stellarator models</h3>
               <p className="nff-card-intro">
                 Physical models that make complex stellarator technology easier
@@ -158,19 +85,16 @@ export default function Page() {
               </p>
               <ul className="nff-benefits">
                 <li>
-                  <ProductIcon name="visibility" />
                   <span>
                     Create a focal point at exhibitions and conferences
                   </span>
                 </li>
                 <li>
-                  <ProductIcon name="communication" />
                   <span>
                     Support public engagement and technical communication
                   </span>
                 </li>
                 <li>
-                  <ProductIcon name="education" />
                   <span>
                     Provide a visual aid for introductory university teaching
                   </span>
@@ -185,6 +109,34 @@ export default function Page() {
             <a className="button" href="/products">
               Explore our products
             </a>
+          </div>
+        </div>
+      </section>
+
+      <section className="section field-deep" aria-labelledby="nff-photos-title">
+        <div className="shell">
+          <div className="section-heading">
+            <h2 id="nff-photos-title">From the forum.</h2>
+            <p>
+              Nordic Fusion Forum 2026 took place in Copenhagen on 19 October.
+              Thank you to everyone who stopped to talk.
+            </p>
+          </div>
+          <div className="event-pair">
+            <EventFigure
+              name="nff-team"
+              height={781}
+              sizes="(min-width: 52rem) 46vw, 100vw"
+              alt="Aurora Confinement members wearing Nordic Fusion Forum 2026 lanyards, standing together in front of the event screen."
+              caption="Aurora Confinement at Nordic Fusion Forum 2026, Copenhagen."
+            />
+            <EventFigure
+              name="nff-panel"
+              height={1200}
+              sizes="(min-width: 52rem) 46vw, 100vw"
+              alt="A panel session on the stage of a full hall at Nordic Fusion Forum 2026."
+              caption="A panel session in the main hall at Nordic Fusion Forum 2026."
+            />
           </div>
         </div>
       </section>

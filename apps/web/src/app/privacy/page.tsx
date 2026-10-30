@@ -14,13 +14,13 @@ export default function Page() {
   return (
     <>
       <PageHero
-        eyebrow="Privacy"
+        field="deep"
         title="An honest initial privacy notice."
         intro="This notice describes the intended handling of enquiries. Several operational facts must be confirmed before a production form is connected."
         compact
       />
-      <section className="section">
-        <div className="shell-narrow prose">
+      <section className="section field-night">
+        <div className="shell prose">
           <p className="notice">
             <strong>Draft status:</strong> This notice requires organisational
             and legal review before any production form collection is enabled.

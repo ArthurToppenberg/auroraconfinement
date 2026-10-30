@@ -16,17 +16,14 @@ export default function Page() {
   return (
     <>
       <PageHero
-        eyebrow="Technology"
-        title="Physical tools for stellarator communication and research."
+        field="deep"
+        title="Physical tools for stellarators."
         intro="We are developing tabletop models for exhibition and communication, alongside experimental platforms for hands-on stellarator research and advanced teaching."
       />
 
-      <section className="section">
+      <section className="section field-night">
         <div className="shell split-section">
-          <div>
-            <p className="eyebrow">Stellarators, briefly</p>
-            <h2>Magnetic confinement without a single simple ring.</h2>
-          </div>
+          <h2>Confinement without a simple ring.</h2>
           <div className="split-copy">
             <p>
               A stellarator is a magnetic-confinement concept designed to hold
@@ -45,13 +42,12 @@ export default function Page() {
         </div>
       </section>
 
-      <section className="section" id="tabletop">
+      <section className="section field-ice" id="tabletop">
         <div className="shell split-section">
           <ProductFigure kind="tabletop" eager />
           <div className="split-copy">
-            <span className="status-label">Current focus · In development</span>
-            <p className="eyebrow">Direction 01</p>
             <h2>Tabletop stellarator models</h2>
+            <span className="status-label">Current focus: in development</span>
             <p>
               Physical models designed to help fusion companies, research
               institutions, and universities communicate stellarator technology
@@ -76,15 +72,14 @@ export default function Page() {
         </div>
       </section>
 
-      <section className="section" id="research">
+      <section className="section field-night" id="research">
         <div className="shell split-section reverse">
           <ProductFigure kind="research" />
           <div className="split-copy">
-            <span className="status-label">
-              Current focus · Early-stage development
-            </span>
-            <p className="eyebrow">Direction 02</p>
             <h2>Experimental stellarator platforms</h2>
+            <span className="status-label">
+              Current focus: early-stage development
+            </span>
             <p>
               Compact experimental systems being developed for universities,
               startups, and research teams seeking more accessible hands-on
@@ -108,9 +103,8 @@ export default function Page() {
         </div>
       </section>
 
-      <section className="section tight">
+      <section className="section tight field-magenta">
         <div className="shell callout">
-          <p className="eyebrow">Responsible technical dialogue</p>
           <h2>Help shape the useful questions.</h2>
           <p>
             Researchers and industry specialists can help us understand

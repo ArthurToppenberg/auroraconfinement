@@ -18,7 +18,7 @@ export default function Page() {
         <header className="brief-header">
           <img src="/images/logo-symbol.png" alt="" width="84" height="84" />
           <div>
-            <p className="eyebrow">One-page overview · October 2026</p>
+            <p className="muted">One-page overview, October 2026</p>
             <h1>Aurora Confinement</h1>
             <p className="lede">
               Making stellarator technology tangible and accessible.

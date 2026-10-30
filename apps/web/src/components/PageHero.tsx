@@ -1,20 +1,19 @@
 interface PageHeroProps {
-  eyebrow: string;
   title: string;
   intro: string;
   compact?: boolean;
+  field?: 'night' | 'deep' | 'cyan' | 'ice' | 'magenta';
 }
 
 export default function PageHero({
-  eyebrow,
   title,
   intro,
   compact = false,
+  field = 'cyan',
 }: PageHeroProps) {
   return (
-    <section className={compact ? 'page-hero compact' : 'page-hero'}>
+    <section className={`page-hero field-${field}${compact ? ' compact' : ''}`}>
       <div className="shell page-hero-inner">
-        <p className="eyebrow">{eyebrow}</p>
         <h1>{title}</h1>
         <p className="lede">{intro}</p>
       </div>

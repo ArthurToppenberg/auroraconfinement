@@ -14,13 +14,13 @@ export default function Page() {
   return (
     <>
       <PageHero
-        eyebrow="Accessibility"
+        field="deep"
         title="Access is part of the work."
         intro="We are designing this website toward WCAG 2.2 Level AA, but we do not yet claim complete conformance."
         compact
       />
-      <section className="section">
-        <div className="shell-narrow prose">
+      <section className="section field-night">
+        <div className="shell prose">
           <p className="notice">
             <strong>Status:</strong> This is an initial statement for a
             pre-release local website. A formal assessment date is still

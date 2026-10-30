@@ -15,7 +15,6 @@ export default function Page() {
   return (
     <>
       <PageHero
-        eyebrow="Admin"
         title="Restricted area."
         intro="Enter the admin password to continue."
         compact
