@@ -33,10 +33,7 @@ export default function Page() {
               appointments.
             </p>
           </div>
-          <h3 className="team-group-title">Core team</h3>
-          <TeamGrid group="core" label="Core team" />
-          <h3 className="team-group-title">Extended team</h3>
-          <TeamGrid group="extended" label="Extended team" />
+          <TeamGrid label="Team" />
         </div>
       </section>
 

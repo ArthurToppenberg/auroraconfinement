@@ -6,8 +6,10 @@ import { usePathname } from 'next/navigation';
 import { contactHrefs } from '@/content/site';
 
 const links = [
-  { href: '/products', label: 'Products' },
   { href: '/about', label: 'Team' },
+  { href: '/model', label: 'Model' },
+  { href: '/research-platform', label: 'Research Platform' },
+  { href: '/roadmap', label: 'Roadmap' },
 ] as const;
 
 export default function Header() {
@@ -92,7 +94,7 @@ export default function Header() {
                 className="nav-cta"
                 aria-current={path === '/contact' ? 'page' : undefined}
               >
-                Contact
+                Register
               </Link>
             </li>
           </ul>

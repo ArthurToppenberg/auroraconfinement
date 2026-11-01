@@ -5,13 +5,12 @@ export const contactHrefs = {
 } as const;
 
 export const homeHero = {
-  headline: 'Stellarator research should be within reach.',
+  headline:
+    'A desktop stellarator model to inspire 100,000 new fusion engineers.',
   supporting:
     'Aurora Confinement is developing compact experimental platforms designed to reduce the cost and infrastructure required for hands-on stellarator research, together with physical models that make the technology easier to communicate and teach.',
   primaryLabel: 'Register institutional interest',
   primaryHref: contactHrefs.productInterest,
-  secondaryLabel: 'Explore our products',
-  secondaryHref: '/products',
 } as const;
 
 export const projectStatus =

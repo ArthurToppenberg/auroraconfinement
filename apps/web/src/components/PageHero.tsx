@@ -1,6 +1,6 @@
 interface PageHeroProps {
   title: string;
-  intro: string;
+  intro?: string;
   compact?: boolean;
   field?: 'night' | 'deep' | 'cyan' | 'ice' | 'magenta';
 }
@@ -15,7 +15,7 @@ export default function PageHero({
     <section className={`page-hero field-${field}${compact ? ' compact' : ''}`}>
       <div className="shell page-hero-inner">
         <h1>{title}</h1>
-        <p className="lede">{intro}</p>
+        {intro && <p className="lede">{intro}</p>}
       </div>
     </section>
   );

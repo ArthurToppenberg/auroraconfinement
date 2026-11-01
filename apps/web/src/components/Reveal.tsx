@@ -6,8 +6,7 @@ import { usePathname } from 'next/navigation';
 // Staggered entrance for the parts of every section. Content stays visible
 // without script or with reduced motion: nothing is hidden until this runs.
 const targets = [
-  'main section:not(.page-hero):not(.home-hero):not(.products-intro) .shell > *',
-  'main .product-grid > *',
+  'main section:not(.page-hero):not(.home-hero) .shell > *',
   'main .grid-3 > *',
   'main .nff-product-grid > *',
   'main .fact-strip > *',

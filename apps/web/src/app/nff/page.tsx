@@ -105,11 +105,6 @@ export default function Page() {
               </p>
             </article>
           </div>
-          <div className="nff-products-cta">
-            <a className="button" href="/products">
-              Explore our products
-            </a>
-          </div>
         </div>
       </section>
 

@@ -20,3 +20,13 @@ applies `dist/_headers` (CSP with per-build script hashes). Details: `docs/DEPLO
 - Don't commit, push, or change repo secrets/variables unless asked.
 - Never reboot the server; ask first.
 - Keep the UI as-is unless the task is explicitly about design.
+- Don't start dev servers (`pnpm dev`, `next dev`). Assume the human dev already has one
+  running; if you need one and none is up, tell the human to start it.
+
+## UI work
+
+For any UI you build or change, use the `/design-taste-frontend` skill. For a single
+section or component, skip its direction draw: match the surrounding design, apply its
+house rules, and run `inspect.mjs` on the production build (`pnpm build`). Its rules
+apply alongside `AGENTS.md`; where they conflict (for example the logo, concept-image
+captions, CSP, or the no-inline-styles rule), `AGENTS.md` wins.

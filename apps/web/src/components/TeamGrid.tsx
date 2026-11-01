@@ -1,7 +1,6 @@
-import { teamMembers, type TeamGroup } from '@/content/team';
+import { teamMembers } from '@/content/team';
 
 interface TeamGridProps {
-  group: TeamGroup;
   label: string;
   showRoles?: boolean;
 }
@@ -9,14 +8,12 @@ interface TeamGridProps {
 const widths = [320, 640] as const;
 
 export default function TeamGrid({
-  group,
   label,
   showRoles = true,
 }: TeamGridProps) {
-  const members = teamMembers.filter((member) => member.group === group);
   return (
-    <ul className={`team-grid team-grid-${group}`} aria-label={label}>
-      {members.map((member) => (
+    <ul className="team-grid" aria-label={label}>
+      {teamMembers.map((member) => (
         <li className="team-card" key={member.slug}>
           <img
             src={`/images/team/${member.slug}-640.webp`}

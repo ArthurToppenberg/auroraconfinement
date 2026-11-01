@@ -350,7 +350,6 @@ main:focus {
 
 .grid-2,
 .grid-3,
-.product-grid,
 .form-grid {
   display: grid;
   gap: 0.5rem;
@@ -1046,21 +1045,76 @@ p.interest-disclaimer {
   padding-block: clamp(2rem, 6vh, 4rem);
 }
 
+.hero-visual {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+.hero-visual-stage {
+  position: absolute;
+  inset: 0;
+}
+
 .hero-plasma {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  opacity: 0.3;
-  pointer-events: none;
+}
+
+/* The model and its caption only show where there is room beside the copy. */
+.hero-model,
+.hero-visual figcaption {
+  display: none;
 }
 
 @media (min-width: 60rem) {
-  .hero-plasma {
+  .hero-visual {
     inset: auto 0 0 auto;
+    display: grid;
+    grid-template-rows: minmax(0, 1fr) auto;
     width: min(54vw, 56rem);
-    height: 58%;
+    height: 66%;
     opacity: 1;
+  }
+
+  .hero-visual-stage {
+    position: relative;
+    inset: auto;
+  }
+
+  /* The plasma grows evenly around the stage centre, so it fills more of the
+     hero and passes behind the title while the model stays put. */
+  .hero-plasma {
+    inset: -45% auto auto -30%;
+    width: 160%;
+    height: 190%;
+    opacity: 0.4;
+  }
+
+  .hero-model {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: block;
+    width: 46%;
+    height: auto;
+    transform: translate(-50%, -50%);
+  }
+
+  .hero-visual figcaption {
+    position: relative;
+    display: block;
+    max-width: 42rem;
+    margin-left: auto;
+    padding-right: max(var(--margin), (100vw - var(--shell)) / 2);
+    padding-bottom: clamp(2rem, 6vh, 4rem);
+    font-size: var(--step-small);
+    line-height: 1.45;
+    text-align: right;
   }
 }
 
@@ -1118,16 +1172,158 @@ p.interest-disclaimer {
   margin-top: 0.5rem;
 }
 
-.barrier-list {
+.voices {
+  overflow-x: clip;
+}
+
+.voice-field {
   display: grid;
-  gap: 1rem;
-  margin-top: clamp(2rem, 5vw, 3.5rem);
+  gap: clamp(1.25rem, 3vw, 2rem);
   padding: 0;
+  margin: 0;
   list-style: none;
 }
 
+@media (min-width: 52rem) {
+  .voice-field {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: start;
+    padding-bottom: 3rem;
+  }
+
+  .voice-float:nth-child(3n + 2) {
+    margin-top: 3rem;
+  }
+
+  .voice-float:nth-child(3n) {
+    margin-top: 1.25rem;
+  }
+}
+
+/* Each card drifts along its own loop; the offsets stay within the grid gaps
+   so neighbours never overlap. */
+@keyframes voice-drift-a {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(-0.6deg);
+  }
+  33% {
+    transform: translate(0.9rem, -1rem) rotate(0.4deg);
+  }
+  66% {
+    transform: translate(-0.6rem, 0.8rem) rotate(-0.2deg);
+  }
+}
+
+@keyframes voice-drift-b {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0.5deg);
+  }
+  40% {
+    transform: translate(-0.9rem, 0.9rem) rotate(-0.5deg);
+  }
+  70% {
+    transform: translate(0.7rem, -0.8rem) rotate(0.3deg);
+  }
+}
+
+@keyframes voice-drift-c {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  25% {
+    transform: translate(0.6rem, 0.9rem) rotate(0.5deg);
+  }
+  75% {
+    transform: translate(-0.9rem, -0.7rem) rotate(-0.5deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .voice-float {
+    animation: voice-drift-a 13s ease-in-out infinite;
+  }
+
+  .voice-float:nth-child(3n + 2) {
+    animation-name: voice-drift-b;
+    animation-duration: 16s;
+    animation-delay: -5s;
+  }
+
+  .voice-float:nth-child(3n) {
+    animation-name: voice-drift-c;
+    animation-duration: 19s;
+    animation-delay: -9s;
+  }
+}
+
+.voice-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin: 0;
+  padding: clamp(1.25rem, 3vw, 2rem);
+  background: var(--tint);
+  color: var(--ink);
+}
+
+.voice-flag {
+  align-self: start;
+  margin: 0;
+  padding: 0.2rem 0.6rem;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-size: var(--step-small);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.voice-card blockquote {
+  margin: 0;
+}
+
+.voice-card blockquote p {
+  margin: 0;
+  font-size: var(--step-lead);
+  line-height: 1.3;
+  letter-spacing: -0.015em;
+}
+
+.voice-card figcaption {
+  display: grid;
+  gap: 0.15rem;
+  font-size: var(--step-small);
+  line-height: 1.4;
+}
+
+.barrier-layout {
+  display: grid;
+  gap: clamp(2rem, 5vw, 3rem);
+  align-items: start;
+}
+
+.barrier-layout .event-figure {
+  width: 100%;
+}
+
+.barrier-list {
+  display: grid;
+  gap: 1.25rem;
+  margin-top: clamp(2rem, 5vw, 3rem);
+  padding: 0 0 0 1.5rem;
+  list-style: disc;
+}
+
 .barrier-list li {
-  padding-block: 1.25rem;
+  padding-left: 0.25rem;
+}
+
+.barrier-list li::marker {
+  color: var(--accent);
+  font-size: var(--step-head);
 }
 
 .barrier-list h3 {
@@ -1143,26 +1339,11 @@ p.interest-disclaimer {
 
 .barrier-bridge {
   max-width: 34ch;
-  margin-top: clamp(2rem, 5vw, 4rem);
+  margin-top: clamp(2rem, 5vw, 3rem);
   font-size: var(--step-lead);
   font-weight: 600;
   letter-spacing: -0.02em;
   line-height: 1.2;
-}
-
-.home-product-card {
-  display: flex;
-  flex-direction: column;
-  gap: 1.25rem;
-}
-
-.home-product-card > * + * {
-  margin-top: 0;
-}
-
-.home-product-content {
-  display: grid;
-  gap: 1rem;
 }
 
 .status-label + h2,
@@ -1170,56 +1351,11 @@ p.interest-disclaimer {
   margin-top: 0.5rem;
 }
 
-.home-feature-list {
-  display: grid;
-  gap: 1rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.home-feature-list strong,
-.home-feature-list span {
-  display: block;
-}
-
-.home-feature-list strong {
-  font-size: var(--step-body);
-}
-
-.home-product-footer {
-  margin-top: auto;
-}
-
-.home-card-actions,
-.product-card-actions {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
 .team-cta {
   margin-top: 2rem;
 }
 
 /* Products ----------------------------------------------------------- */
-
-.products-intro {
-  padding-block: clamp(4rem, 10vw, 8rem);
-}
-
-.products-intro .shell {
-  display: grid;
-  gap: clamp(1.5rem, 3vw, 2.25rem);
-}
-
-.products-intro h1 {
-  max-width: 12ch;
-}
-
-.products-intro .lede {
-  max-width: 34ch;
-}
 
 .product-section {
   padding-block: var(--gap-section);
@@ -1270,16 +1406,6 @@ p.interest-disclaimer {
 
 .product-clarification {
   font-weight: 600;
-}
-
-.products-final {
-  padding-block: var(--gap-section);
-}
-
-.products-final-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
 }
 
 /* Contact / NFF ------------------------------------------------------ */
@@ -1385,11 +1511,6 @@ p.interest-disclaimer {
   font-weight: 600;
 }
 
-.nff-products-cta {
-  display: flex;
-  margin-top: 2rem;
-}
-
 /* Brief (printable one-pager) --------------------------------------- */
 
 .brief {
@@ -1471,8 +1592,7 @@ p.interest-disclaimer {
 
   .page-hero h1,
   .contact-intro h1,
-  .nff-intro-copy h1,
-  .products-intro h1 {
+  .nff-intro-copy h1 {
     animation: fade-rise 700ms var(--ease) both;
   }
 
@@ -1525,7 +1645,6 @@ p.interest-disclaimer {
   }
 
   .grid-2,
-  .product-grid,
   .form-grid,
   .nff-product-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1537,12 +1656,6 @@ p.interest-disclaimer {
 
   .field-wide {
     grid-column: 1 / -1;
-  }
-
-  .home-card-actions,
-  .product-card-actions {
-    flex-direction: row;
-    flex-wrap: wrap;
   }
 
   .footer-board {
@@ -1604,8 +1717,7 @@ p.interest-disclaimer {
     align-items: end;
   }
 
-  .page-hero-inner,
-  .products-intro .shell {
+  .page-hero-inner {
     grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
     align-items: end;
   }
@@ -1622,13 +1734,9 @@ p.interest-disclaimer {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
-  .barrier-list {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 0.5rem;
-  }
-
-  .barrier-list li {
-    padding: 0 1rem 0 0;
+  .barrier-layout {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 6fr);
+    gap: clamp(2rem, 5vw, 4rem);
   }
 
   .brief-header {
@@ -2224,14 +2332,6 @@ body:has(.admin-page) .site-footer {
 
 /* Team, event photographs and proof ----------------------------------- */
 
-.team-group-title {
-  margin: clamp(2.5rem, 6vw, 4rem) 0 1.25rem;
-}
-
-.team-group-title:first-of-type {
-  margin-top: 0;
-}
-
 .team-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -2358,11 +2458,7 @@ body:has(.admin-page) .site-footer {
 }
 
 @media (min-width: 40rem) {
-  .team-grid-core {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
-  .team-grid-extended {
+  .team-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
@@ -2378,11 +2474,7 @@ body:has(.admin-page) .site-footer {
 }
 
 @media (min-width: 64rem) {
-  .team-grid-core {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-  }
-
-  .team-grid-extended {
+  .team-grid {
     grid-template-columns: repeat(6, minmax(0, 1fr));
   }
 

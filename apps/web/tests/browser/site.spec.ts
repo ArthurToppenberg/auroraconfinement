@@ -4,9 +4,11 @@ import type { Page } from '@playwright/test';
 
 const routes = [
   '/',
-  '/products/',
   '/about/',
   '/contact/',
+  '/model/',
+  '/research-platform/',
+  '/roadmap/',
   '/nff/',
   '/privacy/',
 ] as const;
@@ -59,10 +61,7 @@ test.describe('responsive release baseline', () => {
 
         if (route === '/' && viewport.width <= 430) {
           const hero = page.locator('.home-hero');
-          for (const label of [
-            'Register institutional interest',
-            'Explore our products',
-          ]) {
+          for (const label of ['Register institutional interest']) {
             const link = hero.getByRole('link', { name: label });
             await expect(link).toBeVisible();
             const box = await link.boundingBox();
@@ -105,7 +104,7 @@ test('mobile navigation supports keyboard state and focus', async ({
   await expect(
     page
       .getByRole('navigation', { name: 'Primary' })
-      .getByRole('link', { name: 'Products' }),
+      .getByRole('link', { name: 'Model' }),
   ).toBeFocused();
   await page.keyboard.press('Escape');
   await expect(menuButton).toHaveAttribute('aria-expanded', 'false');
@@ -305,14 +304,6 @@ test('server field errors are shown on the matching field', async ({
 test('contact CTAs preserve and apply their intent context', async ({
   page,
 }) => {
-  await page.goto('/products/');
-  await expect(
-    page.getByRole('link', { name: 'Discuss an exhibition model' }),
-  ).toHaveAttribute('href', '/contact?intent=collaboration');
-  await expect(
-    page.getByRole('link', { name: 'Discuss a research partnership' }),
-  ).toHaveAttribute('href', '/contact?intent=collaboration');
-
   await page.goto('/contact/?intent=product-interest');
   await expect(page.getByLabel('Register product interest')).toBeChecked();
 
@@ -364,7 +355,7 @@ test('concept images always carry the exact visible caption', async ({
 }) => {
   const caption =
     'Concept illustration — not the actual product or final design. The magnetic-field configuration shown is illustrative and does not represent Aurora Confinement’s technology.';
-  for (const route of ['/', '/products/']) {
+  for (const route of ['/technology/']) {
     await page.goto(route);
     const figures = page.locator('.product-figure');
     await expect(figures).toHaveCount(2);

@@ -4,7 +4,7 @@ import { siteName, siteOrigin, socialImage } from '@/content/site';
 interface PageMetadataOptions {
   title: string;
   description: string;
-  /** Route path with leading and trailing slash, e.g. `/products/`. */
+  /** Route path with leading and trailing slash, e.g. `/about/`. */
   path: string;
   image?: string;
   article?: boolean;
