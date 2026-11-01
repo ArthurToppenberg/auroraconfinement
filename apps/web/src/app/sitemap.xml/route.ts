@@ -2,7 +2,7 @@ import { siteOrigin } from '@/content/site';
 
 export const dynamic = 'force-static';
 
-const routes = ['/', '/about/', '/contact/', '/nff/', '/privacy/'];
+const routes = ['/', '/about/', '/roadmap/', '/contact/', '/nff/', '/privacy/'];
 
 function escapeXml(value: string) {
   return value.replace(/[<>&'"]/g, (character) => {

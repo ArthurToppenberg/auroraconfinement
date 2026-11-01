@@ -7,7 +7,7 @@ import { contactHrefs } from '@/content/site';
 
 const links = [
   { href: '/about', label: 'Team' },
-  { href: '/model', label: 'Model' },
+  { href: '/model', label: 'Exhibition Model' },
   { href: '/research-platform', label: 'Research Platform' },
   { href: '/roadmap', label: 'Roadmap' },
 ] as const;

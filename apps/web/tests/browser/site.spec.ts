@@ -104,7 +104,7 @@ test('mobile navigation supports keyboard state and focus', async ({
   await expect(
     page
       .getByRole('navigation', { name: 'Primary' })
-      .getByRole('link', { name: 'Model' }),
+      .getByRole('link', { name: 'Exhibition Model' }),
   ).toBeFocused();
   await page.keyboard.press('Escape');
   await expect(menuButton).toHaveAttribute('aria-expanded', 'false');
