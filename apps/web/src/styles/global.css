@@ -208,6 +208,7 @@ h1,
 h2,
 h3 {
   margin: 0;
+  overflow-wrap: anywhere;
   color: inherit;
   font-weight: 600;
   letter-spacing: -0.04em;
@@ -306,6 +307,7 @@ main:focus {
 
 .section-heading {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 1.5rem;
   margin-bottom: clamp(2.5rem, 6vw, 4.5rem);
 }
@@ -344,6 +346,7 @@ main:focus {
 
 .split-section {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: clamp(2rem, 5vw, 4rem);
   align-items: start;
 }
@@ -352,6 +355,7 @@ main:focus {
 .grid-3,
 .form-grid {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 0.5rem;
 }
 
@@ -438,6 +442,7 @@ main:focus {
 
 .callout {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 1.25rem;
   justify-items: start;
 }
@@ -686,6 +691,7 @@ main:focus {
 
 .page-hero h1 {
   max-width: 14ch;
+  overflow-wrap: anywhere;
 }
 
 .page-hero .lede {
