@@ -936,104 +936,97 @@ p.interest-disclaimer {
   overflow-wrap: anywhere;
 }
 
-/* Footer: tiles ------------------------------------------------------ */
-
+/* Compact shared footer. */
 .site-footer {
-  padding: 0.5rem;
+  padding-block: 2.5rem 1.5rem;
   background: var(--night);
   color: var(--paper);
 }
 
-.footer-board {
+.footer-groups {
+  display: grid;
+  gap: 2rem;
+}
+
+.footer-groups > * {
+  min-width: 0;
+}
+
+.footer-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.footer-brand img {
+  flex: 0 0 auto;
+}
+
+.footer-brand-group p {
+  max-width: 36ch;
+  margin: 1rem 0 0;
+  font-size: 1rem;
+}
+
+.footer-groups h2 {
+  margin-bottom: 1rem;
+  font-size: 1.125rem;
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+}
+
+.footer-explore ul {
   display: grid;
   gap: 0.5rem;
 }
 
-.footer-tile {
-  min-width: 0;
-  padding: 1.5rem;
-  background: var(--night-tint);
-  color: var(--paper);
+.footer-explore,
+.footer-contact {
+  text-align: right;
 }
 
-.footer-tile h2 {
-  margin-bottom: 1rem;
-  font-size: var(--step-small);
-  font-weight: 600;
-  letter-spacing: 0;
-  line-height: 1.3;
+.footer-groups a {
+  font-size: 1rem;
 }
 
-.footer-tile li + li {
-  margin-top: 0.35rem;
-}
-
-.footer-tile a {
-  text-decoration: none;
-}
-
-.footer-tile a:hover {
-  text-decoration: underline;
-}
-
-.footer-tile p + p {
-  margin-top: 0.75rem;
-}
-
-.footer-statement p:first-child {
-  font-size: var(--step-lead);
-  line-height: 1.2;
-  letter-spacing: -0.02em;
-}
-
-.footer-small {
-  font-size: var(--step-small);
-}
-
-.footer-email a {
-  font-size: var(--step-lead);
-  letter-spacing: -0.02em;
+.footer-contact-email {
+  display: block;
   overflow-wrap: anywhere;
 }
 
-.footer-name {
-  display: flex;
-  min-height: 9rem;
+.footer-linkedin {
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  background: var(--paper);
-  color: var(--night);
-  font-size: clamp(2rem, 8vw, 7rem);
-  font-weight: 600;
-  letter-spacing: -0.045em;
-  line-height: 1;
-  text-align: center;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
 }
 
-.footer-invite {
+.footer-linkedin svg {
+  flex: 0 0 auto;
+}
+
+.footer-utility {
   display: flex;
-  min-height: 10rem;
-  flex-direction: column;
+  flex-wrap: wrap;
   justify-content: space-between;
-  gap: 1.5rem;
-  background: var(--cyan);
-  color: var(--on-cyan);
-  font-size: var(--step-lead);
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  line-height: 1.1;
-  text-decoration: none;
+  gap: 0.75rem 2rem;
+  margin-top: 2rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgb(247 248 255 / 18%);
+  font-size: 0.875rem;
 }
 
-.footer-invite:hover {
-  background: var(--paper);
-  text-decoration: none;
+.footer-utility p {
+  margin: 0;
 }
 
-.footer-invite svg {
-  align-self: flex-end;
-  width: 2.5rem;
-  height: 2.5rem;
+@media (min-width: 52rem) {
+  .footer-groups {
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.8fr) minmax(0, 1fr);
+    gap: 2.5rem;
+  }
 }
 
 .muted {
@@ -1046,136 +1039,147 @@ p.interest-disclaimer {
   position: relative;
   display: grid;
   min-height: calc(100svh - var(--header-height));
-  align-items: end;
+  align-items: center;
   overflow: clip;
-  padding-block: clamp(2rem, 6vh, 4rem);
+  padding-block: clamp(2.5rem, 6vh, 5rem);
+}
+
+.home-hero-grid {
+  display: grid;
+  gap: clamp(2.5rem, 5vw, 5rem);
+  align-items: center;
+}
+
+.hero-copy {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 1.5rem;
+  min-width: 0;
+}
+
+.hero-benefit-title {
+  font-size: clamp(2.35rem, 4.1vw, 3.75rem);
+  font-weight: 650;
+  letter-spacing: -0.045em;
+  line-height: 1.04;
+  text-wrap: initial;
+}
+
+.hero-benefit-title span {
+  display: block;
+}
+
+.hero-supporting {
+  max-width: 54ch;
+  margin: 0;
+}
+
+.hero-benefits {
+  display: grid;
+  gap: 1.5rem 2rem;
+  margin: 0.5rem 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hero-benefits li {
+  display: grid;
+  grid-template-columns: 1.5rem minmax(0, 1fr);
+  gap: 0.75rem;
+  align-items: start;
+}
+
+.hero-benefits svg {
+  margin-top: 0.1rem;
+  color: var(--deep);
+}
+
+.hero-benefits h2,
+.hero-benefits h3 {
+  margin-bottom: 0.4rem;
+  font-size: 1.0625rem;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+  text-wrap: initial;
+}
+
+.hero-benefits p {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.hero-enquiry {
+  display: grid;
+  justify-items: start;
+  gap: 0.75rem;
+}
+
+.hero-enquiry p {
+  max-width: 52ch;
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.hero-enquiry .hero-privacy {
+  font-size: 0.875rem;
 }
 
 .hero-visual {
-  position: absolute;
-  inset: 0;
+  position: relative;
+  min-width: 0;
   margin: 0;
-  opacity: 0.3;
-  pointer-events: none;
 }
 
 .hero-visual-stage {
-  position: absolute;
-  inset: 0;
+  position: relative;
+  isolation: isolate;
 }
 
 .hero-plasma {
   position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
+  z-index: -1;
+  inset: -70%;
+  width: 240%;
+  height: 240%;
+  opacity: 0.15;
+  pointer-events: none;
 }
 
-/* The model and its caption only show where there is room beside the copy. */
-.hero-model,
+.hero-model {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
 .hero-visual figcaption {
-  display: none;
+  max-width: 54ch;
+  margin: 1rem auto 0;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  text-wrap: pretty;
+}
+
+.hero-visual figcaption span {
+  display: block;
+  margin-top: 0.35rem;
+}
+
+@media (min-width: 40rem) {
+  .hero-benefits {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 @media (min-width: 60rem) {
-  .hero-visual {
-    inset: auto 0 0 auto;
-    display: grid;
-    grid-template-rows: minmax(0, 1fr) auto;
-    width: min(54vw, 56rem);
-    height: 66%;
-    opacity: 1;
+  .home-hero-grid {
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    gap: clamp(2rem, 3vw, 3rem);
   }
-
-  .hero-visual-stage {
-    position: relative;
-    inset: auto;
-  }
-
-  /* The plasma grows evenly around the stage centre, so it fills more of the
-     hero and passes behind the title while the model stays put. */
-  .hero-plasma {
-    inset: -45% auto auto -30%;
-    width: 160%;
-    height: 190%;
-    opacity: 0.4;
-  }
-
-  .hero-model {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    display: block;
-    width: 46%;
-    height: auto;
-    transform: translate(-50%, -50%);
-  }
-
-  .hero-visual figcaption {
-    position: relative;
-    display: block;
-    max-width: 42rem;
-    margin-left: auto;
-    padding-right: max(var(--margin), (100vw - var(--shell)) / 2);
-    padding-bottom: clamp(2rem, 6vh, 4rem);
-    font-size: var(--step-small);
-    line-height: 1.45;
-    text-align: right;
-  }
-}
-
-.home-hero-grid {
-  position: relative;
-  z-index: 1;
-  display: grid;
-  gap: clamp(1.5rem, 4vh, 3rem);
-}
-
-.hero-name {
-  font-size: clamp(3.4rem, 12.5vw, 12rem);
-  font-weight: 650;
-  letter-spacing: -0.045em;
-  line-height: 0.84;
-}
-
-.hero-name .line {
-  display: block;
-  overflow: clip;
-  padding-bottom: 0.08em;
-}
-
-.hero-name .line > span {
-  display: block;
-}
-
-.hero-name .line:first-child {
-  color: var(--deep);
-}
-
-.hero-copy {
-  display: grid;
-  gap: 1rem;
-  max-width: 40rem;
-}
-
-.hero-copy .lede {
-  max-width: 24ch;
-  font-size: var(--step-head);
-  letter-spacing: -0.035em;
-  line-height: 1;
-}
-
-.hero-supporting {
-  max-width: 46ch;
-  margin: 0;
-}
-
-.hero-copy .button-row {
-  margin-top: 0.75rem;
-}
-
-.hero-copy .interest-disclaimer {
-  margin-top: 0.5rem;
 }
 
 .voices {
@@ -1867,11 +1871,7 @@ p.interest-disclaimer {
   }
 }
 
-@media (min-width: 52rem) {
-  :root {
-    --margin: 2rem;
-  }
-
+@media (min-width: 76rem) {
   .menu-button {
     display: none;
   }
@@ -1896,6 +1896,12 @@ p.interest-disclaimer {
   .primary-nav .nav-cta {
     margin-left: 0.5rem;
     padding-inline: 1.25rem;
+  }
+}
+
+@media (min-width: 52rem) {
+  :root {
+    --margin: 2rem;
   }
 
   .section-heading {
@@ -2666,5 +2672,757 @@ body:has(.admin-page) .site-footer {
 
   .proof-grid {
     grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  }
+}
+
+/* Illustrated homepage applications. */
+.application-cards {
+  display: grid;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.application-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 1.25rem;
+  background: var(--paper);
+}
+
+.application-scene {
+  display: block;
+  width: 100%;
+  height: 140px;
+  margin-bottom: 1rem;
+  color: var(--night);
+}
+
+.application-scene .application-plasma {
+  fill: var(--magenta);
+  stroke: var(--deep);
+}
+
+.application-scene .application-accent {
+  stroke: var(--deep);
+}
+
+.application-card-copy h3 {
+  margin-bottom: 0.625rem;
+}
+
+.application-card-copy p {
+  max-width: 44ch;
+  margin: 0;
+}
+
+.application-development-note {
+  margin: 1.25rem 0 0;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.applications-cta {
+  display: grid;
+  justify-items: start;
+  gap: 1rem;
+  margin-top: 2.5rem;
+}
+
+.applications-cta p {
+  margin: 0;
+  font-size: 1rem;
+}
+
+@media (min-width: 52rem) {
+  .application-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Homepage problem and evidence rows. */
+.home-evidence .evidence-rows {
+  margin-top: clamp(2rem, 5vw, 4rem);
+}
+
+.home-evidence .evidence-row {
+  display: grid;
+  gap: 1.5rem;
+  padding-block: clamp(2rem, 4vw, 3rem);
+  border-bottom: 1px solid rgb(247 248 255 / 18%);
+}
+
+.home-evidence .evidence-row:first-child {
+  border-top: 1px solid rgb(247 248 255 / 18%);
+}
+
+.home-evidence .evidence-highlight {
+  max-width: 12ch;
+  margin: 0;
+  font-size: clamp(2rem, 3.8vw, 3.5rem);
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+  text-wrap: balance;
+}
+
+.home-evidence .evidence-number {
+  font-size: clamp(3rem, 6vw, 5.5rem);
+  line-height: 0.95;
+}
+
+.home-evidence .evidence-copy {
+  max-width: 58ch;
+}
+
+.home-evidence .evidence-copy h3 {
+  margin-bottom: 1rem;
+}
+
+.home-evidence .evidence-copy p {
+  margin-bottom: 0;
+}
+
+.home-evidence .evidence-source {
+  margin-top: 1rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.home-evidence .evidence-invitation {
+  display: grid;
+  justify-items: start;
+  gap: 1.25rem;
+  margin-top: 2.5rem;
+}
+
+.home-evidence .evidence-invitation p {
+  max-width: 64ch;
+  margin: 0;
+}
+
+.home-evidence .evidence-intro {
+  max-width: 64ch;
+  margin-top: 1.5rem;
+}
+
+.home-evidence .evidence-number-label {
+  margin: 0.75rem 0 0;
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+.home-evidence .evidence-methodology {
+  margin-top: 0.75rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.home-evidence .evidence-methodology summary {
+  width: fit-content;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.home-evidence .evidence-methodology p {
+  margin-top: 0.75rem;
+}
+
+@media (min-width: 48rem) {
+  .home-evidence .evidence-row {
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    gap: clamp(2rem, 5vw, 5rem);
+    align-items: start;
+  }
+}
+
+/* Compact homepage invitation and institutional registration introduction. */
+.home-closing {
+  padding-block: clamp(2rem, 4vw, 3rem);
+}
+
+.home-closing-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.5rem;
+}
+
+.home-closing h2 {
+  font-size: clamp(1.75rem, 2.8vw, 2.75rem);
+  line-height: 1.1;
+}
+
+.home-closing p {
+  margin: 0.75rem 0 0;
+}
+
+.contact-page-grid:has(.model-registration-intro) {
+  max-width: 56rem;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 2rem;
+}
+
+.model-registration-intro h2 {
+  font-size: var(--step-lead);
+  line-height: 1.3;
+}
+
+.model-registration-intro > * + * {
+  margin-top: 1rem;
+}
+
+.model-registration-intro p {
+  margin-bottom: 0;
+}
+
+.model-registration-intro .registration-reassurance {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+@media (min-width: 52rem) {
+  .home-closing-inner {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+
+  .home-closing .button {
+    flex-shrink: 0;
+  }
+}
+
+/* Exhibition model product page. */
+.exhibition-hero {
+  padding-block: clamp(2.5rem, 5vw, 5rem);
+}
+
+.exhibition-hero-grid,
+.exhibition-learning-grid,
+.exhibition-evidence-grid,
+.exhibition-questions {
+  display: grid;
+  gap: 2rem;
+}
+
+.exhibition-hero-grid {
+  align-items: center;
+}
+
+.exhibition-hero-copy > * + * {
+  margin-top: 1.5rem;
+}
+
+.exhibition-eyebrow {
+  margin: 0;
+  font-size: 0.8125rem;
+  font-weight: 650;
+  letter-spacing: 0.05em;
+}
+
+.exhibition-hero h1 {
+  font-size: clamp(2.4rem, 4.3vw, 4.25rem);
+  line-height: 1.04;
+}
+
+.exhibition-applications-link {
+  align-self: center;
+}
+
+.exhibition-drawing {
+  min-width: 0;
+  margin: 0;
+}
+
+.exhibition-drawing img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.exhibition-drawing figcaption,
+.exhibition-source,
+.exhibition-methodology {
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.exhibition-drawing figcaption {
+  margin-top: 1rem;
+}
+
+.exhibition-learning-grid svg {
+  margin-bottom: 1rem;
+  color: var(--deep);
+}
+
+.exhibition-learning-grid h3,
+.exhibition-evidence-item h3 {
+  margin-bottom: 0.75rem;
+}
+
+.exhibition-learning-grid p,
+.exhibition-evidence-item p {
+  margin-bottom: 0;
+}
+
+.exhibition-evidence-grid {
+  margin-top: 2.5rem;
+  gap: 2rem 3rem;
+}
+
+.exhibition-evidence-item {
+  min-width: 0;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgb(247 248 255 / 18%);
+}
+
+.exhibition-evidence-item .exhibition-evidence-number {
+  margin: 0 0 1rem;
+  font-size: clamp(2.75rem, 4vw, 4rem);
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.exhibition-evidence-item .exhibition-source,
+.exhibition-methodology {
+  margin-top: 1rem;
+}
+
+.exhibition-methodology summary,
+.exhibition-questions summary {
+  cursor: pointer;
+}
+
+.exhibition-methodology p,
+.exhibition-questions details p {
+  margin-top: 1rem;
+}
+
+.exhibition-evidence-context {
+  max-width: 64ch;
+  margin: 2.5rem 0 0;
+}
+
+.exhibition-questions details {
+  padding-block: 1.25rem;
+  border-bottom: 1px solid var(--tint);
+}
+
+.exhibition-questions summary {
+  font-size: var(--step-lead);
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+@media (min-width: 48rem) {
+  .exhibition-learning-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .exhibition-evidence-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 60rem) {
+  .exhibition-hero-grid {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: 3rem;
+  }
+
+  .exhibition-questions {
+    grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
+    gap: 3rem;
+  }
+}
+
+/* Research platform keeps its ice, navy and deep-blue palette. */
+.research-directions svg {
+  color: var(--magenta);
+}
+
+.research-direction-note {
+  max-width: 70ch;
+  margin: 2rem 0 0;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.research-applications {
+  display: grid;
+  gap: 2rem;
+}
+
+.research-applications h3 {
+  margin-bottom: 0.75rem;
+}
+
+.research-applications p {
+  margin: 0;
+}
+
+@media (min-width: 48rem) {
+  .research-applications {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* Tighter rhythm scoped to the exhibition model page. */
+.exhibition-page .section {
+  padding-block: clamp(2.5rem, 5vw, 4rem);
+}
+
+.exhibition-page .exhibition-hero {
+  padding-block: clamp(2rem, 4vw, 3.5rem);
+}
+
+.exhibition-page .section-heading {
+  display: block;
+  margin-bottom: 2rem;
+}
+
+.exhibition-page .exhibition-hero-copy > * + * {
+  margin-top: 1.25rem;
+}
+
+.exhibition-page .exhibition-evidence-grid {
+  margin-top: 2rem;
+  gap: 1.75rem 2.5rem;
+}
+
+.exhibition-page .exhibition-evidence-item {
+  padding-top: 1.25rem;
+}
+
+.exhibition-page .exhibition-learning-grid svg {
+  width: 3rem;
+  height: 3rem;
+  margin-bottom: 0.75rem;
+}
+
+.exhibition-page .exhibition-questions details {
+  padding-block: 1rem;
+}
+
+.exhibition-page .home-closing-inner > div {
+  max-width: 46rem;
+}
+
+/* Compact research value and audience sections. */
+.research-compact {
+  padding-block: clamp(2.5rem, 5vw, 4rem);
+}
+
+.research-compact .section-heading {
+  display: block;
+  margin-bottom: 2rem;
+}
+
+.research-compact .section-heading p {
+  max-width: 60ch;
+  margin-top: 1rem;
+  font-size: var(--step-body);
+  line-height: 1.5;
+}
+
+.research-compact .research-directions svg {
+  width: 3rem;
+  height: 3rem;
+  margin-bottom: 0.75rem;
+}
+
+.research-compact .research-direction-note,
+.research-compact .applications-cta {
+  margin-top: 1.5rem;
+}
+
+/* A conversation-led break after the research capabilities. */
+.research-collaboration {
+  display: grid;
+  gap: 2.5rem;
+  align-items: center;
+}
+
+.research-collaboration-copy h2 {
+  max-width: 20ch;
+}
+
+.research-collaboration-copy p {
+  max-width: 52ch;
+  margin: 1.25rem 0 1.5rem;
+}
+
+.research-audiences h3 {
+  margin-bottom: 1rem;
+  font-size: 1.125rem;
+  line-height: 1.4;
+  letter-spacing: 0;
+}
+
+.research-audiences ul {
+  display: grid;
+  gap: 1rem;
+  margin: 0;
+  padding-left: 1.25rem;
+}
+
+@media (min-width: 52rem) {
+  .research-collaboration {
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+    gap: clamp(3rem, 6vw, 6rem);
+  }
+}
+
+/* People first on the Team page. */
+.team-introduction {
+  padding-block: 2rem;
+}
+
+.team-introduction h1 {
+  font-size: var(--step-head);
+}
+
+.team-introduction p {
+  max-width: 64ch;
+  margin: 1rem 0 0;
+}
+
+.team-page .section {
+  padding-block: clamp(2.5rem, 5vw, 4rem);
+}
+
+.team-page .team-section {
+  padding-top: 1.5rem;
+}
+
+.team-page .team-grid {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1rem;
+  margin: 0;
+}
+
+.team-card-copy {
+  padding: 1rem;
+}
+
+.team-card-copy h3 {
+  font-size: 1.1875rem;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.team-card .team-card-copy .team-discipline {
+  margin: 0.5rem 0 0;
+  padding: 0;
+  font-size: 0.9375rem;
+  line-height: 1.4;
+}
+
+.team-focus {
+  display: grid;
+  gap: 0.25rem;
+  margin: 0.75rem 0 0;
+  padding-left: 1.1rem;
+  font-size: 0.9375rem;
+  line-height: 1.4;
+}
+
+.team-development-progress {
+  max-width: 70ch;
+  margin-top: 2.5rem;
+}
+
+.team-development-progress p {
+  margin: 1rem 0 0;
+}
+
+.team-status-note {
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+
+.team-contact-link {
+  align-self: center;
+}
+
+@media (min-width: 40rem) {
+  .team-page .team-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 52rem) {
+  .team-page .team-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 76rem) {
+  .team-page .team-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* Native community posts retain LinkedIn's own presentation. */
+.community-posts {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 2rem;
+  max-width: 34rem;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+  align-items: start;
+}
+
+.community-post {
+  min-width: 0;
+}
+
+.community-post iframe {
+  display: block;
+  width: 100%;
+  border: 0;
+}
+
+.community-post-original {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+
+.community-post-original svg {
+  flex-shrink: 0;
+}
+
+@media (min-width: 76rem) {
+  .community-posts {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.5rem;
+    max-width: none;
+  }
+}
+
+/* Team page: blue and white with a consistent editorial rhythm. */
+.team-page .team-introduction {
+  padding-block: clamp(2rem, 4vw, 3.5rem) 1.5rem;
+}
+
+.team-page .team-introduction h1 {
+  max-width: none;
+  font-size: clamp(2.5rem, 4.5vw, 4rem);
+  line-height: 1.05;
+  text-wrap: pretty;
+}
+
+.team-page .team-introduction p {
+  max-width: 64ch;
+  margin: 1rem 0 0;
+  text-wrap: pretty;
+}
+
+.team-page .team-section {
+  padding-top: 0.5rem;
+}
+
+.team-page .team-card {
+  background: var(--deep-tint);
+  color: var(--paper);
+}
+
+.team-page .team-card-copy {
+  padding: 1.25rem;
+}
+
+.team-page .team-card-copy h3 {
+  text-wrap: pretty;
+}
+
+.team-page .team-discipline,
+.team-page .event-figure figcaption,
+.team-page .team-status-note {
+  color: inherit;
+}
+
+.team-page .section-heading {
+  display: block;
+  margin-bottom: 2rem;
+}
+
+.team-page .section-heading h2 {
+  max-width: 28ch;
+  text-wrap: pretty;
+}
+
+.team-page .section-heading p {
+  max-width: 64ch;
+  margin-top: 1rem;
+  font-size: var(--step-body);
+  line-height: 1.5;
+}
+
+.team-page .event-item h3 {
+  text-wrap: pretty;
+}
+
+.team-page .team-current-focus {
+  padding-block: clamp(2.5rem, 5vw, 4rem);
+}
+
+.team-current-focus h2 {
+  font-size: clamp(2rem, 3vw, 3rem);
+  line-height: 1.1;
+}
+
+.team-focus-bullets {
+  display: grid;
+  gap: 0.75rem;
+  max-width: 66ch;
+  margin: 1.5rem 0 2rem;
+  padding-left: 1.25rem;
+  line-height: 1.6;
+}
+
+.team-focus-bullets li::marker {
+  color: var(--deep);
+}
+
+.team-page .team-status-note {
+  max-width: 88ch;
+  margin: 1.75rem 0 0;
+}
+
+.team-closing {
+  padding-block: clamp(2rem, 4vw, 3rem);
+}
+
+.team-closing-inner {
+  display: grid;
+  align-items: center;
+  gap: 1.5rem 2rem;
+}
+
+.team-closing h2 {
+  max-width: none;
+  text-wrap: pretty;
+}
+
+.team-closing .button-row {
+  margin: 0;
+}
+
+@media (min-width: 64rem) {
+  .team-closing-inner {
+    grid-template-columns: minmax(0, 1fr) auto;
   }
 }

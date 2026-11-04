@@ -77,9 +77,9 @@ export default function Page() {
             <h2>The team</h2>
             <p>
               A multidisciplinary, student-led research initiative bringing
-              together talent from DTU (Technical University of Denmark) and KU
-              (University of Copenhagen), based in the Copenhagen area. No DTU
-              or KU endorsement is implied.
+              together talent from Technical University of Denmark and
+              University of Copenhagen, based in the Copenhagen area. No
+              university endorsement is implied.
             </p>
           </div>
         </section>

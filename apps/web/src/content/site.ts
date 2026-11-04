@@ -5,19 +5,20 @@ export const contactHrefs = {
 } as const;
 
 export const homeHero = {
-  headline:
-    'A desktop stellarator model to inspire 100,000 new fusion engineers.',
+  headline: ['Make plasma visible.', 'Bring fusion closer to people.'],
   supporting:
-    'Aurora Confinement is developing compact experimental platforms designed to reduce the cost and infrastructure required for hands-on stellarator research, together with physical models that make the technology easier to communicate and teach.',
-  primaryLabel: 'Register institutional interest',
-  primaryHref: contactHrefs.productInterest,
+    'We’re developing a tabletop real-plasma model with shaped magnetic fields to support introductory teaching, public engagement and informed conversations about fusion.',
+  primaryLabel: 'Register interest',
+  primaryHref: '/contact/?intent=product-interest&interest=exhibition-model',
+  invitation:
+    'Interested in using the model at your institution? Register your non-binding interest.',
 } as const;
 
 export const projectStatus =
-  'Aurora Confinement is a student-led research initiative bringing together talent from DTU (Technical University of Denmark) and KU (University of Copenhagen). The project is pre-incorporation and at an early stage of development.';
+  'Aurora Confinement is a student-led research initiative bringing together talent from Technical University of Denmark and University of Copenhagen. The project is pre-incorporation and at an early stage of development.';
 
 export const conceptCaption =
-  'Concept illustration — not the actual product or final design. The magnetic-field configuration shown is illustrative and does not represent Aurora Confinement’s technology.';
+  'Concept illustration - not the actual product or final design. The magnetic-field configuration shown is illustrative and does not represent Aurora Confinement’s technology.';
 
 // Read at build time on the server; these pages are statically exported.
 export const siteName = 'Aurora Confinement';

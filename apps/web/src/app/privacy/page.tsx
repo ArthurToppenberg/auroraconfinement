@@ -60,6 +60,25 @@ export default function Page() {
             interest, and any later relationship management before collection
             begins.
           </p>
+          <h2>LinkedIn posts on the Team page</h2>
+          <p>
+            The Team page includes lazy-loaded LinkedIn frames. When your
+            browser loads a post, it connects to LinkedIn, which receives
+            connection and browser information, including your IP address.
+            LinkedIn may use cookies or browser storage under its own policies,
+            particularly if you are signed in. Aurora does not copy post
+            interactions into its enquiry records or control LinkedIn’s logs or
+            retention periods. You can also open each original post through the
+            link beneath it.
+          </p>
+          <p>
+            See{' '}
+            <a href="https://www.linkedin.com/legal/privacy-policy">
+              LinkedIn’s privacy policy
+            </a>
+            . External-content processing, storage and retention require review;
+            this notice does not claim that LinkedIn frames are tracking-free.
+          </p>
           <h2>Recipients and processors</h2>
           <p>
             Access should be limited to authorised Aurora Confinement personnel

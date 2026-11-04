@@ -3,12 +3,12 @@
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { contactHrefs } from '@/content/site';
+import { homeHero } from '@/content/site';
 
 const links = [
+  { href: '/model', label: 'Exhibition model' },
+  { href: '/research-platform', label: 'Research platform' },
   { href: '/about', label: 'Team' },
-  { href: '/model', label: 'Exhibition Model' },
-  { href: '/research-platform', label: 'Research Platform' },
   { href: '/roadmap', label: 'Roadmap' },
 ] as const;
 
@@ -90,11 +90,11 @@ export default function Header() {
             ))}
             <li>
               <Link
-                href={contactHrefs.productInterest}
+                href={homeHero.primaryHref}
                 className="nav-cta"
                 aria-current={path === '/contact' ? 'page' : undefined}
               >
-                Register
+                {homeHero.primaryLabel}
               </Link>
             </li>
           </ul>

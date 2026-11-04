@@ -1,3 +1,5 @@
+import { Suspense } from 'react';
+import ContactIntroduction from '@/components/ContactIntroduction';
 import type { Metadata } from 'next';
 import { pageMetadata } from '@/lib/metadata';
 import InterestForm from '@/components/InterestForm';
@@ -13,31 +15,18 @@ export default function Page() {
   return (
     <section className="contact-page chapter field-deep" id="contact-form">
       <div className="shell contact-page-grid">
-        <div className="contact-intro">
-          <h1>Tell us what you are exploring.</h1>
-          <p className="contact-lead">
-            Register your interest in one of our products, discuss a
-            collaboration or send us a general enquiry.
-          </p>
-          <div className="contact-categories" aria-label="Conversation topics">
-            <div>
-              <span>Exhibition stellarator models</span>
+        <Suspense
+          fallback={
+            <div className="contact-intro">
+              <h1>Contact Aurora Confinement</h1>
             </div>
-            <div>
-              <span>Experimental research platforms</span>
-            </div>
-            <div>
-              <span>Research, investment or strategic collaboration</span>
-            </div>
-          </div>
-        </div>
+          }
+        >
+          <ContactIntroduction />
+        </Suspense>
         <div className="contact-form-column">
           <div className="contact-form-heading">
-            <h2>Register your interest.</h2>
-            <p>
-              Tell us how one of our products could be relevant to your
-              organisation.
-            </p>
+            <h2>Your details</h2>
           </div>
           <InterestForm />
         </div>

@@ -4,10 +4,10 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { sessionCookie, verifySession } from '@/lib/admin/session';
 
-// Self-hosted Umami (cookieless analytics): the only third-party origin allowed.
+// Self-hosted Umami (cookieless analytics), allowed for scripts and connections.
 const statsOrigin = 'https://stats.arthurtoppenberg.dk';
 
-const policy = (scriptSrc: string) =>
+const policy = (scriptSrc: string, allowLinkedInFrames = false) =>
   [
     "default-src 'self'",
     "base-uri 'self'",
@@ -15,6 +15,7 @@ const policy = (scriptSrc: string) =>
     "font-src 'self'",
     "form-action 'self'",
     "frame-ancestors 'none'",
+    `frame-src 'self'${allowLinkedInFrames ? ' https://www.linkedin.com/embed/' : ''}`,
     "img-src 'self' data:",
     "object-src 'none'",
     scriptSrc,
@@ -61,7 +62,7 @@ export function proxy(request: NextRequest) {
     );
     requestHeaders.set('x-nonce', nonce);
   } else {
-    csp = policy(staticHashes());
+    csp = policy(staticHashes(), /^\/about\/?$/.test(pathname));
   }
   requestHeaders.set('Content-Security-Policy', csp);
 

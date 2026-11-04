@@ -1,58 +1,41 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { pageMetadata } from '@/lib/metadata';
-import PageHero from '@/components/PageHero';
 import TeamGrid from '@/components/TeamGrid';
 import EventFigure from '@/components/EventFigure';
-import { contactHrefs, projectStatus } from '@/content/site';
+import CommunityPosts from '@/components/CommunityPosts';
+import { homeHero } from '@/content/site';
 
 export const metadata: Metadata = pageMetadata({
   title: 'Team',
   description:
-    'Meet the student-led Aurora Confinement team: physics and engineering students from DTU and KU developing physical tools for stellarator research, communication, and teaching.',
+    'Meet the physics and engineering students behind Aurora Confinement, working together to make plasma and fusion tangible.',
   path: '/about/',
 });
 
 export default function Page() {
   return (
-    <>
-      <PageHero
-        field="ice"
-        title="Meet the team."
-        intro="Aurora Confinement is a student-led research initiative bringing together talent from DTU (Technical University of Denmark) and KU (University of Copenhagen) to make stellarator technology more accessible for communication, education, and experimental research."
-      />
-
-      <section className="section field-deep team-section" id="team">
+    <div className="team-page">
+      <section className="team-introduction chapter field-ice">
         <div className="shell">
-          <div className="section-heading">
-            <h2>Physics and engineering, side by side.</h2>
-            <p>
-              Physics and engineering students working across modelling, plasma
-              physics, electronics, design, and operations. Roles are current
-              focus areas inside a project in formation, not formal
-              appointments.
-            </p>
-          </div>
-          <TeamGrid label="Team" />
+          <h1>Meet the team.</h1>
+          <p>
+            Physics and engineering students from DTU and the University of
+            Copenhagen, working together to make plasma and fusion tangible.
+          </p>
         </div>
       </section>
 
-      <section className="section field-night">
-        <div className="shell split-section">
-          <h2>Lower the barrier to engagement.</h2>
-          <div className="split-copy">
-            <p>
-              Hands-on stellarator research can require substantial capital,
-              specialist infrastructure, and engineering resources. Aurora
-              Confinement is developing compact experimental platforms intended
-              to reduce those barriers.
-            </p>
-            <p>
-              Alongside this research direction, the team is developing
-              exhibition stellarator models for communication, with introductory
-              teaching as an additional application.
-            </p>
-          </div>
+      <section
+        className="section field-deep team-section"
+        id="team"
+        aria-labelledby="team-members-heading"
+      >
+        <div className="shell">
+          <h2 className="sr-only" id="team-members-heading">
+            Team members
+          </h2>
+          <TeamGrid label="Team" />
         </div>
       </section>
 
@@ -61,8 +44,8 @@ export default function Page() {
           <div className="section-heading">
             <h2>What the team has done so far.</h2>
             <p>
-              Before any hardware exists, we have been building the audience and
-              the conversations around it.
+              Developing the concept, bringing people together and learning from
+              the fusion community.
             </p>
           </div>
           <div className="event-pair">
@@ -72,50 +55,92 @@ export default function Page() {
                 height={1200}
                 sizes="(min-width: 52rem) 46vw, 100vw"
                 alt="A full university auditorium during a fusion lunch lecture, with a presentation slide visible on the screens."
-                caption="Fusion lunch lecture at DTU, organised and promoted by Aurora Confinement."
+                caption="Fusion lunch lecture at Technical University of Denmark, organised and promoted by Aurora Confinement."
               />
-              <h3>A fusion lecture that sold out.</h3>
+              <h3>120 registrations in 48 hours.</h3>
               <p>
                 Aurora Confinement organised and promoted a fusion lunch lecture
-                at DTU. It drew 120 registrations within 48 hours, with a
-                further 20 people on the waiting list, and students from
-                disciplines across the university.
+                at <a href="https://www.dtu.dk/">DTU</a> with Søren Bang
+                Korsholm and{' '}
+                <a href="https://www.novatronfusion.com/">Novatron</a>. The
+                event attracted 120 registrations within 48 hours, with another
+                20 people joining the waiting list.
               </p>
             </article>
             <article className="event-item">
               <EventFigure
-                name="nff-team"
-                height={781}
+                name="nff-team-2"
+                height={1200}
                 sizes="(min-width: 52rem) 46vw, 100vw"
                 alt="Aurora Confinement members wearing Nordic Fusion Forum 2026 lanyards, standing together in front of the event screen."
                 caption="Aurora Confinement at Nordic Fusion Forum 2026, Copenhagen."
               />
-              <h3>Nordic Fusion Forum 2026.</h3>
+              <h3>Connecting with the fusion community.</h3>
               <p>
-                The team took part in Nordic Fusion Forum in Copenhagen on 19
-                October 2026 and met researchers, fusion companies, and funders.
-                Visitors can{' '}
-                <Link href="/nff">continue the conversation here</Link>.
+                At{' '}
+                <a href="https://nordic-fusion-forum-2026.confetti.events/#speakers--1498456">
+                  Nordic Fusion Forum 2026
+                </a>{' '}
+                in Copenhagen, team members met researchers, fusion companies
+                and funders to discuss workforce needs, public engagement and
+                potential applications for our models.
               </p>
             </article>
           </div>
         </div>
       </section>
 
-      <section className="section tight field-cyan">
-        <div className="shell callout">
-          <h2>Early-stage and actively developing.</h2>
-          <p>
-            {projectStatus} Both product directions are current priorities at
-            different levels of technical maturity. No completed product,
-            customer relationship, formal institutional partnership, DTU or KU
-            endorsement, or regulatory approval is claimed.
-          </p>
-          <Link className="button primary" href={contactHrefs.generalEnquiry}>
-            Talk with the team
+      <CommunityPosts />
+
+      <section className="section field-ice team-current-focus">
+        <div className="shell">
+          <h2>Our focus now.</h2>
+          <ul className="team-focus-bullets">
+            <li>
+              Gather free, non-binding expressions of interest to support grant
+              funding applications and help us start building the physical prototype.
+            </li>
+            <li>
+              Refine the <Link href="/model/">exhibition model</Link> through
+              simulations and virtual modelling.
+            </li>
+            <li>
+              Gather institutional requirements for teaching, exhibitions and
+              outreach.
+            </li>
+            <li>
+              Explore the{' '}
+              <Link href="/research-platform/">research platform</Link> as a
+              longer-term direction.
+            </li>
+          </ul>
+          <Link className="button" href="/roadmap/">
+            See the roadmap
           </Link>
+          <p className="team-status-note">
+            Aurora Confinement is an early-stage, student-led initiative,
+            currently pre-incorporation. University affiliations describe team
+            members’ studies and do not imply institutional endorsement.
+          </p>
         </div>
       </section>
-    </>
+
+      <section className="home-closing chapter field-deep team-closing">
+        <div className="shell team-closing-inner">
+          <div>
+            <h2>Interested in using the model?</h2>
+            <p>
+              Free and non-binding. Your interest helps us assess demand and
+              support applications for grant funding.
+            </p>
+          </div>
+          <div className="button-row">
+            <Link className="button primary" href={homeHero.primaryHref}>
+              Register interest
+            </Link>
+          </div>
+        </div>
+      </section>
+    </div>
   );
 }

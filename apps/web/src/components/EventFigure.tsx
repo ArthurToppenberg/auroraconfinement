@@ -1,5 +1,11 @@
 interface EventFigureProps {
-  name: 'lecture-hall' | 'lecture-wide' | 'nff-panel' | 'nff-team';
+  name:
+    | 'lecture-hall'
+    | 'packed-lecture'
+    | 'lecture-wide'
+    | 'nff-panel'
+    | 'nff-team'
+    | 'nff-team-2';
   alt: string;
   caption: string;
   height: number;

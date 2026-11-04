@@ -584,11 +584,19 @@ export default function InterestFormFields({
           ? isNff || isProductInterest
             ? 'Registering…'
             : 'Sending…'
-          : isNff || isProductInterest
+          : isNff
             ? 'Register your interest'
-            : 'Send enquiry'}
+            : isProductInterest
+              ? 'Submit interest'
+              : 'Send enquiry'}
       </button>
-      <InterestDisclaimer />
+      <InterestDisclaimer
+        subject={
+          isProductInterest && requestedInterest === 'exhibition-model'
+            ? 'our real-plasma exhibition and educational model'
+            : 'the selected product or enquiry'
+        }
+      />
       <div
         ref={statusRef}
         className="form-status"

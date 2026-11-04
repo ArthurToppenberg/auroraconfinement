@@ -7,10 +7,7 @@ interface TeamGridProps {
 
 const widths = [320, 640] as const;
 
-export default function TeamGrid({
-  label,
-  showRoles = true,
-}: TeamGridProps) {
+export default function TeamGrid({ label, showRoles = true }: TeamGridProps) {
   return (
     <ul className="team-grid" aria-label={label}>
       {teamMembers.map((member) => (
@@ -20,18 +17,24 @@ export default function TeamGrid({
             srcSet={widths
               .map((w) => `/images/team/${member.slug}-${w}.webp ${w}w`)
               .join(', ')}
-            sizes="(min-width: 64rem) 16vw, (min-width: 40rem) 30vw, 46vw"
+            sizes="(min-width: 76rem) 23vw, (min-width: 52rem) 30vw, (min-width: 40rem) 45vw, 100vw"
             alt={`Portrait of ${member.name}`}
             width="640"
             height="800"
             loading="lazy"
             decoding="async"
           />
-          <h4>{member.name}</h4>
-          <p className="team-discipline">{member.discipline}</p>
-          {showRoles && member.role && (
-            <p className="team-role">{member.role}</p>
-          )}
+          <div className="team-card-copy">
+            <h3>{member.name}</h3>
+            <p className="team-discipline">{member.discipline}</p>
+            {showRoles && member.focus && member.focus.length > 0 && (
+              <ul className="team-focus">
+                {member.focus.slice(0, 3).map((focus) => (
+                  <li key={focus}>{focus}</li>
+                ))}
+              </ul>
+            )}
+          </div>
         </li>
       ))}
     </ul>

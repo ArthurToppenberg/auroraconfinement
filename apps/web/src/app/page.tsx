@@ -2,17 +2,15 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { pageMetadata } from '@/lib/metadata';
 import HeroVisual from '@/components/HeroVisual';
-import InterestDisclaimer from '@/components/InterestDisclaimer';
+import HeroBenefits from '@/components/HeroBenefits';
+import ModelApplications from '@/components/ModelApplications';
 import EventFigure from '@/components/EventFigure';
-import TeamGrid from '@/components/TeamGrid';
-import { contactHrefs, homeHero, projectStatus } from '@/content/site';
-import VoiceField from '@/components/VoiceField';
-import { placeholder, voices } from '@/content/voices';
+import { homeHero, projectStatus } from '@/content/site';
 
 export const metadata: Metadata = pageMetadata({
   title: 'Aurora Confinement',
   description:
-    'Aurora Confinement is developing compact experimental stellarator platforms for more accessible hands-on research, together with exhibition stellarator models for communication and teaching.',
+    'Aurora Confinement is developing a tabletop real-plasma model with shaped magnetic fields for introductory teaching, exhibitions and fusion outreach.',
   path: '/',
 });
 
@@ -20,118 +18,183 @@ export default function Page() {
   return (
     <>
       <section className="home-hero chapter field-cyan">
-        <HeroVisual />
         <div className="shell home-hero-grid">
-          <h1 className="hero-name">
-            <span className="line">
-              <span>Aurora</span>
-            </span>
-            <span className="line">
-              <span>Confinement</span>
-            </span>
-          </h1>
           <div className="hero-copy">
-            <p className="lede">{homeHero.headline}</p>
+            <h1 className="hero-benefit-title">
+              {homeHero.headline.map((line) => (
+                <span key={line}>{line}</span>
+              ))}
+            </h1>
             <p className="hero-supporting">{homeHero.supporting}</p>
-            <div className="button-row">
+            <HeroBenefits />
+            <div className="hero-enquiry">
               <Link className="button primary" href={homeHero.primaryHref}>
                 {homeHero.primaryLabel}
               </Link>
+              <p>{homeHero.invitation}</p>
+              <p className="hero-privacy">
+                How we handle your data:{' '}
+                <Link href="/privacy">Privacy Notice</Link>.
+              </p>
             </div>
-            <InterestDisclaimer />
+          </div>
+          <HeroVisual />
+        </div>
+      </section>
+
+      <section className="section tight field-night home-evidence">
+        <div className="shell">
+          <h2>
+            Fusion needs talent.
+            <br />
+            And public confidence.
+          </h2>
+          <p className="evidence-intro">
+            Billions are backing fusion’s development. Building its future also
+            means introducing students, engaging the public and helping
+            decision-makers understand the science.
+          </p>
+          <div className="evidence-rows">
+            <div className="evidence-row">
+              <p className="evidence-highlight evidence-number">$14.2bn</p>
+              <div className="evidence-copy">
+                <h3>
+                  Serious investment. A growing need to explain the science.
+                </h3>
+                <p>
+                  The 56 fusion companies surveyed by the Fusion Industry
+                  Association in 2026 reported $14.24 billion in cumulative
+                  funding. Teaching and outreach can help bring this developing
+                  field to more people.
+                </p>
+                <p className="evidence-source">
+                  <a href="https://www.fusionindustryassociation.org/fusion-industry-attracts-record-annual-funding-of-4-48bn-raising-total-to-14-24bn/">
+                    Fusion Industry Association, 2026
+                  </a>
+                </p>
+              </div>
+            </div>
+            <div className="evidence-row">
+              <p className="evidence-highlight evidence-number">100,000</p>
+              <div className="evidence-copy">
+                <h3>A new generation of fusion engineers.</h3>
+                <p>
+                  An industry estimate cited at Nordic Fusion Forum 2026 puts
+                  the need at 100,000 new fusion engineers. Introducing students
+                  to plasma and magnetic confinement is a place to start.
+                </p>
+                <p className="evidence-source">
+                  Industry estimate cited by Tobias Petrini, Business Finland,
+                  Nordic Fusion Forum 2026.
+                </p>
+              </div>
+            </div>
+            <div className="evidence-row">
+              <p className="evidence-highlight evidence-number">19%</p>
+              <div className="evidence-copy">
+                <h3>Public understanding of fusion is low.</h3>
+                <p>
+                  65% of UK adults had heard of fusion, but just 19% said they
+                  knew a fair amount or a lot about it. Educators and outreach
+                  teams have an opportunity to make the science more accessible.
+                </p>
+                <p className="evidence-source">
+                  <a href="https://www.gov.uk/government/statistics/desnz-public-attitudes-tracker-spring-2026/desnz-public-attitudes-tracker-energy-infrastructure-and-energy-security-spring-2026-uk">
+                    DESNZ Public Attitudes Tracker, UK, spring 2026
+                  </a>
+                </p>
+              </div>
+            </div>
+            <div className="evidence-row">
+              <div>
+                <p className="evidence-highlight evidence-number">13 of 52</p>
+                <p className="evidence-number-label">
+                  on-campus devices identified
+                </p>
+              </div>
+              <div className="evidence-copy">
+                <h3>Limited hands on teaching.</h3>
+                <p>
+                  In our review of European institutions offering fusion or
+                  plasma degrees and courses, we identified on-campus
+                  magnetic-confinement devices at only 13 of 52 institutions.
+                </p>
+                <p className="evidence-source">
+                  Aurora Confinement desk research, October 2026
+                </p>
+                <details className="evidence-methodology">
+                  <summary>About this research</summary>
+                  <p>
+                    Our wider list covers 72 European institutions. Of the 52
+                    classified as offering fusion/plasma degrees or courses, 13
+                    had an identified on-campus toroidal or linear
+                    magnetic-confinement device, four were classified as
+                    partner-lab only, and 35 had no device identified in the
+                    reviewed sources. The list is not exhaustive; ‘not found’
+                    does not mean confirmed absent.
+                  </p>
+                  <p>
+                    These counts concern identified magnetic-confinement
+                    devices, not all plasma teaching equipment, and do not
+                    establish student access or teaching use.
+                  </p>
+                </details>
+              </div>
+            </div>
+          </div>
+          <div className="evidence-invitation">
+            <h3>Bring the science into the room.</h3>
+            <p>
+              We’re developing a tabletop real-plasma model with shaped magnetic
+              fields to help universities introduce confinement concepts and
+              give museums, fusion organisations and policy events a focal point
+              for explaining the science.
+            </p>
+            <Link className="button primary" href={homeHero.primaryHref}>
+              {homeHero.primaryLabel}
+            </Link>
+            <p className="evidence-source">
+              Tell us how your institution would use the model. Registration is
+              non-binding.
+            </p>
           </div>
         </div>
       </section>
 
-      <section className="section tight voices field-ice" id="voices">
-        <div className="shell">
-          <VoiceField voices={voices} placeholder={placeholder} />
-        </div>
-      </section>
-
-      <section className="section tight field-night">
+      <section className="section field-ice">
         <div className="shell">
           <div className="section-heading">
-            <h2>Fusion is known, but not understood.</h2>
+            <h2>Where could you use the model?</h2>
             <p>
-              Awareness of fusion is broader than understanding. Physical,
-              visible tools can help close that gap, without claiming to replace
-              credible regulation, safety, and performance.
+              Bring real plasma into teaching, exhibitions and conversations
+              about fusion.
             </p>
           </div>
-          <ul className="stat-row" aria-label="Public understanding of fusion">
-            <li>
-              <strong>65%</strong>
-              <span>had heard of fusion</span>
-            </li>
-            <li>
-              <strong>19%</strong>
-              <span>knew a fair amount or a lot</span>
-            </li>
-            <li>
-              <strong>5%</strong>
-              <span>said they knew a lot</span>
-            </li>
-          </ul>
-          <p className="status-copy">
-            Representative UK government survey of about 3,400 people, spring
-            2026:{' '}
-            <a
-              href="https://www.gov.uk/government/statistics/desnz-public-attitudes-tracker-spring-2026/desnz-public-attitudes-tracker-energy-infrastructure-and-energy-security-spring-2026-uk"
-              rel="noopener noreferrer"
-            >
-              DESNZ Public Attitudes Tracker
-            </a>
-            .
+          <ModelApplications />
+          <p className="application-development-note">
+            Applications shown are illustrative. The model is in development.
           </p>
-        </div>
-      </section>
-
-      <section className="section home-barrier field-ice">
-        <div className="shell barrier-layout">
-          <div className="barrier-copy">
-            <h2>Hands-on research is resource-heavy.</h2>
-            <ul className="barrier-list">
-              <li>
-                <h3>High capital cost</h3>
-                <p>Heavy financial investment limits entry.</p>
-              </li>
-              <li>
-                <h3>Specialist infrastructure</h3>
-                <p>Demands complex, specialized facilities.</p>
-              </li>
-              <li>
-                <h3>Restricted access</h3>
-                <p>Limits hands-on research to a few large institutions.</p>
-              </li>
-            </ul>
-            <p className="barrier-bridge">
-              Aurora Confinement is developing compact platforms and physical
-              models intended to lower these barriers.
-            </p>
+          <div className="applications-cta">
+            <Link className="button primary" href={homeHero.primaryHref}>
+              {homeHero.primaryLabel}
+            </Link>
+            <p>Tell us where your institution would use the model.</p>
           </div>
-          <EventFigure
-            name="nff-team"
-            height={781}
-            sizes="(min-width: 52rem) 46vw, 100vw"
-            alt="Aurora Confinement members wearing Nordic Fusion Forum 2026 lanyards, standing together in front of the event screen."
-            caption="Aurora Confinement at Nordic Fusion Forum 2026, Copenhagen."
-          />
         </div>
       </section>
 
       <section className="section field-night">
         <div className="shell">
           <div className="section-heading">
-            <h2>A fusion lecture that sold out in 48 hours.</h2>
+            <h2>Fusion outreach: a full lecture in 48 hours.</h2>
           </div>
           <div className="proof-grid">
             <EventFigure
-              name="lecture-hall"
+              name="packed-lecture"
               height={1200}
               sizes="(min-width: 64rem) 56vw, 100vw"
               alt="A full university auditorium during a fusion lunch lecture, with a presentation slide visible on the screens."
-              caption="Fusion lunch lecture at DTU, organised and promoted by Aurora Confinement."
+              caption="Fusion lunch lecture in collaboration with the Technical University of Denmark and Novatron Fusion Group AB, organised and promoted by Aurora Confinement."
             />
             <div className="proof-copy">
               <ul className="stat-row stat-column">
@@ -143,50 +206,47 @@ export default function Page() {
                   <strong>+20</strong>
                   <span>more on the waiting list</span>
                 </li>
-                <li>
-                  <strong>5</strong>
-                  <span>
-                    non-binding expressions of interest around Nordic Fusion
-                    Forum 2026
-                  </span>
-                </li>
               </ul>
               <p>
-                The turnout shows interest in fusion education. Expressions of
-                interest are not letters of intent, orders, customers, or
-                commitments.
+                This lecture reflects the team’s outreach activity and audience
+                interest in fusion education. It is not evidence of
+                institutional purchase demand or the model’s performance.
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="section field-deep">
-        <div className="shell">
-          <div className="section-heading">
+      <section className="section tight field-deep">
+        <div className="shell split-section">
+          <div className="split-copy">
             <h2>A multidisciplinary student team.</h2>
             <p>
-              {projectStatus} No DTU or KU endorsement or institutional
+              {projectStatus} No university endorsement or institutional
               partnership is implied.
             </p>
+            <a className="button cta-button team-cta" href="/about/">
+              Meet the team
+            </a>
           </div>
-          <TeamGrid label="Team" showRoles={false} />
-          <a className="button cta-button team-cta" href="/about/">
-            Meet the team
-          </a>
+          <EventFigure
+            name="nff-team-2"
+            height={1200}
+            sizes="(min-width: 52rem) 46vw, 100vw"
+            alt="Five Aurora Confinement team members standing together in front of the Nordic Fusion Forum 2026 event screen."
+            caption="Aurora Confinement team at Nordic Fusion Forum 2026, Copenhagen."
+          />
         </div>
       </section>
 
-      <section className="section field-magenta">
-        <div className="shell callout">
-          <h2>Where could a stellarator tool help?</h2>
-          <p>
-            We welcome non-binding conversations with research institutions,
-            universities, fusion companies, collaborators, and strategic
-            partners.
-          </p>
-          <Link className="button primary" href={contactHrefs.generalEnquiry}>
-            Start a conversation
+      <section className="home-closing chapter field-magenta">
+        <div className="shell home-closing-inner">
+          <div>
+            <h2>Bring plasma to your institution.</h2>
+            <p>Registering interest is completely free + non-binding, and helps us validate demand for softfunding, to get started building.</p>
+          </div>
+          <Link className="button primary" href={homeHero.primaryHref}>
+            {homeHero.primaryLabel}
           </Link>
         </div>
       </section>

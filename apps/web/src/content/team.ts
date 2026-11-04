@@ -2,42 +2,46 @@ export interface TeamMember {
   slug: string;
   name: string;
   discipline: string;
-  role?: string;
+  focus?: readonly string[];
 }
 
-// Names, disciplines and roles follow the team's own working document.
+// Names, disciplines and focus areas follow material supplied by the team.
 // Portraits live in public/images/team/<slug>-{320,640}.webp (4:5, greyscale).
-// Roles are working focus areas inside a project in formation, not job titles.
+// Focus areas describe contributions, not formal appointments.
 export const teamMembers: readonly TeamMember[] = [
   {
     slug: 'etienne',
     name: 'Etienne Rasmus Gras',
     discipline: 'Mechanical Engineering',
-    role: 'Commercial lead, operations and project coordination',
+    focus: ['Commercial development', 'Operations', 'Project coordination'],
   },
   {
     slug: 'malik',
     name: 'Malik Zaabalawi',
-    discipline: 'Physics Engineering',
-    role: 'Technology, theory and outreach',
+    discipline: 'Engineering Physics',
+    focus: ['Technology and theory', 'Outreach'],
   },
   {
     slug: 'stig',
     name: 'Stig Kvistgaard Jensen',
-    discipline: 'Physics Engineering',
-    role: 'Modelling, programming and core technology',
+    discipline: 'Engineering Physics',
+    focus: ['Modelling and programming', 'Core technology development'],
   },
   {
     slug: 'tobias-elholm',
     name: 'Tobias Peter Elholm',
-    discipline: 'Physics Engineering',
-    role: 'Plasma parameters, machine requirements and market validation',
+    discipline: 'Engineering Physics',
+    focus: [
+      'Plasma parameters',
+      'Engineering requirements',
+      'Market validation',
+    ],
   },
   {
     slug: 'robin',
     name: 'Robin William Brandt',
-    discipline: 'Physics Engineering',
-    role: 'Core physics, concept development and exhibition models',
+    discipline: 'Engineering Physics',
+    focus: ['Core physics', 'Concept development', 'Exhibition models'],
   },
   {
     slug: 'fie',
@@ -52,21 +56,26 @@ export const teamMembers: readonly TeamMember[] = [
   {
     slug: 'elisabeth',
     name: 'Elisabeth Astrup Christensen',
-    discipline: 'Physics Engineering',
+    discipline: 'Engineering Physics',
   },
   {
     slug: 'emily',
     name: 'Emily Bak Torp',
-    discipline: 'Physics Engineering',
+    discipline: 'Engineering Physics',
   },
   {
     slug: 'tobias-tops',
     name: 'Tobias Sejling Tops',
-    discipline: 'Physics Engineering',
+    discipline: 'Engineering Physics',
   },
   {
     slug: 'frederik',
     name: 'Frederik Bjerre Dansbo',
-    discipline: 'Physics Engineering',
+    discipline: 'Engineering Physics',
+  },
+  {
+    slug: 'elias',
+    name: 'Elias Dansbo',
+    discipline: 'Engineering Physics',
   },
 ];
