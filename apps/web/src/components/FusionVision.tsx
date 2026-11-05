@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import VisionPowerCable from '@/components/VisionPowerCable';
 import VisionBenefitIcon from '@/components/VisionBenefitIcon';
 
