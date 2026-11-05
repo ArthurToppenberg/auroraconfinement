@@ -1,3 +1,5 @@
+import type { ReactNode } from 'react';
+
 interface EventFigureProps {
   name:
     | 'lecture-hall'
@@ -7,7 +9,7 @@ interface EventFigureProps {
     | 'nff-team'
     | 'nff-team-2';
   alt: string;
-  caption: string;
+  caption: ReactNode;
   height: number;
   sizes: string;
   eager?: boolean;

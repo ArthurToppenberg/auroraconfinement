@@ -1,11 +1,15 @@
+import FusionMotivationIntro from '@/components/FusionMotivationIntro';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { pageMetadata } from '@/lib/metadata';
 import HeroVisual from '@/components/HeroVisual';
+import FusionVision from '@/components/FusionVision';
 import HeroBenefits from '@/components/HeroBenefits';
 import ModelApplications from '@/components/ModelApplications';
 import EventFigure from '@/components/EventFigure';
-import { homeHero, projectStatus } from '@/content/site';
+import CountUp from '@/components/CountUp';
+import { homeHero, projectStatus, universityResearch } from '@/content/site';
+import AnimatedNumbers from '@/components/AnimatedNumbers';
 
 export const metadata: Metadata = pageMetadata({
   title: 'Aurora Confinement',
@@ -16,7 +20,7 @@ export const metadata: Metadata = pageMetadata({
 
 export default function Page() {
   return (
-    <>
+    <div className="home-page">
       <section className="home-hero chapter field-cyan">
         <div className="shell home-hero-grid">
           <div className="hero-copy">
@@ -42,125 +46,126 @@ export default function Page() {
         </div>
       </section>
 
-      <section className="section tight field-night home-evidence">
+      <section
+        className="section field-night team-motivation home-fusion-vision"
+        aria-labelledby="home-vision-heading"
+      >
         <div className="shell">
-          <h2>
-            Fusion needs talent.
-            <br />
-            And public confidence.
-          </h2>
-          <p className="evidence-intro">
-            Billions are backing fusion’s development. Building its future also
-            means introducing students, engaging the public and helping
-            decision-makers understand the science.
-          </p>
-          <div className="evidence-rows">
-            <div className="evidence-row">
-              <p className="evidence-highlight evidence-number">$14.2bn</p>
-              <div className="evidence-copy">
-                <h3>
-                  Serious investment. A growing need to explain the science.
-                </h3>
+          <FusionMotivationIntro id="home-vision-heading" />
+          <FusionVision />
+          <div className="home-vision-support">
+            <div className="home-vision-sdg-group">
+              <div className="home-sdg-teaser">
+                <ul aria-label="Sustainable Development Goals">
+                  {[4, 7, 9, 13].map((goal) => (
+                    <li key={goal}>
+                      <a
+                        href={`https://sdgs.un.org/goals/goal${goal}`}
+                        aria-label={`United Nations Sustainable Development Goal ${goal}`}
+                      >
+                        <img
+                          src={`/images/sdg/goal-${String(goal).padStart(2, '0')}.jpg`}
+                          width="44"
+                          height="44"
+                          alt=""
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+                <Link href="/about/#team-motivation">
+                  Our motivation and goals
+                </Link>
+              </div>
+              <details className="sdg-attribution">
+                <summary>SDG icon attribution</summary>
                 <p>
-                  The 56 fusion companies surveyed by the Fusion Industry
-                  Association in 2026 reported $14.24 billion in cumulative
-                  funding. Teaching and outreach can help bring this developing
-                  field to more people.
-                </p>
-                <p className="evidence-source">
-                  <a href="https://www.fusionindustryassociation.org/fusion-industry-attracts-record-annual-funding-of-4-48bn-raising-total-to-14-24bn/">
-                    Fusion Industry Association, 2026
+                  Official icons:{' '}
+                  <a href="https://www.un.org/sustainabledevelopment">
+                    United Nations Sustainable Development Goals
                   </a>
-                </p>
-              </div>
-            </div>
-            <div className="evidence-row">
-              <p className="evidence-highlight evidence-number">100,000</p>
-              <div className="evidence-copy">
-                <h3>A new generation of fusion engineers.</h3>
-                <p>
-                  An industry estimate cited at Nordic Fusion Forum 2026 puts
-                  the need at 100,000 new fusion engineers. Introducing students
-                  to plasma and magnetic confinement is a place to start.
-                </p>
-                <p className="evidence-source">
-                  Industry estimate cited by Tobias Petrini, Business Finland,
-                  Nordic Fusion Forum 2026.
-                </p>
-              </div>
-            </div>
-            <div className="evidence-row">
-              <p className="evidence-highlight evidence-number">19%</p>
-              <div className="evidence-copy">
-                <h3>Public understanding of fusion is low.</h3>
-                <p>
-                  65% of UK adults had heard of fusion, but just 19% said they
-                  knew a fair amount or a lot about it. Educators and outreach
-                  teams have an opportunity to make the science more accessible.
-                </p>
-                <p className="evidence-source">
-                  <a href="https://www.gov.uk/government/statistics/desnz-public-attitudes-tracker-spring-2026/desnz-public-attitudes-tracker-energy-infrastructure-and-energy-security-spring-2026-uk">
-                    DESNZ Public Attitudes Tracker, UK, spring 2026
+                  .{' '}
+                  <a href="https://www.un.org/sustainabledevelopment/wp-content/uploads/2023/09/E_SDG_Guidelines_Sep20238.pdf">
+                    SDG asset-use guidelines
                   </a>
+                  .
                 </p>
-              </div>
-            </div>
-            <div className="evidence-row">
-              <div>
-                <p className="evidence-highlight evidence-number">13 of 72</p>
-                <p className="evidence-number-label">
-                  on-campus devices identified
-                </p>
-              </div>
-              <div className="evidence-copy">
-                <h3>Limited hands on teaching.</h3>
                 <p>
-                  In our review of European institutions offering fusion or
-                  plasma degrees and courses, we identified on-campus
-                  magnetic-confinement devices at only 13 of 72 institutions.
+                  The content of this publication has not been approved by the
+                  United Nations and does not reflect the views of the United
+                  Nations or its officials or Member States.
                 </p>
-                <p className="evidence-source">
-                  Aurora Confinement desk research, October 2026
-                </p>
-                <details className="evidence-methodology">
-                  <summary>About this research</summary>
-                  <p>
-                    Of the 72 institutions classified as offering fusion/plasma degrees
-                    or courses, 13 had an identified on-campus toroidal or linear
-                    magnetic-confinement device, four were classified as
-                    partner-lab only, and 35 had no device identified in the
-                    reviewed sources.
-                  </p>
-                  <p>
-                    These counts concern identified magnetic-confinement
-                    devices, not all plasma teaching equipment, and do not
-                    establish student access or teaching use.
-                  </p>
-                </details>
-              </div>
+              </details>
             </div>
-          </div>
-          <div className="evidence-invitation">
-            <h3>Bring the science into the room.</h3>
-            <p>
-              We’re developing a tabletop real-plasma model with shaped magnetic
-              fields to help universities introduce confinement concepts and
-              give museums, fusion organisations and policy events a focal point
-              for explaining the science.
-            </p>
-            <Link className="button primary" href={homeHero.primaryHref}>
-              {homeHero.primaryLabel}
-            </Link>
-            <p className="evidence-source">
-              Tell us how your institution would use the model. Registration is
-              non-binding.
-            </p>
           </div>
         </div>
       </section>
 
-      <section className="section field-ice">
+      <section
+        className="section tight field-ice home-model-bridge"
+        aria-labelledby="model-bridge-heading"
+      >
         <div className="shell">
+          <div className="home-model-bridge-copy">
+            <h2 id="model-bridge-heading">
+              That future starts with people who understand the science.
+            </h2>
+            <p>
+              Our real-plasma model gives educators and organisations a tangible
+              way to introduce plasma, explain magnetic confinement and start
+              conversations about fusion.
+            </p>
+          </div>
+          <dl className="home-evidence-strip">
+            <div>
+              <dt>
+                <CountUp as="span" value={100000} grouped />
+              </dt>
+              <dd>
+                New fusion engineers needed, according to an industry estimate
+                cited by Tobias Petrini, Business Finland, at Nordic Fusion
+                Forum 2026.
+              </dd>
+            </div>
+            <div>
+              <dt>
+                <CountUp as="span" value={19} suffix="%" />
+              </dt>
+              <dd>
+                Of UK adults said they knew a fair amount or a lot about fusion.
+              </dd>
+              <dd className="home-evidence-source">
+                <a href="https://www.gov.uk/government/statistics/desnz-public-attitudes-tracker-spring-2026/desnz-public-attitudes-tracker-energy-infrastructure-and-energy-security-spring-2026-uk">
+                  DESNZ Public Attitudes Tracker, spring 2026
+                </a>
+              </dd>
+            </div>
+            <div>
+              <dt>
+                <AnimatedNumbers text={universityResearch.metric} />
+              </dt>
+              <dd>{universityResearch.description}</dd>
+              <dd className="home-evidence-source">
+                {universityResearch.attribution}
+              </dd>
+              <dd>
+                <details className="home-evidence-methodology">
+                  <summary>{universityResearch.summary}</summary>
+                  {universityResearch.paragraphs.map((paragraph) => (
+                    <p key={paragraph}>{paragraph}</p>
+                  ))}
+                </details>
+              </dd>
+            </div>
+          </dl>
+        </div>
+      </section>
+
+      <section className="section field-ice home-applications">
+        <div className="shell">
+          <hr className="home-applications-divider" />
           <div className="section-heading">
             <h2>Where could you use the model?</h2>
             <p>
@@ -181,7 +186,7 @@ export default function Page() {
         </div>
       </section>
 
-      <section className="section field-night">
+      <section className="section field-night home-outreach">
         <div className="shell">
           <div className="section-heading">
             <h2>Fusion outreach: a full lecture in 48 hours.</h2>
@@ -197,11 +202,11 @@ export default function Page() {
             <div className="proof-copy">
               <ul className="stat-row stat-column">
                 <li>
-                  <strong>120</strong>
+                  <CountUp value={120} />
                   <span>registrations within 48 hours</span>
                 </li>
                 <li>
-                  <strong>+20</strong>
+                  <CountUp value={20} prefix="+" />
                   <span>more on the waiting list</span>
                 </li>
               </ul>
@@ -215,7 +220,7 @@ export default function Page() {
         </div>
       </section>
 
-      <section className="section tight field-deep">
+      <section className="section tight field-deep home-team">
         <div className="shell split-section">
           <div className="split-copy">
             <h2>A multidisciplinary student team.</h2>
@@ -232,7 +237,15 @@ export default function Page() {
             height={1200}
             sizes="(min-width: 52rem) 46vw, 100vw"
             alt="Five Aurora Confinement team members standing together in front of the Nordic Fusion Forum 2026 event screen."
-            caption="Aurora Confinement team at Nordic Fusion Forum 2026, Copenhagen."
+            caption={
+              <>
+                Aurora Confinement team at{' '}
+                <a href="https://nordic-fusion-forum-2026.confetti.events/#speakers--1498456">
+                  Nordic Fusion Forum 2026
+                </a>
+                , Copenhagen.
+              </>
+            }
           />
         </div>
       </section>
@@ -241,13 +254,16 @@ export default function Page() {
         <div className="shell home-closing-inner">
           <div>
             <h2>Bring plasma to your institution.</h2>
-            <p>Registering interest is completely free + non-binding, and helps us validate demand for softfunding, to get started building.</p>
+            <p>
+              Registering interest is completely free + non-binding, and helps
+              us validate demand for softfunding, to get started building.
+            </p>
           </div>
           <Link className="button primary" href={homeHero.primaryHref}>
             {homeHero.primaryLabel}
           </Link>
         </div>
       </section>
-    </>
+    </div>
   );
 }
