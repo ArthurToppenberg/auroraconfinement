@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 
 // Letters that must be held together, in any order. Matched on both the
 // physical key (`code`, layout independent) and the typed character (`key`).
@@ -9,18 +9,14 @@ const letters = ['s', 't', 'a'];
 const holdMs = 2000;
 const videoSrc = encodeURI('/not easter egg.mp4');
 
+// Nothing is rendered or downloaded until the chord is pressed: the overlay and
+// video are created from JS at that moment and fully destroyed on release.
 export default function StaEasterEgg() {
-  const overlayRef = useRef<HTMLDivElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
-
   useEffect(() => {
-    const overlay = overlayRef.current;
-    const video = videoRef.current;
-    if (!overlay || !video) return;
-
     const held = new Set<string>();
     let timer: number | undefined;
-    let active = false;
+    let overlay: HTMLDivElement | undefined;
+    let video: HTMLVideoElement | undefined;
 
     const letterOf = (event: KeyboardEvent) => {
       const fromCode = /^Key([A-Z])$/.exec(event.code)?.[1]?.toLowerCase();
@@ -37,18 +33,25 @@ export default function StaEasterEgg() {
       );
     };
 
-    // Called inside the keydown that completes the chord (a real user gesture,
-    // like MiguelEasterEgg's audio.play()), so the browser always allows it.
-    // It plays muted and hidden while the hold runs, then show() unmutes it.
-    const prime = () => {
+    // Runs inside the keydown that completes the chord (a real user gesture,
+    // like MiguelEasterEgg's audio.play()), so the browser allows playback.
+    // The video starts muted inside a hidden overlay while the hold runs.
+    const load = () => {
+      overlay = document.createElement('div');
+      overlay.className = 'sta-egg';
+      overlay.setAttribute('aria-hidden', 'true');
+      video = document.createElement('video');
       video.muted = true;
-      video.volume = 1;
-      video.currentTime = 0;
+      video.loop = true;
+      video.playsInline = true;
+      video.src = videoSrc;
+      overlay.append(video);
+      document.body.append(overlay);
       video.play().catch(() => {});
     };
 
     const show = () => {
-      active = true;
+      if (!overlay || !video) return;
       overlay.classList.add('is-active');
       video.currentTime = 0;
       video.muted = false;
@@ -56,16 +59,18 @@ export default function StaEasterEgg() {
       if (video.paused) video.play().catch(() => {});
     };
 
-    const hide = () => {
-      const pending = timer !== undefined;
+    // Stop playback, abort the download and remove the element entirely.
+    const unload = () => {
       window.clearTimeout(timer);
       timer = undefined;
-      if (!active && !pending) return;
-      active = false;
-      video.pause();
-      video.currentTime = 0;
-      video.muted = true;
-      overlay.classList.remove('is-active');
+      if (video) {
+        video.pause();
+        video.removeAttribute('src');
+        video.load();
+      }
+      overlay?.remove();
+      overlay = undefined;
+      video = undefined;
     };
 
     const onKeyDown = (event: KeyboardEvent) => {
@@ -74,9 +79,8 @@ export default function StaEasterEgg() {
       const letter = letterOf(event);
       if (!letter) return;
       held.add(letter);
-      if (timer !== undefined || active || !letters.every((l) => held.has(l)))
-        return;
-      prime();
+      if (video || !letters.every((l) => held.has(l))) return;
+      load();
       timer = window.setTimeout(() => {
         timer = undefined;
         if (letters.every((l) => held.has(l))) show();
@@ -86,12 +90,12 @@ export default function StaEasterEgg() {
     const onKeyUp = (event: KeyboardEvent) => {
       const letter = letterOf(event);
       if (letter) held.delete(letter);
-      if (!letters.every((l) => held.has(l))) hide();
+      if (!letters.every((l) => held.has(l))) unload();
     };
 
     const reset = () => {
       held.clear();
-      hide();
+      unload();
     };
 
     window.addEventListener('keydown', onKeyDown, true);
@@ -107,9 +111,5 @@ export default function StaEasterEgg() {
     };
   }, []);
 
-  return (
-    <div ref={overlayRef} className="sta-egg" aria-hidden="true">
-      <video ref={videoRef} src={videoSrc} preload="auto" playsInline loop />
-    </div>
-  );
+  return null;
 }
