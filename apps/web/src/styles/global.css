@@ -4663,6 +4663,23 @@ main article[id] {
   stroke-width: 1.5;
 }
 
+.team-page .team-motivation .vision-windmill-blades {
+  transform-box: view-box;
+  transform-origin: 55px 45px;
+}
+
+@keyframes vision-windmill-turn {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .team-page .team-motivation .vision-windmill-blades {
+    animation: vision-windmill-turn 12s linear infinite;
+  }
+}
+
 /* Hold-S-T-A easter egg: full-screen black overlay with a video ------- */
 
 .sta-egg {
