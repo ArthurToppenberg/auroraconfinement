@@ -505,7 +505,7 @@ export default function FusionVision() {
           <ul className="home-fusion-support-benefits">
             {[
               {
-                title: 'Concentrated generation',
+                title: 'Concentrated power generation',
                 text: 'Substantial output at individual power-station sites, offering another option where land use, landscapes and local impacts constrain expansion.',
                 path: 'M3 20V7h18v13M2 20h20M3 11h18M7 20v-5h10v5M7 7V4h10v3',
               },
@@ -533,7 +533,7 @@ export default function FusionVision() {
             ))}
           </ul>
           <div className="home-fusion-comparison">
-            <h4>The potential of concentrated generation:</h4>
+            <h4>The potential of concentrated power generation:</h4>
             <dl>
               {[
                 {

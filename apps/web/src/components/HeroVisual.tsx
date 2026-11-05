@@ -1,16 +1,16 @@
 import HeroPlasma from '@/components/HeroPlasma';
 
-// Pre-generated WebP renditions of product_b_drawing.png
+// Pre-generated WebP renditions of product_b_visualization.png
 // (original in assets/images/). The exported site cannot resize images at
 // request time, so the responsive set is committed under public/.
-const widths = [560, 760, 1080, 1600] as const;
-const intrinsicSize = 1600;
-const aspect = 1287 / 1222;
+const widths = [360, 560, 760, 1000] as const;
+const intrinsicSize = 1000;
+const aspect = 1;
 
 // The animated plasma torus with the desktop stellarator model sitting inside
 // it. The plasma is drawn first and faded, so it stays behind the model.
 export default function HeroVisual() {
-  const base = '/images/concepts/exhibition-drawing';
+  const base = '/images/concepts/product-b';
   return (
     <figure className="hero-visual">
       <div className="hero-visual-stage">

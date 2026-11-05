@@ -114,16 +114,16 @@ export default function Page() {
           </div>
           <figure className="exhibition-drawing">
             <img
-              src="/images/concepts/exhibition-drawing-1080.webp"
-              srcSet={[560, 760, 1080, 1600]
+              src="/images/concepts/product-b-1000.webp"
+              srcSet={[360, 560, 760, 1000]
                 .map(
                   (width) =>
-                    `/images/concepts/exhibition-drawing-${width}.webp ${width}w`,
+                    `/images/concepts/product-b-${width}.webp ${width}w`,
                 )
                 .join(', ')}
               sizes="(min-width: 60rem) 54vw, 100vw"
-              width="1287"
-              height="1222"
+              width="1000"
+              height="1000"
               alt="Concept illustration of a tabletop real-plasma exhibition model in an open case, showing purple plasma within surrounding coils."
               fetchPriority="high"
               decoding="async"

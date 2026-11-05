@@ -90,14 +90,7 @@ export default function Page() {
           </div>
           <figure className="exhibition-drawing">
             <img
-              src="/images/concepts/research-drawing-1080.webp"
-              srcSet={[560, 760, 1080, 1600]
-                .map(
-                  (width) =>
-                    `/images/concepts/research-drawing-${width}.webp ${width}w`,
-                )
-                .join(', ')}
-              sizes="(min-width: 60rem) 54vw, 100vw"
+              src="/images/concepts/product_c_visualization.png"
               width="1536"
               height="1024"
               alt="Concept illustration of a research-scale stellarator platform with an enclosed vessel, surrounding coils and adjacent equipment cabinets."
