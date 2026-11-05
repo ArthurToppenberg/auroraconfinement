@@ -40,6 +40,8 @@ export default function StaEasterEgg() {
       overlay = document.createElement('div');
       overlay.className = 'sta-egg';
       overlay.setAttribute('aria-hidden', 'true');
+      // Hidden by the browser itself even if the stylesheet fails to apply.
+      overlay.hidden = true;
       video = document.createElement('video');
       video.muted = true;
       video.loop = true;
@@ -52,6 +54,7 @@ export default function StaEasterEgg() {
 
     const show = () => {
       if (!overlay || !video) return;
+      overlay.hidden = false;
       overlay.classList.add('is-active');
       video.currentTime = 0;
       video.muted = false;
