@@ -1,8 +1,9 @@
+import AnimatedNumbers from '@/components/AnimatedNumbers';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { pageMetadata } from '@/lib/metadata';
 import ModelApplications from '@/components/ModelApplications';
-import { homeHero } from '@/content/site';
+import { homeHero, universityResearch } from '@/content/site';
 
 export const metadata: Metadata = pageMetadata({
   title: 'Exhibition Model',
@@ -46,10 +47,10 @@ const evidence = [
       'Industry estimate cited by Tobias Petrini, Business Finland, Nordic Fusion Forum 2026.',
   },
   {
-    number: '13 of 52',
+    number: universityResearch.metric,
     title: 'On-campus equipment identified.',
-    text: 'In Aurora’s review of European institutions offering fusion or plasma degrees and courses, on-campus magnetic-confinement devices were identified at 13 of 52 institutions.',
-    source: 'Aurora Confinement desk research, October 2026.',
+    text: universityResearch.description,
+    source: universityResearch.attribution,
     methodology: true,
   },
   {
@@ -176,7 +177,9 @@ export default function Page() {
           <div className="exhibition-evidence-grid">
             {evidence.map((item) => (
               <article className="exhibition-evidence-item" key={item.number}>
-                <p className="exhibition-evidence-number">{item.number}</p>
+                <p className="exhibition-evidence-number">
+                  <AnimatedNumbers text={item.number} />
+                </p>
                 <h3>{item.title}</h3>
                 <p>{item.text}</p>
                 <p className="exhibition-source">
@@ -188,20 +191,10 @@ export default function Page() {
                 </p>
                 {item.methodology && (
                   <details className="exhibition-methodology">
-                    <summary>About this research</summary>
-                    <p>
-                      The wider list covers 72 European institutions. Among 52
-                      classified as offering fusion/plasma degrees or courses,
-                      13 had identified on-campus toroidal or linear
-                      magnetic-confinement devices, four were classified as
-                      partner-lab only, and 35 had no device identified in the
-                      reviewed sources. The list is not exhaustive; ‘not found’
-                      does not mean confirmed absent.
-                    </p>
-                    <p>
-                      The review does not cover all plasma demonstration
-                      equipment or establish student access or teaching use.
-                    </p>
+                    <summary>{universityResearch.summary}</summary>
+                    {universityResearch.paragraphs.map((paragraph) => (
+                      <p key={paragraph}>{paragraph}</p>
+                    ))}
                   </details>
                 )}
               </article>

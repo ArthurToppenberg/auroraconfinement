@@ -29,3 +29,15 @@ export const socialImage = process.env['PUBLIC_SOCIAL_IMAGE'];
 
 export const contactEmail =
   process.env['PUBLIC_CONTACT_EMAIL'] || 'contact@auroraconfinement.com';
+
+export const universityResearch = {
+  metric: '13 of 72',
+  description:
+    'European institutions in our review had identified on-campus equipment for physical magnetic-confinement experiments.',
+  attribution: 'Aurora Confinement desk research, October 2026',
+  summary: 'About this research',
+  paragraphs: [
+    'We reviewed 72 European institutions across 22 countries using FuseNet, EUROfusion and institution-specific sources. We identified on-campus physical magnetic-confinement equipment at 13 of them.',
+    'The review covers toroidal and linear magnetic-confinement devices. It is not exhaustive: equipment not identified in public sources is not confirmed absent. Institutions may also conduct research through partner laboratories, remote access or simulations. The review does not establish student access or teaching use.',
+  ],
+} as const;

@@ -34,6 +34,7 @@ export default function TeamMotivation({ children }: { children?: ReactNode }) {
     <>
       <section
         className="section field-night team-motivation"
+        id="team-motivation"
         aria-labelledby="team-motivation-heading"
       >
         <div className="shell">
@@ -73,7 +74,8 @@ export default function TeamMotivation({ children }: { children?: ReactNode }) {
                 </li>
               ))}
             </ul>
-            <div className="team-sdg-credit">
+            <details className="sdg-attribution">
+              <summary>SDG icon attribution</summary>
               <p>
                 Official icons:{' '}
                 <a href="https://www.un.org/sustainabledevelopment">
@@ -90,7 +92,7 @@ export default function TeamMotivation({ children }: { children?: ReactNode }) {
                 United Nations and does not reflect the views of the United
                 Nations or its officials or Member States.
               </p>
-            </div>
+            </details>
           </div>
         </div>
       </section>

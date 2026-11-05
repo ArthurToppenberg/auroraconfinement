@@ -1,3 +1,4 @@
+import AnimatedNumbers from './AnimatedNumbers';
 import type { ComponentType } from 'react';
 import VisionPowerCable from '@/components/VisionPowerCable';
 import VisionBenefitIcon, {
@@ -319,11 +320,182 @@ const cards: readonly MotivationCard[] = [
   },
 ];
 
-export default function FusionVision() {
+const condensedBullets: readonly MotivationCard['bullets'][] = [
+  [
+    {
+      icon: 'smoke',
+      lead: 'No direct CO₂',
+      text: 'emissions during power generation.',
+    },
+    { icon: 'fuel', lead: 'Small fuel quantities.', text: '' },
+    { icon: 'reuse', lead: 'A different waste legacy.', text: '' },
+  ],
+  [
+    { icon: 'steady', lead: 'Power beyond sunshine and wind.', text: '' },
+    {
+      icon: 'pylon',
+      lead: 'Reliable electricity alongside renewables.',
+      text: '',
+    },
+    {
+      icon: 'generator',
+      lead: '400 MW target',
+      text: 'for CFS’s planned ARC plant.',
+    },
+  ],
+  [
+    { icon: 'family', lead: 'Responsibility to future generations.', text: '' },
+    {
+      icon: 'shield',
+      lead: 'No runaway chain reaction',
+      text: 'or fission-style core meltdown.',
+    },
+    {
+      icon: 'warning',
+      lead: 'No uranium enrichment or plutonium fuel required',
+      text: 'for deuterium–tritium fusion.',
+    },
+  ],
+];
+
+export default function FusionVision({
+  compact = false,
+}: {
+  compact?: boolean;
+}) {
+  const displayCards = compact
+    ? cards.map((card, index) => ({
+        ...card,
+        bullets: condensedBullets[index] ?? card.bullets,
+      }))
+    : cards;
+  const renewablesIllustration = (
+    <svg
+      className="fusion-vision-renewables"
+      viewBox="0 0 200 134"
+      width="200"
+      height="134"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <circle cx="55" cy="45" r="4" />
+      <g className="vision-windmill-blades">
+        <path d="M53 41 51 10q1-6 4-1l4 32" />
+        <path d="M53 41 51 10q1-6 4-1l4 32" transform="rotate(120 55 45)" />
+        <path d="M53 41 51 10q1-6 4-1l4 32" transform="rotate(240 55 45)" />
+      </g>
+      <path d="m52 50-4 83h14l-4-83 M103 118v15 M155 118v15 M8 133h184" />
+      <g className="fusion-vision-renewable-panel">
+        <path d="M102 82h82l-16 36H86Z M97 94h82 M91 106h82 M122 82l-16 36 M142 82l-16 36 M162 82l-16 36" />
+      </g>
+    </svg>
+  );
+  const supportingEvidence = (
+    <div className="home-fusion-support-evidence">
+      <details>
+        <summary>Sources and context</summary>
+        <h4>Fusion</h4>
+        <p>
+          A 2001 conceptual study estimated approximately 300 m² per MW of plant
+          capacity. Converting that estimate gives approximately 3,300 MW/km².
+          This is a historical design estimate, not measured commercial
+          performance.
+        </p>
+        <a href="https://www.sciencedirect.com/science/article/pii/S0920379601005531">
+          Fusion land-requirement study — 2001
+        </a>
+        <h4>Solar and wind</h4>
+        <p>
+          A 2018 NREL technical-potential methodology uses approximately 30–36
+          MW/km² for solar and 3 MW/km² for wind. These represent rated capacity
+          per area, not average electricity delivered.
+        </p>
+        <a href="https://www.nrel.gov/docs/fy18osti/71532.pdf">
+          NREL technical-potential methodology — 2018
+        </a>
+        <h4>Comparison limits</h4>
+        <p>
+          The studies use different dates, assumptions and land boundaries.
+          Wind-farm spacing can remain available for farming and other
+          activities; rooftop solar uses existing surfaces. Actual fusion sites
+          must include supporting infrastructure. These figures do not establish
+          a validated land-saving ratio.
+        </p>
+        <h4>Dependable generation</h4>
+        <p>
+          The US Department of Energy identifies on-demand generation as a
+          potential benefit of fusion. This does not mean uninterrupted
+          operation or eliminate the need for storage and grid investment.
+        </p>
+        <a href="https://www.energy.gov/fusion/doe-fusion-energy-strategy-2024-executive-summary">
+          US DOE — on-demand generation potential
+        </a>
+        <h4>Plant scale</h4>
+        <p>
+          Max Planck IPP describes future plants producing 1–1.5 GW of
+          electricity, with buildings comparable in size to existing large power
+          stations. This is a prospective design scale, not demonstrated
+          performance or Aurora’s capability.
+        </p>
+        <a href="https://www.ipp.mpg.de/2767777/faq4">
+          Max Planck IPP — future plant scale
+        </a>
+        <h4>District heating</h4>
+        <p>
+          Fusion researchers have examined combined electricity and
+          district-heat production. Viability depends on plant design,
+          heat-network temperatures, nearby demand and economics. Extracting
+          useful heat can reduce electrical output.
+        </p>
+        <a href="https://www.osti.gov/servlets/purl/1861030">
+          Fusion research — electricity and district heat
+        </a>
+        <h4>Combined heat and power</h4>
+        <p>
+          Cogeneration recovers heat for homes, businesses or industry alongside
+          electricity generation.
+        </p>
+        <a href="https://energy.ec.europa.eu/topics/energy-efficiency/cogeneration-heat-and-power_en">
+          European Commission — cogeneration
+        </a>
+        <h4>Local considerations</h4>
+        <p>
+          Noise, landscape changes, shadow flicker and warning lights can affect
+          acceptance of wind projects. Fusion plants will also require
+          environmental assessment, infrastructure and community engagement.
+        </p>
+        <a href="https://www.trafikstyrelsen.dk/publikationsliste/luftfart-publikationer/2025/apr/rapport-om-mulighederne-for-behovsstyring-til-deaktivering-af-hindringslys-paa-vindmoeller-igangvaerende-omskrivning">
+          Denmark’s Transport Authority — wind-project acceptance
+        </a>
+        <h4>Local acceptance in Denmark</h4>
+        <p>
+          In a 2023 IDA survey, 21% said living near wind turbines would bother
+          them to a high or very high degree. This measured stated expectations,
+          not actual neighbour experiences. The survey also found greater
+          acceptance of wind and solar than of motorways and airports.
+        </p>
+        <a href="https://ida.dk/om-ida/nyt-fra-ida/danskerne-foretraekker-naboskab-til-vindmoeller-frem-for-motorveje">
+          IDA — 2023 survey of expected neighbour impacts
+        </a>
+        <h4>Important context</h4>
+        <p>
+          These sources do not establish proven comparative land savings, fewer
+          local disturbances or greater public acceptance for fusion. Commercial
+          fusion costs, availability, operating lifetimes and maintenance
+          requirements remain to be demonstrated.
+        </p>
+      </details>
+    </div>
+  );
   return (
     <div className="fusion-vision">
       <ol className="fusion-vision-sequence">
-        {cards.map(({ Drawing, title, bullets, sources, details }) => (
+        {displayCards.map(({ Drawing, title, bullets, sources, details }) => (
           <li className="fusion-vision-card" key={title}>
             <Drawing />
             <h3>{title}</h3>
@@ -332,7 +504,10 @@ export default function FusionVision() {
                 <li key={bullet.lead}>
                   <VisionBenefitIcon kind={bullet.icon} />
                   <span>
-                    <strong>{bullet.lead}</strong> {bullet.text}
+                    <strong>
+                      <AnimatedNumbers text={bullet.lead} />
+                    </strong>{' '}
+                    {bullet.text}
                   </span>
                 </li>
               ))}
@@ -367,56 +542,127 @@ export default function FusionVision() {
         ))}
       </ol>
       <VisionPowerCable />
-      <div className="fusion-vision-context">
-        <div className="fusion-vision-context-copy">
-          <h3>Why keep pursuing fusion?</h3>
-          <p className="fusion-vision-context-lead">
-            Because a cleaner world will still need dependable power.
-          </p>
-          <p>
-            Fusion could deliver large amounts of electricity from concentrated
-            power stations, day and night, alongside wind and solar. Its promise
-            is reliable low-carbon energy for growing cities, industry and
-            computing, even when renewable output is low.
-          </p>
-          <div className="fusion-vision-context-sources">
-            <a href="https://www.energy.gov/fusion/doe-fusion-energy-strategy-2024-executive-summary">
-              On-demand power potential — US DOE
-            </a>
-            <a href="https://www.cfs.energy/chesterfield/info/">
-              Planned 400 MW ARC plant — CFS
-            </a>
-          </div>
-        </div>
-        <svg
-          className="fusion-vision-renewables"
-          viewBox="0 0 200 134"
-          width="200"
-          height="134"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          aria-hidden="true"
-          focusable="false"
+      <div
+        className={compact ? 'home-fusion-support' : 'fusion-vision-context'}
+      >
+        <div
+          className={
+            compact ? 'home-fusion-support-copy' : 'fusion-vision-context-copy'
+          }
         >
-          <circle cx="55" cy="45" r="4" />
-          <g className="vision-windmill-blades">
-            <path d="M53 41 51 10q1-6 4-1l4 32" />
-            <path d="M53 41 51 10q1-6 4-1l4 32" transform="rotate(120 55 45)" />
-            <path d="M53 41 51 10q1-6 4-1l4 32" transform="rotate(240 55 45)" />
-          </g>
-          <path d="m52 50-4 83h14l-4-83 M103 118v15 M155 118v15 M8 133h184" />
-          <g className="fusion-vision-renewable-panel">
-            <path d="M102 82h82l-16 36H86Z M97 94h82 M91 106h82 M122 82l-16 36 M142 82l-16 36 M162 82l-16 36" />
-          </g>
-        </svg>
-        <p className="fusion-vision-note">
-          A long-term vision. Commercial fusion still requires substantial
-          development; our work today starts with plasma education and
-          prototypes.
-        </p>
+          {compact ? (
+            <>
+              <h3>Why pursue fusion if we have wind and solar?</h3>
+              <p>
+                Wind and solar output changes with the weather and time of day.
+                Fusion could add controllable low-carbon generation, helping
+                balance supply when renewable output is low.
+              </p>
+              <ul className="home-fusion-support-benefits">
+                {[
+                  {
+                    title: 'Concentrated generation',
+                    text: 'Substantial output at individual power-station sites, offering another option where land use, landscapes and local impacts constrain expansion.',
+                    path: 'M3 20V7h18v13M2 20h20M3 11h18M7 20v-5h10v5M7 7V4h10v3',
+                  },
+                  {
+                    title: 'Power our cities. Heat our homes.',
+                    text: 'Future fusion plants could produce electricity and supply district heating, making more use of the energy they generate.',
+                    path: 'm3 11 9-8 9 8M5 10v11h14V10M9 21v-7h6v7M8 9V6m8 3V6',
+                  },
+                ].map((benefit) => (
+                  <li key={benefit.title}>
+                    <svg
+                      viewBox="0 0 24 24"
+                      width="22"
+                      height="22"
+                      aria-hidden="true"
+                      focusable="false"
+                    >
+                      <path d={benefit.path} />
+                    </svg>
+                    <div>
+                      <h4>{benefit.title}</h4>
+                      <p>{benefit.text}</p>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+              <div className="home-fusion-comparison">
+                <h4>The potential of concentrated generation:</h4>
+                <dl>
+                  {[
+                    {
+                      label: 'Fusion',
+                      number: '≈3,300',
+                      note: 'Conceptual estimate',
+                    },
+                    {
+                      label: 'Utility-scale solar',
+                      number: '30–36',
+                      note: 'Planning assumption',
+                    },
+                    {
+                      label: 'Onshore wind',
+                      number: '≈3',
+                      note: 'Including turbine spacing',
+                    },
+                  ].map((item) => (
+                    <div key={item.label}>
+                      <dt>{item.label}</dt>
+                      <dd className="home-fusion-comparison-number">
+                        {item.number}
+                      </dd>
+                      <dd>MW/km²</dd>
+                      <dd>{item.note}</dd>
+                    </div>
+                  ))}
+                </dl>
+                <p>
+                  Illustrative rated-capacity estimates from different studies,
+                  not average output or a like-for-like land-use comparison.
+                </p>
+              </div>
+            </>
+          ) : (
+            <>
+              <h3>Why keep pursuing fusion?</h3>
+              <p className="fusion-vision-context-lead">
+                Because a cleaner world will still need dependable power.
+              </p>
+              <p>
+                Fusion could deliver large amounts of electricity from
+                concentrated power stations, day and night, alongside wind and
+                solar. Its promise is reliable low-carbon energy for growing
+                cities, industry and computing, even when renewable output is
+                low.
+              </p>
+              <div className="fusion-vision-context-sources">
+                <a href="https://www.energy.gov/fusion/doe-fusion-energy-strategy-2024-executive-summary">
+                  On-demand power potential — US DOE
+                </a>
+                <a href="https://www.cfs.energy/chesterfield/info/">
+                  Planned 400 MW ARC plant — CFS
+                </a>
+              </div>
+            </>
+          )}
+        </div>
+        {compact ? (
+          <div className="home-fusion-support-visual">
+            {renewablesIllustration}
+          </div>
+        ) : (
+          renewablesIllustration
+        )}
+        {compact && supportingEvidence}
+        {!compact && (
+          <p className="fusion-vision-note">
+            A long-term vision. Commercial fusion still requires substantial
+            development; our work today starts with plasma education and
+            prototypes.
+          </p>
+        )}
       </div>
     </div>
   );
