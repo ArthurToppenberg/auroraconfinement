@@ -42,7 +42,7 @@ export default function TeamMotivation({ children }: { children?: ReactNode }) {
           <FusionMotivationIntro id="team-motivation-heading" />
           <FusionVision />
           <div className="team-sdg-alignment">
-            <h3>The goals guiding our work.</h3>
+            <h3>The goals guiding our work:</h3>
             <p className="team-sdg-context">
               Areas of alignment and intended contribution to the Sustainable
               Development Goals.

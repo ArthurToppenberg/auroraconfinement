@@ -1,17 +1,18 @@
-interface InterestDisclaimerProps {
-  subject?: string;
-}
+import { homeHero } from '@/content/site';
 
 export default function InterestDisclaimer({
-  subject = 'our research platforms',
-}: InterestDisclaimerProps) {
+  context,
+  className = 'registration-notice',
+}: {
+  context?: string;
+  className?: string;
+}) {
   return (
-    <p className="interest-disclaimer">
-      <strong>Registering interest is non-binding</strong> and{' '}
-      <strong>helps validate demand</strong> for {subject}.
-      <span>
-        Learn how we handle your data in our{' '}
-        <a href="/privacy">Privacy Notice</a>.
+    <p className={className}>
+      {context && <>{context} </>}
+      {homeHero.invitation}
+      <span className="registration-privacy">
+        How we handle your data: <a href="/privacy">Privacy Notice</a>.
       </span>
     </p>
   );

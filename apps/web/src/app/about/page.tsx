@@ -1,3 +1,4 @@
+import InterestDisclaimer from '@/components/InterestDisclaimer';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { pageMetadata } from '@/lib/metadata';
@@ -19,7 +20,7 @@ export default function Page() {
     <div className="team-page">
       <section className="team-introduction chapter field-ice">
         <div className="shell">
-          <h1>Meet the team.</h1>
+          <h1>Meet the team</h1>
           <p>
             Physics and engineering students from DTU and the University of
             Copenhagen, working together to make plasma and fusion tangible.
@@ -43,7 +44,7 @@ export default function Page() {
       <section className="section field-ice">
         <div className="shell">
           <div className="section-heading">
-            <h2>What the team has done so far.</h2>
+            <h2>What the team has done so far:</h2>
             <p>
               Developing the concept, bringing people together and learning from
               the fusion community.
@@ -95,7 +96,7 @@ export default function Page() {
 
       <section className="section field-ice team-current-focus">
         <div className="shell">
-          <h2>Our focus now.</h2>
+          <h2>Our focus now:</h2>
           <ul className="team-focus-bullets">
             <li>
               Gather free, non-binding interest to support grant funding for a
@@ -129,10 +130,7 @@ export default function Page() {
         <div className="team-closing-inner">
           <div>
             <h2>Interested in using the model?</h2>
-            <p>
-              Free and non-binding. Your interest helps us assess demand and
-              support applications for grant funding.
-            </p>
+            <InterestDisclaimer />
           </div>
           <div className="button-row">
             <Link className="button primary" href={homeHero.primaryHref}>

@@ -1,3 +1,4 @@
+import InterestDisclaimer from '@/components/InterestDisclaimer';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { pageMetadata } from '@/lib/metadata';
@@ -87,6 +88,7 @@ export default function Page() {
                 Explore applications
               </a>
             </div>
+            <InterestDisclaimer />
           </div>
           <figure className="exhibition-drawing">
             <img
@@ -191,11 +193,7 @@ export default function Page() {
         <div className="shell home-closing-inner">
           <div>
             <h2>What could your lab explore?</h2>
-            <p>
-              Share your requirements for a future research platform.
-              Registering interst is free and non-binding. Your interest helps
-              us assess demand and support applications for grant funding.
-            </p>
+            <InterestDisclaimer context="Share your research questions and requirements for a future experimental stellarator platform." />
           </div>
           <Link className="button primary" href={registrationHref}>
             Register interest

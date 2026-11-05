@@ -31,7 +31,7 @@ export default function CommunityPosts() {
     >
       <div className="shell">
         <div className="section-heading">
-          <h2 id="community-posts-heading">Seen in the fusion community.</h2>
+          <h2 id="community-posts-heading">Seen in the fusion community:</h2>
         </div>
         <ul className="community-posts">
           {posts.map((post) => (

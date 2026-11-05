@@ -1,3 +1,4 @@
+import InterestDisclaimer from '@/components/InterestDisclaimer';
 import FusionMotivationIntro from '@/components/FusionMotivationIntro';
 import type { Metadata } from 'next';
 import Link from 'next/link';
@@ -35,11 +36,7 @@ export default function Page() {
               <Link className="button primary" href={homeHero.primaryHref}>
                 {homeHero.primaryLabel}
               </Link>
-              <p>{homeHero.invitation}</p>
-              <p className="hero-privacy">
-                How we handle your data:{' '}
-                <Link href="/privacy">Privacy Notice</Link>.
-              </p>
+              <InterestDisclaimer />
             </div>
           </div>
           <HeroVisual />
@@ -181,7 +178,7 @@ export default function Page() {
             <Link className="button primary" href={homeHero.primaryHref}>
               {homeHero.primaryLabel}
             </Link>
-            <p>Tell us where your institution would use the model.</p>
+            <InterestDisclaimer />
           </div>
         </div>
       </section>
@@ -254,10 +251,7 @@ export default function Page() {
         <div className="shell home-closing-inner">
           <div>
             <h2>Bring plasma to your institution.</h2>
-            <p>
-              Registering interest is completely free + non-binding, and helps
-              us validate demand for softfunding, to get started building.
-            </p>
+            <InterestDisclaimer />
           </div>
           <Link className="button primary" href={homeHero.primaryHref}>
             {homeHero.primaryLabel}

@@ -1,3 +1,4 @@
+import InterestDisclaimer from '@/components/InterestDisclaimer';
 import AnimatedNumbers from '@/components/AnimatedNumbers';
 import type { Metadata } from 'next';
 import Link from 'next/link';
@@ -111,6 +112,7 @@ export default function Page() {
                 Explore applications
               </a>
             </div>
+            <InterestDisclaimer />
           </div>
           <figure className="exhibition-drawing">
             <img
@@ -233,10 +235,7 @@ export default function Page() {
         <div className="shell home-closing-inner">
           <div>
             <h2>Bring plasma to your institution.</h2>
-            <p>
-              Free and non-binding. Your interest helps us assess demand and
-              support applications for grant funding.
-            </p>
+            <InterestDisclaimer context="Tell us how your institution would use the exhibition model for teaching, exhibitions or outreach." />
           </div>
           <Link className="button primary" href={homeHero.primaryHref}>
             Register interest

@@ -1,295 +1,175 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { pageMetadata } from '@/lib/metadata';
-import { homeHero } from '@/content/site';
+import { contactHrefs, homeHero } from '@/content/site';
+import RoadmapScene from '@/components/RoadmapScene';
+import RoadmapMotion from '@/components/RoadmapMotion';
 
 export const metadata: Metadata = pageMetadata({
   title: 'Roadmap',
   description:
-    'Exhibition model calendar targets for January–June 2027 and a longer-term research programme measured from a separately funded project start.',
+    'Two development tracks: exhibition-model prototype targets for January–June 2027 and an indicative, separately funded research-platform programme.',
   path: '/roadmap/',
 });
 
-interface Phase {
-  timing: string;
-  title: string;
-  actions: readonly string[];
-  outcome: string;
-  checkpoint?: boolean;
-}
-
-const exhibitionPhases: readonly Phase[] = [
+const phases = [
   {
-    timing: 'January–February 2027',
-    title: 'Define and test',
-    actions: [
-      'Clarify institutional requirements, suppliers and preliminary design.',
-      'Build a linear test unit.',
-      'Test the RF plasma source, vacuum system and argon operating pressure.',
-    ],
-    outcome: 'A tested basis for the torus design.',
+    number: 1,
+    name: 'Define',
+    exhibition: {
+      timing: 'January–February 2027',
+      title: 'Design and subsystem testing',
+      description:
+        'Confirm institutional requirements. Build a linear test unit and investigate RF, vacuum and argon operating conditions.',
+    },
+    research: {
+      timing: 'Months 1–3',
+      title: 'Requirements and engineering baseline',
+      description:
+        'Define the research use case, simulation baseline, CAD, bill of materials and safety requirements.',
+    },
   },
   {
-    timing: 'March–April 2027',
-    title: 'Build and integrate',
-    actions: [
-      'Finalise magnet holders and compare measured fields with simulations.',
-      'Order the custom glass torus.',
-      'Integrate the torus, vacuum, RF source, magnets and enclosure.',
-    ],
-    outcome: 'First controlled tests of the integrated prototype.',
+    number: 2,
+    name: 'Build',
+    exhibition: {
+      timing: 'March–April 2027',
+      title: 'Integrate the prototype',
+      description:
+        'Compare magnetic-field measurements with simulations. Assemble the torus, vacuum system, RF source, magnets and enclosure.',
+    },
+    research: {
+      timing: 'Months 4–7',
+      title: 'Assemble core hardware',
+      description:
+        'Integrate vacuum infrastructure, magnetic systems, cooling and initial data acquisition.',
+    },
   },
   {
-    timing: 'May–June 2027',
-    title: 'Validate and demonstrate',
-    actions: [
-      'Test repeatable operation, heat and transport.',
-      'Complete a safety review and operating procedure.',
-      'Aim for up to three demonstrations, subject to readiness and safety.',
-    ],
-    outcome: 'User feedback and a decision on readiness for a paid pilot.',
-    checkpoint: true,
-  },
-];
-
-const researchPhases: readonly Phase[] = [
-  {
-    timing: 'Months 1–3',
-    title: 'Design and requirements',
-    actions: [
-      'Define the experimental requirements and simulation baseline.',
-      'Develop chamber, magnetic-system and support CAD.',
-      'Advance the bill of materials, procurement plan and safety review.',
-    ],
-    outcome: 'A defined engineering baseline.',
+    number: 3,
+    name: 'Validate',
+    exhibition: {
+      timing: 'May–June 2027',
+      title: 'Test and demonstrate',
+      description:
+        'Test repeatable operation, transport and safety. Aim for up to three demonstrations, subject to readiness.',
+    },
+    research: {
+      timing: 'Months 8–11',
+      title: 'Validate systems and prepare plasma',
+      description:
+        'Leak-test the vacuum system, map magnetic fields and compare with simulations. Integrate gas handling, heating and diagnostics.',
+      checkpoint: 'Subsystem validation before plasma commissioning.',
+    },
   },
   {
-    timing: 'Months 4–7',
-    title: 'Core hardware assembly',
-    actions: [
-      'Procure and assemble vacuum infrastructure.',
-      'Assemble magnetic components, supports and cooling.',
-      'Establish data acquisition.',
-    ],
-    outcome: 'An assembled system ready for subsystem testing.',
+    number: 4,
+    name: 'Develop further',
+    exhibition: {
+      timing: 'From H2 2027, subject to validation',
+      title: 'First pilots and customers',
+      description:
+        'Work toward paid institutional trials, refine delivery and support, and assess readiness for small-series production.',
+    },
+    research: {
+      timing: 'Months 12–18+',
+      title: 'First plasma and characterisation',
+      description:
+        'Attempt first plasma, measure performance and refine the configuration with research partners.',
+      checkpoint: 'Target: first plasma',
+    },
   },
-  {
-    timing: 'Months 8–9',
-    title: 'Subsystem validation',
-    actions: [
-      'Test vacuum integrity and operating pressure.',
-      'Map magnetic fields with Hall probes.',
-      'Compare measurements with simulations and resolve discrepancies.',
-    ],
-    outcome: 'Validate the subsystems before progressing to plasma operation.',
-    checkpoint: true,
-  },
-  {
-    timing: 'Months 10–11',
-    title: 'Plasma-system integration',
-    actions: [
-      'Integrate controlled gas handling.',
-      'Install plasma heating and initial diagnostics.',
-      'Prepare operating procedures and controlled commissioning.',
-    ],
-    outcome: 'An integrated setup ready for first-plasma attempts.',
-  },
-  {
-    timing: 'Months 12–18+',
-    title: 'First plasma and characterisation',
-    actions: [
-      'Attempt first plasma and establish repeatable operation.',
-      'Measure plasma behaviour and compare results with the design.',
-      'Refine the magnetic configuration and evaluate research applications.',
-    ],
-    outcome:
-      'Measured performance to guide further development and partner evaluation.',
-  },
-];
-
-function Milestones({
-  phases,
-  horizontal = false,
-}: {
-  phases: readonly Phase[];
-  horizontal?: boolean;
-}) {
-  return (
-    <ol
-      className={`roadmap-milestones${horizontal ? ' roadmap-milestones-wide' : ''}`}
-    >
-      {phases.map((phase, index) => (
-        <li
-          className={`roadmap-milestone${phase.checkpoint ? ' roadmap-checkpoint' : ''}`}
-          key={phase.title}
-        >
-          <div className="roadmap-phase-meta">
-            <span className="roadmap-phase-number">Phase {index + 1}</span>
-            <p>{phase.timing}</p>
-          </div>
-          <div className="roadmap-phase-body">
-            <h3>{phase.title}</h3>
-            <ul>
-              {phase.actions.map((action) => (
-                <li key={action}>{action}</li>
-              ))}
-            </ul>
-            <p className="roadmap-outcome">
-              <strong>
-                {phase.checkpoint ? 'Decision checkpoint' : 'Target outcome'}
-              </strong>
-              {phase.outcome}
-            </p>
-          </div>
-        </li>
-      ))}
-    </ol>
-  );
-}
+] as const;
 
 export default function Page() {
   return (
-    <div className="roadmap-page">
-      <section className="roadmap-intro chapter field-ice">
-        <div className="shell">
-          <h1>
-            From simulation to demonstration.
-            <br />
-            Then toward research.
-          </h1>
-          <p className="roadmap-intro-copy">
-            Our immediate focus is a real-plasma exhibition and teaching model.
-            A future research platform builds on that experience through a
-            separately funded development programme.
-          </p>
-          <div className="roadmap-current-work">
-            <h2>Current work</h2>
-            <ul>
-              <li>Magnetic-field simulations</li>
-              <li>Virtual models</li>
-              <li>Institutional requirements</li>
-              <li>Funding applications</li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
+    <div className="roadmap-page field-ice">
+      <header className="roadmap-intro shell">
+        <h1>Two tracks. One direction.</h1>
+        <p>
+          Developing tangible tools for plasma education and experimental
+          research.
+        </p>
+        <p className="roadmap-current">
+          Current work: simulations, virtual models, institutional requirements
+          and funding.
+        </p>
+      </header>
       <section
-        className="section field-ice roadmap-track"
-        aria-labelledby="exhibition-track-heading"
+        className="roadmap-programme shell"
+        aria-label="Development tracks and target milestones"
       >
-        <div className="shell">
-          <header className="roadmap-track-heading">
-            <p className="roadmap-track-status">
-              Planned · Near-term development
-            </p>
-            <h2 id="exhibition-track-heading">Exhibition model</h2>
-            <p>
-              A real-plasma model for introductory teaching, exhibitions and
-              outreach.
-            </p>
-            <p className="roadmap-time-scale">
-              <strong>Calendar targets</strong>Planned prototype programme:
-              January–June 2027
-            </p>
-          </header>
-          <Milestones phases={exhibitionPhases} horizontal />
-          <div className="roadmap-continuation">
-            <p className="roadmap-phase-number">Conditional continuation</p>
-            <p>From H2 2027, subject to validation</p>
-            <h3>First pilots and customers</h3>
-            <ul>
-              <li>Work toward paid institutional pilots and initial sales.</li>
-              <li>
-                Confirm pricing, delivery, training and support requirements.
+        <RoadmapMotion>
+          <div className="roadmap-track-headers">
+            <span className="roadmap-phase-column" aria-hidden="true">
+              Phase
+            </span>
+            <header>
+              <h2>Exhibition model</h2>
+              <p>Planned prototype programme: January–June 2027</p>
+            </header>
+            <header>
+              <h2>Research platform</h2>
+              <p>
+                Indicative 12–18+ months from a separately funded project start
+              </p>
+            </header>
+          </div>
+          <p className="roadmap-timing-note">
+            Aligned by development phase, not simultaneous calendar dates.
+          </p>
+          <ol className="roadmap-phase-list">
+            {phases.map((phase) => (
+              <li className="roadmap-phase-row" key={phase.number}>
+                <h3 className="roadmap-phase-label">
+                  <span>Phase {phase.number}</span>
+                  {phase.name}
+                </h3>
+                {(['exhibition', 'research'] as const).map((track) => {
+                  const milestone = phase[track];
+                  return (
+                    <article
+                      className={`roadmap-step roadmap-step-${track}`}
+                      key={track}
+                    >
+                      <RoadmapScene track={track} phase={phase.number} />
+                      <div className="roadmap-step-copy">
+                        <p className="roadmap-mobile-track">
+                          {track === 'exhibition'
+                            ? 'Exhibition model'
+                            : 'Research platform'}
+                        </p>
+                        <p className="roadmap-step-timing">
+                          {milestone.timing}
+                        </p>
+                        <h4>{milestone.title}</h4>
+                        <p>{milestone.description}</p>
+                        {'checkpoint' in milestone && (
+                          <p className="roadmap-step-checkpoint">
+                            {milestone.checkpoint}
+                          </p>
+                        )}
+                      </div>
+                    </article>
+                  );
+                })}
               </li>
-              <li>Refine the model using customer feedback.</li>
-            </ul>
-            <p className="roadmap-outcome">
-              <strong>Decision checkpoint</strong>Proceed when performance,
-              safety, customer requirements and delivery economics support it.
-            </p>
-          </div>
-          <p className="roadmap-future">
-            <strong>Small-series improvement · 2028–2029</strong>A possible next
-            step, subject to validation and resources.
-          </p>
-          <p className="roadmap-note">
-            Dates are targets and depend on funding, supplier lead times and
-            test results.
-          </p>
-          <details className="roadmap-technical">
-            <summary>Prototype approach</summary>
-            <p>
-              The prototype uses a vacuum system and controlled argon supply. A
-              hermetically sealed torus is a later option to investigate, not a
-              prerequisite or completed feature.
-            </p>
-          </details>
-        </div>
-      </section>
-
-      <section
-        className="section field-deep roadmap-track"
-        aria-labelledby="research-track-heading"
-      >
-        <div className="shell">
-          <header className="roadmap-track-heading">
-            <p className="roadmap-track-status">
-              Long-term · Separately funded programme
-            </p>
-            <h2 id="research-track-heading">Research platform</h2>
-            <p>
-              A staged programme toward a configurable experimental plasma
-              platform.
-            </p>
-            <p className="roadmap-time-scale">
-              <strong>Relative project months</strong>Indicative duration:
-              12–18+ months from a separately funded project start.
-            </p>
-            <p>
-              Requires a research use case, partner requirements, dedicated
-              funding and engineering resources.
-            </p>
-          </header>
-          <Milestones phases={researchPhases} />
-          <p className="roadmap-note">
-            Scoping may begin from 2028 if resources permit. No calendar start
-            or delivery date is established; all outcomes shown are development
-            targets.
-          </p>
-        </div>
-      </section>
-
-      <section className="section tight field-ice roadmap-bridge">
-        <div className="shell">
-          <h2>How the tracks connect.</h2>
-          <p>
-            Experience from the exhibition model can inform vacuum systems, RF
-            integration, magnetic-field measurement, controls and safe
-            operation. Research capability requires additional engineering and
-            separate validation.
-          </p>
-        </div>
-      </section>
-
-      <section className="home-closing chapter field-magenta">
-        <div className="shell home-closing-inner">
-          <div>
-            <h2>Help shape the exhibition model.</h2>
-            <p>
-              Tell us how your institution would use it and what you would need.
-            </p>
-          </div>
-          <div className="roadmap-closing-links">
-            <Link className="button primary" href={homeHero.primaryHref}>
-              Register interest
+            ))}
+          </ol>
+          <div className="roadmap-track-actions">
+            <Link href={homeHero.primaryHref}>
+              Register exhibition interest <span aria-hidden="true">↗</span>
             </Link>
-            <Link href="/research-platform/">
-              Explore the research platform
+            <Link href={contactHrefs.collaboration}>
+              Discuss research or investment <span aria-hidden="true">↗</span>
             </Link>
           </div>
-        </div>
+        </RoadmapMotion>
+        <p className="roadmap-final-note">
+          Milestones are indicative and depend on funding, partners, supplier
+          lead times and test results. Research-platform development requires a
+          separate programme and budget.
+        </p>
       </section>
     </div>
   );

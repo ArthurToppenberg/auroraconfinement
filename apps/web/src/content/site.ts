@@ -11,7 +11,7 @@ export const homeHero = {
   primaryLabel: 'Register interest',
   primaryHref: '/contact/?intent=product-interest&interest=exhibition-model',
   invitation:
-    'Interested in using the model at your institution? Register your non-binding interest.',
+    'Registering interest is free + non-binding, and supports us in getting softfunding, to get started building.',
 } as const;
 
 export const projectStatus =

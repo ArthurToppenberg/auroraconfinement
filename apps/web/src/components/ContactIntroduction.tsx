@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-import { contactHrefs } from '@/content/site';
+import { contactHrefs, homeHero } from '@/content/site';
 
 export default function ContactIntroduction() {
   const searchParams = useSearchParams();
@@ -17,12 +17,10 @@ export default function ContactIntroduction() {
         <h2>Tell us what your institution needs.</h2>
         <p>
           Would you use a real-plasma model for teaching, exhibitions or
-          outreach? Share your intended application and requirements. Your
-          interest helps us assess demand and strengthen applications for grant
-          funding to build the model.
+          outreach? Share your intended application and requirements.
         </p>
         <p className="registration-reassurance">
-          Completely non-binding. This is not an order, payment commitment or
+          {homeHero.invitation} This is not an order, payment commitment or
           obligation to purchase.
         </p>
         <Link href={contactHrefs.generalEnquiry}>Have a general enquiry?</Link>
