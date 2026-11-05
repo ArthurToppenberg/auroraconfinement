@@ -1,5 +1,3 @@
-// @ts-nocheck
-
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
@@ -46,10 +44,13 @@ export default function VisionPowerCable() {
       )
         return;
       const cards = root.querySelectorAll('.fusion-vision-card');
+      const firstCard = cards[0];
+      const secondCard = cards[1];
+      if (!firstCard || !secondCard) return;
       const horizontal =
         Math.abs(
-          cards[0].getBoundingClientRect().top -
-            cards[1].getBoundingClientRect().top,
+          firstCard.getBoundingClientRect().top -
+            secondCard.getBoundingClientRect().top,
         ) < 8;
       const connect = (
         from: { x: number; y: number },

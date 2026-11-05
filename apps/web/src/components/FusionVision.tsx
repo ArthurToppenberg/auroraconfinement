@@ -1,7 +1,8 @@
-// @ts-nocheck
-
+import type { ComponentType } from 'react';
 import VisionPowerCable from '@/components/VisionPowerCable';
-import VisionBenefitIcon from '@/components/VisionBenefitIcon';
+import VisionBenefitIcon, {
+  type VisionBenefitKind,
+} from '@/components/VisionBenefitIcon';
 
 // A symmetric illustrative torus; highlights travel clockwise around it.
 function torusLoop(rx: number, ry: number) {
@@ -181,12 +182,28 @@ function FamilyFuture() {
   );
 }
 
-const cards = [
+interface MotivationCard {
+  Drawing: ComponentType;
+  title: string;
+  bullets: readonly { icon: VisionBenefitKind; lead: string; text: string }[];
+  sources: readonly { label: string; href: string }[];
+  details?: {
+    summary: string;
+    paragraphs: readonly string[];
+    sources: readonly { label: string; href: string }[];
+  };
+}
+
+const cards: readonly MotivationCard[] = [
   {
     Drawing: FusionFacility,
     title: 'Power progress. Protect the climate.',
     bullets: [
-      { lead: 'No direct CO₂', text: 'emissions during power generation.' },
+      {
+        icon: 'smoke',
+        lead: 'No direct CO₂',
+        text: 'emissions during power generation.',
+      },
       {
         icon: 'fuel' as const,
         lead: 'Small fuel quantities.',
@@ -271,7 +288,7 @@ const cards = [
         text: 'Fusion stops when the required conditions are lost.',
       },
       {
-        icon: 'atom' as const,
+        icon: 'warning' as const,
         lead: 'No uranium or plutonium fuel required.',
         text: 'A different proliferation profile, with tritium still requiring controls.',
       },

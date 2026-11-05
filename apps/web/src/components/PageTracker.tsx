@@ -1,5 +1,3 @@
-// @ts-nocheck
-
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -80,13 +78,11 @@ export default function PageTracker() {
         const values = getComputedStyle(surface)
           .backgroundColor.match(/[\d.]+/g)
           ?.map(Number);
-        if (
-          values &&
-          values.length >= 3 &&
-          (values.length < 4 || values[3] > 0.5)
-        ) {
+        if (values && values.length >= 3 && (values[3] ?? 1) > 0.5) {
           const brightness =
-            values[0] * 0.299 + values[1] * 0.587 + values[2] * 0.114;
+            (values[0] ?? 0) * 0.299 +
+            (values[1] ?? 0) * 0.587 +
+            (values[2] ?? 0) * 0.114;
           setTheme(brightness < 145 ? 'dark' : 'light');
           break;
         }
