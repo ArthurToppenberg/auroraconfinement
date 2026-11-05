@@ -1,3 +1,4 @@
+import FusionMotivationIntro from '@/components/FusionMotivationIntro';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { pageMetadata } from '@/lib/metadata';
@@ -50,14 +51,8 @@ export default function Page() {
         aria-labelledby="home-vision-heading"
       >
         <div className="shell">
-          <div className="home-vision-intro">
-            <h2 id="home-vision-heading">The future we want to help build.</h2>
-            <p>
-              We’re students. We want a future to look forward to - and we’re
-              ready to work for it.
-            </p>
-          </div>
-          <FusionVision compact />
+          <FusionMotivationIntro id="home-vision-heading" />
+          <FusionVision />
           <div className="home-vision-support">
             <div className="home-vision-sdg-group">
               <div className="home-sdg-teaser">

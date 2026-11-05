@@ -1,3 +1,4 @@
+import FusionMotivationIntro from '@/components/FusionMotivationIntro';
 import type { ReactNode } from 'react';
 import FusionVision from '@/components/FusionVision';
 
@@ -38,15 +39,7 @@ export default function TeamMotivation({ children }: { children?: ReactNode }) {
         aria-labelledby="team-motivation-heading"
       >
         <div className="shell">
-          <div className="team-motivation-statement">
-            <h2 id="team-motivation-heading">
-              The future we want to help build.
-            </h2>
-            <p className="team-motivation-lead">
-              We’re students. We want a future to look forward to - and we’re
-              ready to work for it.
-            </p>
-          </div>
+          <FusionMotivationIntro id="team-motivation-heading" />
           <FusionVision />
           <div className="team-sdg-alignment">
             <h3>The goals guiding our work.</h3>

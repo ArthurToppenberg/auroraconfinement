@@ -203,7 +203,7 @@ const cards: readonly MotivationCard[] = [
       {
         icon: 'smoke',
         lead: 'No direct CO₂',
-        text: 'emissions during power generation.',
+        text: 'emissions during fusion power generation.',
       },
       {
         icon: 'fuel' as const,
@@ -320,55 +320,7 @@ const cards: readonly MotivationCard[] = [
   },
 ];
 
-const condensedBullets: readonly MotivationCard['bullets'][] = [
-  [
-    {
-      icon: 'smoke',
-      lead: 'No direct CO₂',
-      text: 'emissions during power generation.',
-    },
-    { icon: 'fuel', lead: 'Small fuel quantities.', text: '' },
-    { icon: 'reuse', lead: 'A different waste legacy.', text: '' },
-  ],
-  [
-    { icon: 'steady', lead: 'Power beyond sunshine and wind.', text: '' },
-    {
-      icon: 'pylon',
-      lead: 'Reliable electricity alongside renewables.',
-      text: '',
-    },
-    {
-      icon: 'generator',
-      lead: '400 MW target',
-      text: 'for CFS’s planned ARC plant.',
-    },
-  ],
-  [
-    { icon: 'family', lead: 'Responsibility to future generations.', text: '' },
-    {
-      icon: 'shield',
-      lead: 'No runaway chain reaction',
-      text: 'or fission-style core meltdown.',
-    },
-    {
-      icon: 'warning',
-      lead: 'No uranium enrichment or plutonium fuel required',
-      text: 'for deuterium–tritium fusion.',
-    },
-  ],
-];
-
-export default function FusionVision({
-  compact = false,
-}: {
-  compact?: boolean;
-}) {
-  const displayCards = compact
-    ? cards.map((card, index) => ({
-        ...card,
-        bullets: condensedBullets[index] ?? card.bullets,
-      }))
-    : cards;
+export default function FusionVision() {
   const renewablesIllustration = (
     <svg
       className="fusion-vision-renewables"
@@ -495,7 +447,7 @@ export default function FusionVision({
   return (
     <div className="fusion-vision">
       <ol className="fusion-vision-sequence">
-        {displayCards.map(({ Drawing, title, bullets, sources, details }) => (
+        {cards.map(({ Drawing, title, bullets, sources, details }) => (
           <li className="fusion-vision-card" key={title}>
             <Drawing />
             <h3>{title}</h3>
@@ -542,127 +494,84 @@ export default function FusionVision({
         ))}
       </ol>
       <VisionPowerCable />
-      <div
-        className={compact ? 'home-fusion-support' : 'fusion-vision-context'}
-      >
-        <div
-          className={
-            compact ? 'home-fusion-support-copy' : 'fusion-vision-context-copy'
-          }
-        >
-          {compact ? (
-            <>
-              <h3>Why pursue fusion if we have wind and solar?</h3>
-              <p>
-                Wind and solar output changes with the weather and time of day.
-                Fusion could add controllable low-carbon generation, helping
-                balance supply when renewable output is low.
-              </p>
-              <ul className="home-fusion-support-benefits">
-                {[
-                  {
-                    title: 'Concentrated generation',
-                    text: 'Substantial output at individual power-station sites, offering another option where land use, landscapes and local impacts constrain expansion.',
-                    path: 'M3 20V7h18v13M2 20h20M3 11h18M7 20v-5h10v5M7 7V4h10v3',
-                  },
-                  {
-                    title: 'Power our cities. Heat our homes.',
-                    text: 'Future fusion plants could produce electricity and supply district heating, making more use of the energy they generate.',
-                    path: 'm3 11 9-8 9 8M5 10v11h14V10M9 21v-7h6v7M8 9V6m8 3V6',
-                  },
-                ].map((benefit) => (
-                  <li key={benefit.title}>
-                    <svg
-                      viewBox="0 0 24 24"
-                      width="22"
-                      height="22"
-                      aria-hidden="true"
-                      focusable="false"
-                    >
-                      <path d={benefit.path} />
-                    </svg>
-                    <div>
-                      <h4>{benefit.title}</h4>
-                      <p>{benefit.text}</p>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-              <div className="home-fusion-comparison">
-                <h4>The potential of concentrated generation:</h4>
-                <dl>
-                  {[
-                    {
-                      label: 'Fusion',
-                      number: '≈3,300',
-                      note: 'Conceptual estimate',
-                    },
-                    {
-                      label: 'Utility-scale solar',
-                      number: '30–36',
-                      note: 'Planning assumption',
-                    },
-                    {
-                      label: 'Onshore wind',
-                      number: '≈3',
-                      note: 'Including turbine spacing',
-                    },
-                  ].map((item) => (
-                    <div key={item.label}>
-                      <dt>{item.label}</dt>
-                      <dd className="home-fusion-comparison-number">
-                        {item.number}
-                      </dd>
-                      <dd>MW/km²</dd>
-                      <dd>{item.note}</dd>
-                    </div>
-                  ))}
-                </dl>
-                <p>
-                  Illustrative rated-capacity estimates from different studies,
-                  not average output or a like-for-like land-use comparison.
-                </p>
-              </div>
-            </>
-          ) : (
-            <>
-              <h3>Why keep pursuing fusion?</h3>
-              <p className="fusion-vision-context-lead">
-                Because a cleaner world will still need dependable power.
-              </p>
-              <p>
-                Fusion could deliver large amounts of electricity from
-                concentrated power stations, day and night, alongside wind and
-                solar. Its promise is reliable low-carbon energy for growing
-                cities, industry and computing, even when renewable output is
-                low.
-              </p>
-              <div className="fusion-vision-context-sources">
-                <a href="https://www.energy.gov/fusion/doe-fusion-energy-strategy-2024-executive-summary">
-                  On-demand power potential — US DOE
-                </a>
-                <a href="https://www.cfs.energy/chesterfield/info/">
-                  Planned 400 MW ARC plant — CFS
-                </a>
-              </div>
-            </>
-          )}
-        </div>
-        {compact ? (
-          <div className="home-fusion-support-visual">
-            {renewablesIllustration}
-          </div>
-        ) : (
-          renewablesIllustration
-        )}
-        {compact && supportingEvidence}
-        {!compact && (
-          <p className="fusion-vision-note">
-            A long-term vision. Commercial fusion still requires substantial
-            development; our work today starts with plasma education and
-            prototypes.
+      <div className="home-fusion-support">
+        <div className="home-fusion-support-copy">
+          <h3>Why pursue fusion if we have wind and solar?</h3>
+          <p>
+            Wind and solar output changes with the weather and time of day.
+            Fusion could add controllable low-carbon generation, helping balance
+            supply when renewable output is low.
           </p>
-        )}
+          <ul className="home-fusion-support-benefits">
+            {[
+              {
+                title: 'Concentrated generation',
+                text: 'Substantial output at individual power-station sites, offering another option where land use, landscapes and local impacts constrain expansion.',
+                path: 'M3 20V7h18v13M2 20h20M3 11h18M7 20v-5h10v5M7 7V4h10v3',
+              },
+              {
+                title: 'Power our cities. Heat our homes.',
+                text: 'Future fusion plants could produce electricity and supply district heating, making more use of the energy they generate.',
+                path: 'm3 11 9-8 9 8M5 10v11h14V10M9 21v-7h6v7M8 9V6m8 3V6',
+              },
+            ].map((benefit) => (
+              <li key={benefit.title}>
+                <svg
+                  viewBox="0 0 24 24"
+                  width="22"
+                  height="22"
+                  aria-hidden="true"
+                  focusable="false"
+                >
+                  <path d={benefit.path} />
+                </svg>
+                <div>
+                  <h4>{benefit.title}</h4>
+                  <p>{benefit.text}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
+          <div className="home-fusion-comparison">
+            <h4>The potential of concentrated generation:</h4>
+            <dl>
+              {[
+                {
+                  label: 'Fusion',
+                  number: '≈3,300',
+                  note: 'Conceptual estimate',
+                },
+                {
+                  label: 'Utility-scale solar',
+                  number: '30–36',
+                  note: 'Planning assumption',
+                },
+                {
+                  label: 'Onshore wind',
+                  number: '≈3',
+                  note: 'Including turbine spacing',
+                },
+              ].map((item) => (
+                <div key={item.label}>
+                  <dt>{item.label}</dt>
+                  <dd className="home-fusion-comparison-number">
+                    {item.number}
+                  </dd>
+                  <dd>MW/km²</dd>
+                  <dd>{item.note}</dd>
+                </div>
+              ))}
+            </dl>
+            <p>
+              Illustrative rated-capacity estimates from different studies, not
+              average output or a like-for-like land-use comparison.
+            </p>
+          </div>
+        </div>
+        <div className="home-fusion-support-visual">
+          {renewablesIllustration}
+        </div>
+        {supportingEvidence}
       </div>
     </div>
   );
