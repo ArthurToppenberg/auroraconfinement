@@ -402,9 +402,11 @@ export default function FusionVision() {
           focusable="false"
         >
           <circle cx="55" cy="45" r="4" />
-          <path d="M53 41 51 10q1-6 4-1l4 32" />
-          <path d="M53 41 51 10q1-6 4-1l4 32" transform="rotate(120 55 45)" />
-          <path d="M53 41 51 10q1-6 4-1l4 32" transform="rotate(240 55 45)" />
+          <g className="vision-windmill-blades">
+            <path d="M53 41 51 10q1-6 4-1l4 32" />
+            <path d="M53 41 51 10q1-6 4-1l4 32" transform="rotate(120 55 45)" />
+            <path d="M53 41 51 10q1-6 4-1l4 32" transform="rotate(240 55 45)" />
+          </g>
           <path d="m52 50-4 83h14l-4-83 M103 118v15 M155 118v15 M8 133h184" />
           <g className="fusion-vision-renewable-panel">
             <path d="M102 82h82l-16 36H86Z M97 94h82 M91 106h82 M122 82l-16 36 M142 82l-16 36 M162 82l-16 36" />
