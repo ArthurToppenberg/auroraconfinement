@@ -5,6 +5,7 @@ import PageTracker from '@/components/PageTracker';
 import Header from '@/components/Header';
 import MiguelEasterEgg from '@/components/MiguelEasterEgg';
 import Reveal from '@/components/Reveal';
+import StaEasterEgg from '@/components/StaEasterEgg';
 import { siteName, siteOrigin } from '@/content/site';
 import '@/styles/global.css';
 
@@ -41,6 +42,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <Footer />
         <PageTracker />
         <MiguelEasterEgg />
+        <StaEasterEgg />
         <Reveal />
       </body>
     </html>
