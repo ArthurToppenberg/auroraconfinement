@@ -4,6 +4,7 @@ import { pageMetadata } from '@/lib/metadata';
 import TeamGrid from '@/components/TeamGrid';
 import EventFigure from '@/components/EventFigure';
 import CommunityPosts from '@/components/CommunityPosts';
+import TeamMotivation from '@/components/TeamMotivation';
 import { homeHero } from '@/content/site';
 
 export const metadata: Metadata = pageMetadata({
@@ -27,7 +28,7 @@ export default function Page() {
       </section>
 
       <section
-        className="section field-deep team-section"
+        className="section field-ice team-section"
         id="team"
         aria-labelledby="team-members-heading"
       >
@@ -97,16 +98,15 @@ export default function Page() {
           <h2>Our focus now.</h2>
           <ul className="team-focus-bullets">
             <li>
-              Gather free, non-binding expressions of interest to support grant
-              funding applications and help us start building the physical prototype.
+              Gather free, non-binding interest to support grant funding for a
+              physical prototype.
             </li>
             <li>
               Refine the <Link href="/model/">exhibition model</Link> through
               simulations and virtual modelling.
             </li>
             <li>
-              Gather institutional requirements for teaching, exhibitions and
-              outreach.
+              Understand what institutions need for teaching and outreach.
             </li>
             <li>
               Explore the{' '}
@@ -125,8 +125,8 @@ export default function Page() {
         </div>
       </section>
 
-      <section className="home-closing chapter field-deep team-closing">
-        <div className="shell team-closing-inner">
+      <TeamMotivation>
+        <div className="team-closing-inner">
           <div>
             <h2>Interested in using the model?</h2>
             <p>
@@ -140,7 +140,7 @@ export default function Page() {
             </Link>
           </div>
         </div>
-      </section>
+      </TeamMotivation>
     </div>
   );
 }

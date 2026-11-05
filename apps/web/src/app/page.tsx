@@ -107,7 +107,7 @@ export default function Page() {
             </div>
             <div className="evidence-row">
               <div>
-                <p className="evidence-highlight evidence-number">13 of 52</p>
+                <p className="evidence-highlight evidence-number">13 of 72</p>
                 <p className="evidence-number-label">
                   on-campus devices identified
                 </p>
@@ -117,7 +117,7 @@ export default function Page() {
                 <p>
                   In our review of European institutions offering fusion or
                   plasma degrees and courses, we identified on-campus
-                  magnetic-confinement devices at only 13 of 52 institutions.
+                  magnetic-confinement devices at only 13 of 72 institutions.
                 </p>
                 <p className="evidence-source">
                   Aurora Confinement desk research, October 2026
@@ -125,13 +125,11 @@ export default function Page() {
                 <details className="evidence-methodology">
                   <summary>About this research</summary>
                   <p>
-                    Our wider list covers 72 European institutions. Of the 52
-                    classified as offering fusion/plasma degrees or courses, 13
-                    had an identified on-campus toroidal or linear
+                    Of the 72 institutions classified as offering fusion/plasma degrees
+                    or courses, 13 had an identified on-campus toroidal or linear
                     magnetic-confinement device, four were classified as
                     partner-lab only, and 35 had no device identified in the
-                    reviewed sources. The list is not exhaustive; ‘not found’
-                    does not mean confirmed absent.
+                    reviewed sources.
                   </p>
                   <p>
                     These counts concern identified magnetic-confinement

@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import type { ReactNode } from 'react';
 import Footer from '@/components/Footer';
+import PageTracker from '@/components/PageTracker';
 import Header from '@/components/Header';
 import MiguelEasterEgg from '@/components/MiguelEasterEgg';
 import Reveal from '@/components/Reveal';
@@ -38,6 +39,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           {children}
         </main>
         <Footer />
+        <PageTracker />
         <MiguelEasterEgg />
         <Reveal />
       </body>

@@ -100,14 +100,14 @@ export default function Page() {
               sizes="(min-width: 60rem) 54vw, 100vw"
               width="1536"
               height="1024"
-              alt="Concept drawing of a research-scale stellarator platform with an enclosed vessel, surrounding coils and adjacent equipment cabinets."
+              alt="Concept illustration of a research-scale stellarator platform with an enclosed vessel, surrounding coils and adjacent equipment cabinets."
               fetchPriority="high"
               decoding="async"
             />
             <figcaption>
-              Concept drawing. Platform in development; final design may differ.
-              The magnetic-field configuration shown is illustrative and does
-              not represent Aurora Confinement’s technology.
+              Concept illustration. Platform in development; final design may
+              differ. The magnetic-field configuration shown is illustrative and
+              does not represent Aurora Confinement’s technology.
             </figcaption>
           </figure>
         </div>
@@ -194,13 +194,14 @@ export default function Page() {
         </div>
       </section>
 
-      <section className="home-closing chapter field-cyan">
+      <section className="home-closing chapter field-magenta">
         <div className="shell home-closing-inner">
           <div>
             <h2>What could your lab explore?</h2>
             <p>
               Share your requirements for a future research platform.
-              Registering interst is free and non-binding. Your interest helps us assess demand and support applications for grant funding.
+              Registering interst is free and non-binding. Your interest helps
+              us assess demand and support applications for grant funding.
             </p>
           </div>
           <Link className="button primary" href={registrationHref}>

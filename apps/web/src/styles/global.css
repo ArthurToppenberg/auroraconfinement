@@ -3426,3 +3426,1239 @@ body:has(.admin-page) .site-footer {
     grid-template-columns: minmax(0, 1fr) auto;
   }
 }
+
+/* Roadmap tracks have independent time scales, not a shared calendar. */
+.roadmap-intro {
+  padding-block: clamp(2.5rem, 5vw, 4rem);
+}
+
+.roadmap-intro h1 {
+  max-width: 26ch;
+  font-size: clamp(2.5rem, 4.8vw, 4.5rem);
+  line-height: 1.05;
+  text-wrap: pretty;
+}
+
+.roadmap-intro-copy {
+  max-width: 65ch;
+  margin: 1.5rem 0 0;
+}
+
+.roadmap-current-work {
+  margin-top: 2rem;
+  padding: 1.25rem;
+  background: var(--tint);
+}
+
+.roadmap-current-work h2 {
+  font-size: 1.125rem;
+  line-height: 1.4;
+  letter-spacing: 0;
+}
+
+.roadmap-current-work ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.75rem;
+  margin: 0.5rem 0 0;
+  padding-left: 1.25rem;
+  font-size: 1rem;
+}
+
+.roadmap-page .roadmap-track {
+  padding-block: clamp(2.5rem, 5vw, 4rem);
+}
+
+.roadmap-track-heading {
+  max-width: 70ch;
+  margin-bottom: 2rem;
+}
+
+.roadmap-track-heading > p {
+  margin: 1rem 0 0;
+}
+
+.roadmap-track-heading .roadmap-track-status {
+  margin: 0 0 0.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.roadmap-time-scale strong {
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.roadmap-milestones {
+  display: grid;
+  gap: 1.25rem;
+  position: relative;
+  margin: 0;
+  padding: 0 0 0 1.5rem;
+  list-style: none;
+}
+
+.roadmap-milestones::before {
+  position: absolute;
+  content: '';
+  top: 1.75rem;
+  bottom: 1.75rem;
+  left: 0.35rem;
+  width: 2px;
+  background: currentColor;
+  opacity: 0.3;
+}
+
+.roadmap-milestone {
+  position: relative;
+  min-width: 0;
+  display: grid;
+  gap: 1rem;
+  padding: 1.5rem;
+  background: var(--paper);
+}
+
+.field-deep .roadmap-milestone {
+  background: var(--deep-tint);
+}
+
+.roadmap-milestone::before {
+  content: '';
+  position: absolute;
+  top: 1.75rem;
+  left: -1.45rem;
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.roadmap-phase-number {
+  font-size: 1rem;
+  font-weight: 650;
+}
+
+.roadmap-phase-meta p {
+  margin: 0.5rem 0 0;
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+.roadmap-phase-body h3,
+.roadmap-continuation h3 {
+  font-size: clamp(1.375rem, 2vw, 1.75rem);
+  line-height: 1.15;
+  text-wrap: pretty;
+}
+
+.roadmap-phase-body ul,
+.roadmap-continuation ul {
+  display: grid;
+  gap: 0.5rem;
+  margin: 1rem 0;
+  padding-left: 1.25rem;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.roadmap-outcome {
+  margin: 1rem 0 0;
+  padding-top: 1rem;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.roadmap-outcome strong {
+  display: block;
+  margin-bottom: 0.35rem;
+}
+
+.roadmap-checkpoint .roadmap-outcome,
+.roadmap-continuation .roadmap-outcome {
+  padding: 1rem;
+  background: var(--tint);
+}
+
+.field-deep .roadmap-checkpoint {
+  background: var(--magenta);
+  color: var(--on-magenta);
+}
+
+.field-deep .roadmap-checkpoint .roadmap-outcome {
+  background: var(--magenta-tint);
+}
+
+.roadmap-continuation {
+  margin: 1.5rem 0 0 1.5rem;
+  padding: 1.5rem;
+  background: var(--paper);
+}
+
+.roadmap-continuation > p:first-child {
+  margin: 0;
+}
+
+.roadmap-continuation > p:nth-child(2) {
+  margin: 0.5rem 0 1rem;
+  font-size: 1rem;
+}
+
+.roadmap-future {
+  margin: 1.5rem 0 0 1.5rem;
+  font-size: 1rem;
+}
+
+.roadmap-future strong {
+  display: block;
+  margin-bottom: 0.35rem;
+}
+
+.roadmap-note,
+.roadmap-technical {
+  margin: 1.5rem 0 0;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+
+.roadmap-technical summary {
+  cursor: pointer;
+}
+
+.roadmap-technical p {
+  max-width: 70ch;
+  margin: 0.75rem 0 0;
+}
+
+.roadmap-bridge p {
+  max-width: 72ch;
+  margin: 1.25rem 0 0;
+}
+
+.roadmap-closing-links {
+  display: grid;
+  justify-items: start;
+  gap: 0.75rem;
+  flex-shrink: 0;
+}
+
+@media (min-width: 52rem) {
+  .roadmap-milestone {
+    grid-template-columns: minmax(10rem, 0.45fr) minmax(0, 1fr);
+    gap: 2rem;
+  }
+}
+
+@media (min-width: 70rem) {
+  .roadmap-milestones-wide {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    padding: 1.5rem 0 0;
+    gap: 1rem;
+  }
+
+  .roadmap-milestones-wide::before {
+    top: 0.35rem;
+    bottom: auto;
+    left: 1.75rem;
+    right: 1.75rem;
+    width: auto;
+    height: 2px;
+  }
+
+  .roadmap-milestones-wide .roadmap-milestone {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto 1fr;
+    gap: 1rem;
+  }
+
+  .roadmap-milestones-wide .roadmap-milestone::before {
+    top: -1.45rem;
+    left: 1.75rem;
+  }
+
+  .roadmap-milestones-wide .roadmap-phase-body {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .roadmap-milestones-wide .roadmap-outcome {
+    margin-top: auto;
+  }
+
+  .roadmap-continuation,
+  .roadmap-future {
+    margin-left: 0;
+  }
+}
+
+/* Collective motivation, followed by informational SDG alignment. */
+.team-motivation-statement {
+  max-width: 66ch;
+}
+
+.team-motivation-statement h2 {
+  max-width: 24ch;
+  text-wrap: pretty;
+}
+
+.team-motivation-statement p {
+  margin: 1.5rem 0 0;
+  line-height: 1.65;
+}
+
+.team-motivation-lead {
+  font-size: var(--step-lead);
+}
+
+.team-motivation-closing {
+  font-weight: 600;
+}
+
+.team-sdg-alignment {
+  margin-top: clamp(5rem, 8.5vw, 7rem);
+}
+
+.team-sdg-context {
+  max-width: 64ch;
+  margin: 1rem 0 2rem;
+  font-size: 1rem;
+}
+
+.team-sdg-grid {
+  display: grid;
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.team-sdg-grid li {
+  min-width: 0;
+}
+
+.team-sdg-grid a {
+  display: block;
+  text-decoration: none;
+}
+
+.team-sdg-grid a:hover h4 {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.team-sdg-grid img {
+  display: block;
+  width: 112px;
+  height: 112px;
+  object-fit: contain;
+  margin-bottom: 1rem;
+}
+
+.team-sdg-grid h4 {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.team-sdg-grid p {
+  max-width: 42ch;
+  margin: 0.75rem 0 0;
+  font-size: 1rem;
+  line-height: 1.55;
+}
+
+@media (min-width: 40rem) {
+  .team-page .team-sdg-grid {
+    row-gap: 0.75rem;
+  }
+
+  .team-page .team-sdg-grid > li {
+    display: grid;
+    grid-template-rows: subgrid;
+    grid-row: span 3;
+    padding-bottom: 1.25rem;
+  }
+
+  .team-page .team-sdg-grid > li > a {
+    display: grid;
+    grid-template-rows: subgrid;
+    grid-row: span 2;
+  }
+
+  .team-page .team-sdg-grid img {
+    margin-bottom: 0;
+  }
+
+  .team-page .team-sdg-grid p {
+    margin-top: 0;
+  }
+}
+
+.team-sdg-credit {
+  max-width: 70ch;
+  margin-top: 3rem;
+  font-size: 0.625rem;
+  color: #a4a9bc;
+  line-height: 1.4;
+  text-align: left;
+}
+
+.team-sdg-credit p {
+  margin: 0.375rem 0 0;
+}
+
+@media (min-width: 40rem) {
+  .team-sdg-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 70rem) {
+  .team-sdg-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* Subtle glass section rail; controls retain generous invisible hit areas. */
+.page-tracker {
+  --tracker-ink: #2b2f9e;
+  --tracker-line: rgb(43 47 158 / 18%);
+  --tracker-dot: #f7f8ff;
+  --tracker-completed: #b79cff;
+  --tracker-active: #2b2f9e;
+  position: fixed;
+  z-index: 35;
+  left: 50%;
+  bottom: 0.75rem;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  width: max-content;
+  max-width: calc(100vw - 1rem);
+  color: var(--tracker-ink);
+  isolation: isolate;
+  opacity: 0;
+  transition: opacity 180ms ease;
+}
+
+.page-tracker[data-scrolling='true'],
+.page-tracker:hover,
+.page-tracker:focus-within {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.page-tracker[data-theme='dark'] {
+  --tracker-ink: #e4ddfa;
+  --tracker-line: rgb(228 221 250 / 22%);
+  --tracker-dot: #211a32;
+  --tracker-completed: #a493cb;
+  --tracker-active: #e4ddfa;
+}
+
+.page-tracker::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  left: 22px;
+  right: 22px;
+  top: calc(50% - 1px);
+  height: 2px;
+  border: 0;
+  border-radius: 4px;
+  background: var(--tracker-line);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  pointer-events: none;
+}
+
+.page-tracker button,
+.page-tracker a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  width: 44px;
+  min-height: 44px;
+  padding: 0;
+  background: transparent;
+  color: inherit;
+  border: 0;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+.page-tracker button svg {
+  width: 16px;
+  height: 16px;
+  opacity: 0.65;
+}
+
+.page-tracker button:hover:not(:disabled) svg,
+.page-tracker button:focus-visible svg {
+  opacity: 1;
+}
+
+.page-tracker button:disabled {
+  opacity: 0.25;
+  cursor: default;
+}
+
+.page-tracker :focus-visible {
+  outline: 2px solid var(--tracker-ink);
+  outline-offset: -4px;
+}
+
+.page-tracker-dots {
+  display: flex;
+  align-items: center;
+  max-width: calc(100vw - 7rem);
+  overflow: auto;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.page-tracker-dots li {
+  flex-shrink: 0;
+}
+
+.page-tracker-dot {
+  width: 7px;
+  height: 7px;
+  border: 1px solid var(--tracker-ink);
+  border-radius: 50%;
+  background: var(--tracker-dot);
+}
+
+.page-tracker-reached .page-tracker-dot {
+  background: var(--tracker-completed);
+}
+
+.page-tracker [aria-current='location'] .page-tracker-dot {
+  width: 9px;
+  height: 9px;
+  background: var(--tracker-active);
+  outline: 1px solid var(--tracker-ink);
+  outline-offset: 3px;
+}
+
+.page-tracker-tooltip {
+  display: none;
+}
+
+body:has(.page-tracker) {
+  padding-bottom: 4rem;
+}
+
+main section[id],
+main article[id] {
+  scroll-margin-top: calc(var(--header-height) + 1rem);
+}
+
+@media (min-width: 64rem) {
+  .page-tracker {
+    top: 50%;
+    bottom: auto;
+    left: 0;
+    width: 44px;
+    flex-direction: column;
+    transform: translateY(-50%);
+  }
+
+  .page-tracker::before {
+    left: 21px;
+    right: auto;
+    top: 16px;
+    bottom: 16px;
+    width: 2px;
+    height: auto;
+  }
+
+  .page-tracker button,
+  .page-tracker a {
+    min-height: 32px;
+  }
+
+  .page-tracker-dots {
+    flex-direction: column;
+    max-width: none;
+    max-height: calc(100svh - 10rem);
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .page-tracker-tooltip {
+    position: absolute;
+    left: calc(100% + 0.25rem);
+    top: 50%;
+    transform: translateY(-50%);
+    width: max-content;
+    max-width: min(20rem, calc(100vw - 5rem));
+    padding: 0.5rem 0.75rem;
+    white-space: normal;
+    text-align: left;
+    text-wrap: pretty;
+    font-weight: 400;
+    letter-spacing: normal;
+    background: rgb(10 16 48 / 92%);
+    color: var(--paper);
+    font-size: 0.875rem;
+    line-height: 1.4;
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    pointer-events: none;
+  }
+
+  .page-tracker a:hover .page-tracker-tooltip,
+  .page-tracker a:focus-visible .page-tracker-tooltip {
+    display: block;
+  }
+
+  body:has(.page-tracker) {
+    --margin: 3.5rem;
+    padding-bottom: 0;
+  }
+}
+
+@media (prefers-contrast: more), (forced-colors: active) {
+  .page-tracker::before,
+  .page-tracker button svg {
+    background: Canvas;
+    border: 1px solid CanvasText;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+
+  .page-tracker-dot {
+    border-color: CanvasText;
+  }
+}
+
+@media print {
+  .page-tracker {
+    display: none;
+  }
+
+  body:has(.page-tracker) {
+    padding-bottom: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-tracker {
+    transition: none;
+  }
+}
+
+/* Team-only cohesion: one pale canvas and one navy closing chapter. */
+.team-page {
+  background: var(--ice);
+  color: var(--on-ice);
+}
+
+.team-page .team-community {
+  --field: var(--ice);
+  --ink: var(--on-ice);
+  --tint: var(--ice-tint);
+  --accent: var(--deep);
+  --accent-ink: var(--paper);
+}
+
+.team-page .team-card {
+  background: transparent;
+  color: var(--on-ice);
+}
+
+.team-page .team-card-copy {
+  padding: 1rem 0 0;
+}
+
+.team-page .team-grid {
+  gap: 2rem 1.5rem;
+}
+
+.team-page .section-heading h2,
+.team-page .team-motivation-statement h2 {
+  max-width: 28ch;
+  font-size: clamp(2rem, 3vw, 3rem);
+  line-height: 1.1;
+}
+
+.team-page .event-pair {
+  gap: 2.5rem;
+}
+
+.team-page .team-community > .shell,
+.team-page .team-current-focus > .shell {
+  border-top: 1px solid var(--ice-tint);
+  padding-top: 2rem;
+}
+
+.team-page .team-community,
+.team-page .team-current-focus {
+  padding-top: 0;
+}
+
+.team-page .team-current-focus h2 {
+  font-size: var(--step-lead);
+  letter-spacing: -0.025em;
+  line-height: 1.3;
+}
+
+.team-page .team-focus-bullets {
+  margin-block: 1rem 1.5rem;
+  gap: 0.5rem;
+}
+
+.team-page .team-status-note {
+  margin-top: 1.5rem;
+}
+
+.team-page .team-sdg-alignment {
+  padding-top: 1.25rem;
+  border-top: 1px solid rgb(247 248 255 / 18%);
+}
+
+.team-page .team-motivation-invitation {
+  margin: 0;
+  padding-block: clamp(2rem, 4vw, 3rem);
+}
+
+.team-page .team-motivation-invitation h2 {
+  font-size: clamp(1.75rem, 2.8vw, 2.5rem);
+  line-height: 1.15;
+  text-wrap: pretty;
+}
+
+.team-page .team-motivation-invitation p {
+  max-width: 58ch;
+  margin: 1rem 0 0;
+}
+
+/* Three future-facing scenes, scoped to the Team motivation section. */
+.team-page .team-motivation .fusion-vision {
+  margin-block: 2rem;
+}
+
+.team-page .team-motivation .fusion-vision-sequence {
+  display: grid;
+  gap: 2.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.team-page .team-motivation .fusion-vision-card {
+  position: relative;
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
+  align-content: start;
+  min-width: 0;
+  padding: 1.25rem;
+  background: var(--night-tint);
+  border: 1px solid rgb(247 248 255 / 14%);
+  border-radius: 0.5rem;
+}
+
+.team-page .team-motivation .fusion-vision svg {
+  display: block;
+  width: 100%;
+  height: 180px;
+  margin-bottom: 1.25rem;
+  fill: none;
+  stroke: var(--paper);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.team-page .team-motivation .vision-energy {
+  stroke: #93dce8;
+}
+
+.team-page .team-motivation .vision-plasma {
+  fill: #93dce8;
+  stroke: #93dce8;
+}
+
+.team-page .team-motivation .fusion-vision-card h3 {
+  margin: 0;
+  font-size: 1.375rem;
+  line-height: 1.25;
+  text-wrap: pretty;
+}
+
+.team-page .team-motivation .fusion-vision-card p {
+  margin: 0.75rem 0 0;
+  font-size: 1rem;
+  line-height: 1.55;
+}
+
+.team-page .team-motivation .fusion-vision-source {
+  margin-top: 1.25rem;
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: #aeb7ce;
+}
+
+.team-page .team-motivation .fusion-vision-note,
+.team-page .team-motivation .team-sdg-context {
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: #d7dbea;
+}
+
+.team-page .team-motivation .fusion-vision-note {
+  margin: 1.25rem 0 0;
+}
+
+@media (min-width: 70rem) {
+  .team-page .team-motivation .fusion-vision-sequence {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 2rem;
+  }
+
+  .team-page .team-motivation .fusion-vision-card {
+    grid-template-rows: 200px minmax(3.5rem, auto) 1fr auto;
+  }
+}
+
+/* Animated conceptual energy flow, isolated to the Team vision cards. */
+.team-page .team-motivation .fusion-vision {
+  position: relative;
+}
+
+.team-page .team-motivation .vision-plasma {
+  fill: var(--magenta);
+  stroke: #d8bbff;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.team-page .team-motivation .vision-foliage {
+  stroke: #8fc69b;
+}
+
+.team-page .team-motivation .vision-home-fill {
+  fill: var(--night-tint);
+  stroke: none;
+}
+
+.team-page .team-motivation .vision-cable-port {
+  fill: none;
+  stroke: none;
+}
+
+.team-page .team-motivation .fusion-vision > .vision-power-cable {
+  position: absolute;
+  z-index: 1;
+  inset: 0 auto auto 0;
+  width: 100%;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.team-page .team-motivation .vision-cable-sheath {
+  stroke: #49617d;
+  stroke-width: 4;
+  stroke-linejoin: round;
+}
+
+.team-page .team-motivation .vision-cable-current {
+  fill: none;
+  stroke: #d8f9ff;
+  stroke-width: 1.8;
+  stroke-dasharray: 18 8 3 12 28 60;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 3px #63d7ff) drop-shadow(0 0 6px #269aff);
+}
+
+.team-page .team-motivation .vision-plasma {
+  filter: drop-shadow(0 0 3px rgb(183 156 255 / 45%));
+}
+
+.team-page .team-motivation .vision-plasma-thread {
+  fill: none;
+  stroke: #e1cbff;
+  stroke-width: 0.8;
+  opacity: 0.7;
+}
+
+.team-page .team-motivation .vision-plasma-flow {
+  fill: none;
+  stroke: #f6e9ff;
+  stroke-width: 1.25;
+  stroke-dasharray: 3 22;
+  stroke-linecap: round;
+}
+
+@keyframes vision-plasma-clockwise {
+  to {
+    stroke-dashoffset: -100;
+  }
+}
+
+@keyframes vision-electricity-flow {
+  to {
+    stroke-dashoffset: -258;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .team-page .team-motivation .vision-plasma-flow {
+    animation: vision-plasma-clockwise 6s linear infinite;
+  }
+
+  .team-page .team-motivation .vision-cable-current {
+    animation: vision-electricity-flow 14s linear infinite;
+  }
+}
+
+.team-page .team-motivation .vision-cable-light {
+  fill: none;
+  stroke: #42bcff;
+  stroke-width: 2;
+  opacity: 0.6;
+  filter: drop-shadow(0 0 4px #269aff);
+}
+
+.team-page .team-motivation .vision-coil-outline {
+  fill: none;
+  stroke: #e6e3f5;
+  stroke-width: 1.25;
+}
+
+.team-page .team-motivation .vision-vessel-rim {
+  fill: none;
+  stroke: #e6e3f5;
+  stroke-width: 0.8;
+}
+
+.team-page .section.team-motivation {
+  padding-bottom: clamp(4rem, 7.5vw, 6.5rem);
+}
+
+.team-page .team-motivation .fusion-vision-benefits {
+  display: grid;
+  align-content: start;
+  gap: 0.5rem;
+  margin: 0.75rem 0 0;
+  padding-left: 1.1rem;
+  font-size: 1rem;
+  line-height: 1.55;
+  list-style: disc;
+}
+
+.team-page .team-motivation .fusion-vision-context {
+  max-width: 72ch;
+  margin-top: 2rem;
+}
+
+.team-page .team-motivation .fusion-vision-context h3 {
+  font-size: 1.125rem;
+  line-height: 1.4;
+}
+
+.team-page .team-motivation .fusion-vision-context p {
+  margin: 0.75rem 0 0;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* Supporting evidence within the Team motivation cards. */
+.team-page .team-motivation .fusion-vision-card-body {
+  min-width: 0;
+}
+
+.team-page .team-motivation .fusion-vision-sources {
+  display: grid;
+  align-content: start;
+  gap: 0.5rem;
+  margin-top: 1.25rem;
+}
+
+.team-page .team-motivation .fusion-vision-sources .fusion-vision-source {
+  margin: 0;
+}
+
+.team-page .team-motivation .fusion-vision-details {
+  margin-top: 1rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: #d7dbea;
+}
+
+.team-page .team-motivation .fusion-vision-details summary {
+  cursor: pointer;
+}
+
+.team-page .team-motivation .fusion-vision-details p,
+.team-page .team-motivation .fusion-vision-card .fusion-vision-qualification {
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: #d7dbea;
+}
+
+.team-page .team-motivation .fusion-vision-scale {
+  display: grid;
+  gap: 0.4rem;
+  margin-top: 1.5rem;
+}
+
+.team-page .team-motivation .fusion-vision-scale strong {
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+
+.team-page .team-motivation .fusion-vision-scale span {
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+
+.team-page .team-motivation .fusion-vision-safety {
+  margin-top: 1.25rem;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.team-page .team-motivation .fusion-vision-safety p {
+  margin-top: 0.35rem;
+}
+
+/* Shared source row; opening details grows the text, not the cable overlay. */
+.team-page .team-motivation .fusion-vision-sources a {
+  display: block;
+}
+
+.team-page .team-motivation .fusion-vision-context {
+  margin-top: clamp(3.5rem, 6vw, 5rem);
+}
+
+.team-page .team-motivation .fusion-vision-context .fusion-vision-context-lead {
+  margin-top: 1rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.team-page .team-motivation .fusion-vision-context-sources {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5rem 1.5rem;
+  margin-top: 1rem;
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: #aeb7ce;
+}
+
+@media (min-width: 70rem) {
+  .team-page .team-motivation .fusion-vision-card {
+    grid-row: span 4;
+    grid-template-rows: subgrid;
+    row-gap: 0;
+  }
+}
+
+/* Consistent card hierarchy: illustration, heading, three bullets, references. */
+.team-page .team-motivation .fusion-vision-card h3 {
+  font-size: 1.1875rem;
+  line-height: 1.3;
+}
+
+.team-page .team-motivation .fusion-vision-benefits {
+  min-width: 0;
+  margin: 0.875rem 0 0;
+  padding-left: 1.1rem;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  line-height: 1.55;
+}
+
+.team-page .team-motivation .fusion-vision-benefits strong {
+  font-weight: 600;
+}
+
+.team-page .team-motivation .fusion-vision-sources {
+  align-content: start;
+  margin-top: 1.25rem;
+}
+
+.team-page .team-motivation .fusion-vision-sources .fusion-vision-details {
+  margin-top: 0.25rem;
+  font-size: 0.8125rem;
+  line-height: 1.55;
+}
+
+.team-page .team-motivation .fusion-vision-sources .fusion-vision-details p {
+  font-size: inherit;
+  line-height: inherit;
+}
+
+/* Text-led explanation with a secondary wind-and-solar sketch. */
+.team-page .team-motivation .fusion-vision-context {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: center;
+  gap: 1.5rem;
+  max-width: none;
+}
+
+.team-page .team-motivation .fusion-vision-context-copy {
+  max-width: 65ch;
+  min-width: 0;
+}
+
+.team-page .team-motivation .fusion-vision-context h3 {
+  font-size: clamp(1.5rem, 2.3vw, 2rem);
+  font-weight: 650;
+  line-height: 1.2;
+  text-wrap: pretty;
+}
+
+.team-page .team-motivation .fusion-vision-context p {
+  margin-top: 0.875rem;
+  font-size: 0.9375rem;
+  line-height: 1.65;
+}
+
+.team-page .team-motivation .fusion-vision-context .fusion-vision-context-lead {
+  margin-top: 1.25rem;
+  font-size: 1.125rem;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.team-page .team-motivation .fusion-vision-context .fusion-vision-renewables {
+  width: 160px;
+  height: auto;
+  margin: 0;
+  stroke: var(--paper);
+  stroke-width: 1.5;
+}
+
+.team-page .team-motivation .fusion-vision-renewable-panel {
+  stroke: #93dce8;
+}
+
+@media (min-width: 48rem) {
+  .team-page .team-motivation .fusion-vision-context {
+    grid-template-columns: minmax(0, 1fr) 180px;
+    gap: clamp(2rem, 5vw, 4rem);
+  }
+
+  .team-page
+    .team-motivation
+    .fusion-vision-context
+    .fusion-vision-context-lead {
+    font-size: 1.25rem;
+  }
+
+  .team-page .team-motivation .fusion-vision-context .fusion-vision-renewables {
+    width: 180px;
+  }
+}
+
+.team-page .team-motivation .fusion-vision-context .fusion-vision-renewables {
+  width: 220px;
+  max-width: 100%;
+  justify-self: end;
+}
+
+.team-page .team-motivation .fusion-vision-context-copy .fusion-vision-note {
+  margin-top: 1.25rem;
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+@media (min-width: 48rem) {
+  .team-page .team-motivation .fusion-vision-context {
+    grid-template-columns: minmax(0, 1fr) 240px;
+    align-items: end;
+  }
+
+  .team-page .team-motivation .fusion-vision-context .fusion-vision-renewables {
+    width: 240px;
+  }
+}
+
+@media (min-width: 70rem) {
+  .team-page .team-motivation .fusion-vision-context {
+    grid-template-columns: minmax(0, 1fr) 300px;
+  }
+
+  .team-page .team-motivation .fusion-vision-context .fusion-vision-renewables {
+    width: 300px;
+  }
+}
+
+.team-page .team-motivation .fusion-vision-context {
+  row-gap: 1rem;
+}
+
+.team-page .team-motivation .fusion-vision-context > .fusion-vision-note {
+  grid-column: 1 / -1;
+  max-width: none;
+  margin: 0;
+  font-size: clamp(0.75rem, 0.95vw, 0.875rem);
+  line-height: 1.6;
+}
+
+.team-page .team-motivation .fusion-vision-context .fusion-vision-renewables {
+  opacity: 0.55;
+}
+
+@media (min-width: 70rem) {
+  .team-page .team-motivation .fusion-vision-context > .fusion-vision-note {
+    white-space: nowrap;
+  }
+}
+
+@media (min-width: 48rem) {
+  .team-page .team-motivation .fusion-vision-context .fusion-vision-renewables {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    align-self: end;
+    margin-bottom: 0.1875rem;
+  }
+
+  .team-page .team-motivation .fusion-vision-context > .fusion-vision-note {
+    grid-row: 2;
+  }
+}
+
+.team-page .team-motivation .fusion-vision-detail-sources {
+  display: grid;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  font-size: 0.75rem;
+  line-height: 1.5;
+}
+
+/* Shared decorative markers for the three motivation lists. */
+.team-page .team-motivation .fusion-vision-benefits {
+  padding-left: 0;
+  list-style: none;
+}
+
+.team-page .team-motivation .fusion-vision-benefits > li {
+  display: grid;
+  grid-template-columns: 21px minmax(0, 1fr);
+  align-items: start;
+  column-gap: 11px;
+}
+
+.team-page .team-motivation .fusion-vision-benefits .vision-benefit-icon {
+  width: 21px;
+  height: 21px;
+  max-height: none;
+  margin: 0;
+  color: #93dce8;
+  stroke: currentColor;
+  stroke-width: 1.5;
+}

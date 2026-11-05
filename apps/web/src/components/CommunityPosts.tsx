@@ -26,7 +26,7 @@ const posts = [
 export default function CommunityPosts() {
   return (
     <section
-      className="section field-deep"
+      className="section field-deep team-community"
       aria-labelledby="community-posts-heading"
     >
       <div className="shell">
