@@ -37,22 +37,34 @@ export default function StaEasterEgg() {
       );
     };
 
-    const show = () => {
-      active = true;
-      overlay.classList.add('is-active');
-      video.muted = false;
+    // Called inside the keydown that completes the chord (a real user gesture,
+    // like MiguelEasterEgg's audio.play()), so the browser always allows it.
+    // It plays muted and hidden while the hold runs, then show() unmutes it.
+    const prime = () => {
+      video.muted = true;
       video.volume = 1;
       video.currentTime = 0;
       video.play().catch(() => {});
     };
 
+    const show = () => {
+      active = true;
+      overlay.classList.add('is-active');
+      video.currentTime = 0;
+      video.muted = false;
+      video.volume = 1;
+      if (video.paused) video.play().catch(() => {});
+    };
+
     const hide = () => {
+      const pending = timer !== undefined;
       window.clearTimeout(timer);
       timer = undefined;
-      if (!active) return;
+      if (!active && !pending) return;
       active = false;
       video.pause();
       video.currentTime = 0;
+      video.muted = true;
       overlay.classList.remove('is-active');
     };
 
@@ -61,16 +73,10 @@ export default function StaEasterEgg() {
         return;
       const letter = letterOf(event);
       if (!letter) return;
-      // Start fetching the (5 MB) video as soon as the chord is begun, so it is
-      // ready by the time the hold completes. Visitors who never press S/T/A
-      // never download it.
-      if (video.preload !== 'auto') {
-        video.preload = 'auto';
-        video.load();
-      }
       held.add(letter);
       if (timer !== undefined || active || !letters.every((l) => held.has(l)))
         return;
+      prime();
       timer = window.setTimeout(() => {
         timer = undefined;
         if (letters.every((l) => held.has(l))) show();
@@ -103,7 +109,7 @@ export default function StaEasterEgg() {
 
   return (
     <div ref={overlayRef} className="sta-egg" aria-hidden="true">
-      <video ref={videoRef} src={videoSrc} preload="none" playsInline loop />
+      <video ref={videoRef} src={videoSrc} preload="auto" playsInline loop />
     </div>
   );
 }
