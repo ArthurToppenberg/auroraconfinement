@@ -1,13 +1,16 @@
 'use server';
 
 import { cookies, headers } from 'next/headers';
+import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
+import { prisma, setFollowUp, setSharing, setStatus } from '@aurora/db';
 import {
   adminConfigured,
   createSession,
   passwordMatches,
   sessionCookie,
   sessionSeconds,
+  verifySession,
 } from '@/lib/admin/session';
 
 // Failed-login throttle: 5 attempts per 15 minutes per client address (in memory).
@@ -57,4 +60,66 @@ export async function login(formData: FormData): Promise<void> {
 export async function logout(): Promise<void> {
   (await cookies()).set(sessionCookie, '', { ...cookieOptions, maxAge: 0 });
   redirect('/admin/login/');
+}
+
+// ------------------------------------------------------------ LOI changes
+// Server actions are public endpoints, so each one re-checks the admin session.
+
+async function requireAdmin(): Promise<void> {
+  if (!verifySession((await cookies()).get(sessionCookie)?.value))
+    redirect('/admin/login/');
+}
+
+function loiId(formData: FormData): string {
+  const id = formData.get('id');
+  if (typeof id !== 'string' || !/^[a-z0-9]{10,40}$/i.test(id))
+    redirect('/admin/loi/');
+  return id;
+}
+
+export async function updateLoiFollowUp(formData: FormData): Promise<void> {
+  await requireAdmin();
+  const id = loiId(formData);
+  const followUp = String(formData.get('followUp') ?? '');
+  const notes = String(formData.get('notes') ?? '').trim();
+  try {
+    await setFollowUp(prisma, id, followUp, notes);
+  } catch (error) {
+    console.error(
+      'admin follow-up failed:',
+      error instanceof Error ? error.name : 'unknown',
+    );
+  }
+  revalidatePath(`/admin/loi/${id}`);
+  redirect(`/admin/loi/${id}/`);
+}
+
+export async function changeLoiSharing(formData: FormData): Promise<void> {
+  await requireAdmin();
+  const id = loiId(formData);
+  try {
+    await setSharing(prisma, id, formData.get('permitted') === 'yes');
+  } catch (error) {
+    console.error(
+      'admin sharing failed:',
+      error instanceof Error ? error.name : 'unknown',
+    );
+  }
+  revalidatePath(`/admin/loi/${id}`);
+  redirect(`/admin/loi/${id}/`);
+}
+
+export async function withdrawLoi(formData: FormData): Promise<void> {
+  await requireAdmin();
+  const id = loiId(formData);
+  try {
+    await setStatus(prisma, id, 'withdrawn');
+  } catch (error) {
+    console.error(
+      'admin withdraw failed:',
+      error instanceof Error ? error.name : 'unknown',
+    );
+  }
+  revalidatePath(`/admin/loi/${id}`);
+  redirect(`/admin/loi/${id}/`);
 }

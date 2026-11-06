@@ -7,96 +7,162 @@ datasource db {
   provider = "postgresql"
 }
 
+// Register interest: one table holds every Letter of Interest (LOI) version.
+// The honeypot field ("website") is never stored. An LOI is a non-binding expression
+// of interest, confirmed by the registrant on submission. Email addresses are not
+// verified.
 // Enum values map to the strings used by the site's form markup.
-// The honeypot field ("website") is never stored. Expressions of interest are non-binding.
 
-/// "Product of interest" select on /contact.
-enum ContactProductArea {
-  EXHIBITION_MODEL        @map("exhibition-model")
-  RESEARCH_PLATFORM       @map("research-platform")
-  BOTH_PRODUCT_DIRECTIONS @map("both-product-directions")
+enum LoiCapacity {
+  PERSONAL    @map("personal")
+  TEAM        @map("team")
+  INSTITUTION @map("institution")
 }
 
-/// "Area of interest" select on /nff.
-enum NffInterestArea {
-  EXHIBITION_MODEL       @map("exhibition-model")
-  RESEARCH_PLATFORM      @map("research-platform")
-  PILOT_DEMONSTRATION    @map("pilot-demonstration")
+enum LoiProcurementRole {
+  POTENTIAL_USER      @map("potential-user")
+  TECHNICAL_EVALUATOR @map("technical-evaluator")
+  RECOMMENDER         @map("recommender")
+  BUDGET_HOLDER       @map("budget-holder")
+  PROCUREMENT         @map("procurement")
+  OTHER               @map("other")
+}
+
+enum LoiProduct {
+  EXHIBITION_MODEL  @map("exhibition-model")
+  RESEARCH_PLATFORM @map("research-platform")
+  BOTH              @map("both")
+}
+
+enum LoiInterestType {
+  DEMONSTRATION          @map("demonstration")
+  PILOT_EVALUATION       @map("pilot-evaluation")
+  RENTAL_EVENT_USE       @map("rental-event-use")
+  POTENTIAL_PURCHASE     @map("potential-purchase")
   RESEARCH_COLLABORATION @map("research-collaboration")
-  INVESTMENT_PARTNERSHIP @map("investment-partnership")
+  EXPLORATORY            @map("exploratory")
 }
 
-/// "Collaboration area" select on /contact.
-enum CollaborationArea {
-  RESEARCH_COLLABORATION @map("research-collaboration")
-  INVESTMENT_PARTNERSHIP @map("investment-partnership")
+enum LoiTiming {
+  WHEN_AVAILABLE     @map("when-available")
+  WITHIN_12_MONTHS   @map("within-12-months")
+  ONE_TO_THREE_YEARS @map("one-to-three-years")
+  LONGER_TERM        @map("longer-term")
+  NOT_YET_KNOWN      @map("not-yet-known")
 }
 
-/// "Approximate timeframe" select, shared by all forms.
-enum InterestTimeframe {
-  AS_SOON_AS_AVAILABLE @map("as-soon-as-available")
-  WITHIN_12_MONTHS     @map("within-12-months")
-  WITHIN_1_TO_3_YEARS  @map("within-1-to-3-years")
-  EXPLORING_FUTURE     @map("exploring-future")
+enum LoiBudgetStatus {
+  AVAILABLE                  @map("available")
+  REQUIRES_INTERNAL_APPROVAL @map("requires-internal-approval")
+  EXTERNAL_FUNDING_NEEDED    @map("external-funding-needed")
+  NOT_EXPLORED               @map("not-explored")
+  PREFER_NOT_TO_SAY          @map("prefer-not-to-say")
 }
 
-/// /contact, "Register product interest" (submissionType=product-interest).
-model ContactProductInterest {
-  id                  String             @id @default(cuid())
-  createdAt           DateTime           @default(now())
-  name                String             @db.VarChar(100)
-  email               String             @db.VarChar(254)
-  organisation        String             @db.VarChar(160)
-  role                String             @db.VarChar(120)
-  interest            ContactProductArea
-  intendedApplication String             @db.VarChar(600)
-  timeframe           InterestTimeframe
-  message             String?            @db.VarChar(1500)
+/// CONFIRMED -> SUPERSEDED / WITHDRAWN. Saved as CONFIRMED on submission.
+enum LoiStatus {
+  CONFIRMED  @map("confirmed")
+  SUPERSEDED @map("superseded")
+  WITHDRAWN  @map("withdrawn")
+}
+
+/// Commercial follow-up, tracked separately from the LOI status.
+enum LoiFollowUp {
+  NEW              @map("new")
+  CONTACTED        @map("contacted")
+  QUALIFIED        @map("qualified")
+  PILOT_DISCUSSION @map("pilot-discussion")
+  CLOSED           @map("closed")
+}
+
+enum LoiEventKind {
+  CREATED
+  SHARING_CHANGED
+  WITHDRAWN
+  SUPERSEDED
+  EXPORTED
+  FOLLOW_UP
+  NOTE
+}
+
+/// /register: one row per letter version. Edits create a new row (supersedesId);
+/// the confirmed letter (letterText) is never overwritten.
+model LetterOfInterest {
+  id           String   @id @default(cuid())
+  /// Public LOI ID printed on the letter, e.g. LOI-2026-7K3Q9F.
+  reference    String   @unique @db.VarChar(24)
+  version      Int      @default(1)
+  supersedesId String?
+  createdAt    DateTime @default(now())
+
+  // Registrant (attributed in the letter).
+  fullName        String              @db.VarChar(100)
+  email           String              @db.VarChar(254)
+  /// Contact detail for follow-up; never part of the letter or of investor exports.
+  /// Optional: null when the registrant left it blank.
+  phone           String?             @db.VarChar(30)
+  role            String              @db.VarChar(120)
+  organisation    String              @db.VarChar(160)
+  /// Lower-cased, whitespace-collapsed organisation name, for deduplication only.
+  organisationKey String              @db.VarChar(160)
+  department      String?             @db.VarChar(160)
+  country         String              @db.VarChar(80)
+  capacity        LoiCapacity
+  /// Role in a purchase decision; distinct from the authority to make the statement.
+  procurementRole LoiProcurementRole?
+
+  // Filterable summary of the interest.
+  product       LoiProduct
+  interestTypes LoiInterestType[]
+  timing        LoiTiming
+  budgetStatus  LoiBudgetStatus?
+
+  /// Per-product answers (application, units, budget, conditions, product-specific).
+  /// Unknown values stay null; nothing is defaulted.
+  sections Json
+
+  // Immutable snapshot of what the registrant reviewed and confirmed.
+  letterText                 Json
+  templateVersion            String   @db.VarChar(32)
+  confirmationWordingVersion String   @db.VarChar(32)
+  confirmedAt                DateTime
+
+  status LoiStatus @default(CONFIRMED)
+
+  // Permission to share identifying details with investors and grant providers.
+  sharingPermitted      Boolean
+  sharingWordingVersion String   @db.VarChar(32)
+  sharingChangedAt      DateTime
+
+  /// "register" or "nff2026". Only allowlisted values are stored.
+  source String? @db.VarChar(32)
+
+  // Internal fields. Never part of the registrant's statement.
+  followUp          LoiFollowUp @default(NEW)
+  internalNotes     String?     @db.VarChar(4000)
+  authorityReview   String?     @db.VarChar(200)
+  authorityEvidence String?     @db.VarChar(2000)
+  pdfRef            String?     @db.VarChar(200)
+  pdfChecksum       String?     @db.VarChar(128)
+
+  events LetterOfInterestEvent[]
 
   @@index([createdAt])
   @@index([email])
+  @@index([status])
+  @@index([product])
+  @@index([organisationKey])
 }
 
-/// /contact, "Discuss a collaboration" (submissionType=collaboration).
-model ContactCollaboration {
-  id           String            @id @default(cuid())
-  createdAt    DateTime          @default(now())
-  name         String            @db.VarChar(100)
-  email        String            @db.VarChar(254)
-  organisation String?           @db.VarChar(160)
-  role         String?           @db.VarChar(120)
-  interest     CollaborationArea
-  message      String            @db.VarChar(1500)
+/// Audit trail: creation, permission changes, withdrawals and exports.
+model LetterOfInterestEvent {
+  id     String           @id @default(cuid())
+  loiId  String
+  loi    LetterOfInterest @relation(fields: [loiId], references: [id], onDelete: Cascade)
+  at     DateTime         @default(now())
+  kind   LoiEventKind
+  /// Small structured detail. Never contains the letter body or the email address.
+  detail Json?
 
-  @@index([createdAt])
-  @@index([email])
-}
-
-/// /contact, "Send a general enquiry" (submissionType=general-enquiry).
-model ContactGeneralEnquiry {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  name      String   @db.VarChar(100)
-  email     String   @db.VarChar(254)
-  message   String   @db.VarChar(1500)
-
-  @@index([createdAt])
-  @@index([email])
-}
-
-/// /nff, Nordic Fusion Forum 2026 (source=nordic-fusion-forum-2026).
-model NffInterest {
-  id                  String            @id @default(cuid())
-  createdAt           DateTime          @default(now())
-  name                String            @db.VarChar(100)
-  email               String            @db.VarChar(254)
-  organisation        String            @db.VarChar(160)
-  role                String            @db.VarChar(120)
-  interest            NffInterestArea
-  intendedApplication String            @db.VarChar(600)
-  timeframe           InterestTimeframe
-  message             String?           @db.VarChar(1500)
-
-  @@index([createdAt])
-  @@index([email])
+  @@index([loiId, at])
 }

@@ -11,6 +11,7 @@ const pageNames: Record<string, string> = {
   '/research-platform': 'Research platform',
   '/roadmap': 'Roadmap',
   '/contact': 'Contact',
+  '/register': 'Register interest',
   '/nff': 'Nordic Fusion Forum',
   '/news': 'News',
   '/vision': 'Vision',

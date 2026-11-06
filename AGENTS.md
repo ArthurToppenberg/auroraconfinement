@@ -27,7 +27,7 @@ The first release is an event-ready, static website for Nordic Fusion Forum on 1
 - Use semantic HTML and locally compiled CSS.
 - Do not load Tailwind from a CDN.
 - Minimise client-side JavaScript.
-- Do not introduce a CMS, database, accounts, authentication, payments, or ecommerce functionality without explicit approval.
+- Do not introduce a CMS, accounts, authentication, payments, or ecommerce functionality without explicit approval. The one approved database use is the Letter of Interest table behind `/register` (see `docs/FORM_CONFIGURATION.md`).
 - Do not add a dependency without explaining its purpose, maintenance implications, privacy impact, and security impact.
 - Pin dependencies through the lockfile and keep the dependency set small.
 
@@ -111,7 +111,7 @@ Navigation and routes may be refined for usability, but do not remove required i
 - Apply reasonable length limits and allowlist structured choices.
 - Use rate limiting and a privacy-conscious honeypot or similarly proportionate spam control.
 - Do not put secrets in client code.
-- Do not save messages in an application database for the initial release.
+- Do not save general contact messages in an application database. `/contact` is email-only; only confirmed Letters of Interest from `/register` are stored.
 - Do not send sensitive form contents to analytics or logs.
 - Provide clear success, validation, and failure states.
 - Make all fields and messages accessible.

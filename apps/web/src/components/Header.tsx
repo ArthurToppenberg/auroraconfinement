@@ -92,7 +92,7 @@ export default function Header() {
               <Link
                 href={homeHero.primaryHref}
                 className="nav-cta"
-                aria-current={path === '/contact' ? 'page' : undefined}
+                aria-current={path === '/register' ? 'page' : undefined}
               >
                 {homeHero.primaryLabel}
               </Link>

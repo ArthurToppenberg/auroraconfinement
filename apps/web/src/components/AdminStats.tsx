@@ -1,5 +1,4 @@
-import Link from 'next/link';
-import type { FormStats } from '@aurora/db';
+import type { LoiStats } from '@aurora/db';
 
 import { adminDate as utc, words } from '@/lib/admin/format';
 
@@ -27,7 +26,7 @@ function Spark({ daily }: { daily: number[] }) {
       className="admin-spark"
       viewBox={`0 0 ${daily.length * 4} ${height}`}
       role="img"
-      aria-label={`Daily submissions, last ${daily.length} days: ${sum(daily)} in total`}
+      aria-label={`Daily letters, last ${daily.length} days: ${sum(daily)} in total`}
       preserveAspectRatio="none"
     >
       {daily.map((count, i) => {
@@ -53,16 +52,15 @@ function Breakdown({
   total,
 }: {
   title: string;
-  counts: Record<string, number> | null;
+  counts: Record<string, number>;
   total: number;
 }) {
-  if (!counts) return null;
   const rows = Object.entries(counts).sort((a, b) => b[1] - a[1]);
   return (
     <div className="admin-breakdown">
       <h4>{title}</h4>
       {rows.length === 0 ? (
-        <p className="admin-empty">No submissions yet.</p>
+        <p className="admin-empty">No letters yet.</p>
       ) : (
         <ul>
           {rows.map(([value, count]) => (
@@ -85,130 +83,64 @@ function Breakdown({
   );
 }
 
-/** Aggregate counts per form, rendered on the server from the database. */
-export default function AdminStats({
-  forms,
-  onlyFake = false,
-}: {
-  forms: FormStats[];
-  onlyFake?: boolean;
-}) {
-  const query = onlyFake ? '?fake=1' : '';
-  const total = sum(forms.map((f) => f.total));
-  const last7 = sum(forms.map((f) => f.last7Days));
-  const prev7 = sum(forms.map((f) => f.prev7Days));
-  const last30 = sum(forms.map((f) => f.last30Days));
-  const latest = forms
-    .map((f) => f.latest)
-    .filter((v): v is string => v !== null)
-    .sort()
-    .at(-1);
-  const daily = Array.from({ length: forms[0]?.daily.length ?? 0 }, (_, i) =>
-    sum(forms.map((f) => f.daily[i] ?? 0)),
-  );
-
+/** Aggregate counts only, rendered on the server from the database. */
+export default function AdminStats({ stats }: { stats: LoiStats }) {
   return (
     <div className="admin-stats">
       <dl className="admin-kpis">
         <div>
-          <dt>Total submissions</dt>
-          <dd>{total}</dd>
-          <span className="admin-delta">{forms.length} forms</span>
+          <dt>Confirmed letters</dt>
+          <dd>{stats.confirmedLetters}</dd>
+          <span className="admin-delta">{stats.withdrawn} withdrawn</span>
         </div>
         <div>
-          <dt>Last 7 days</dt>
-          <dd>{last7}</dd>
-          <Delta current={last7} previous={prev7} />
-        </div>
-        <div>
-          <dt>Last 30 days</dt>
-          <dd>{last30}</dd>
+          <dt>Unique organisations</dt>
+          <dd>{stats.uniqueOrganisations}</dd>
           <span className="admin-delta">
-            {(last30 / 30).toFixed(1)} per day
+            {stats.sharingPermitted} allow sharing
           </span>
         </div>
         <div>
-          <dt>Latest submission</dt>
-          <dd className="small">{latest ? utc(latest) : 'None yet'}</dd>
-          <Spark daily={daily} />
+          <dt>Last 7 days</dt>
+          <dd>{stats.last7Days}</dd>
+          <Delta current={stats.last7Days} previous={stats.prev7Days} />
+        </div>
+        <div>
+          <dt>Latest letter</dt>
+          <dd className="small">
+            {stats.latest ? utc(stats.latest) : 'None yet'}
+          </dd>
+          <Spark daily={stats.daily} />
         </div>
       </dl>
 
-      <div className="admin-panel">
-        <table className="admin-table">
-          <caption>Submissions per form</caption>
-          <thead>
-            <tr>
-              <th scope="col">Form</th>
-              <th scope="col" className="num">
-                Total
-              </th>
-              <th scope="col" className="num">
-                7d
-              </th>
-              <th scope="col" className="num">
-                30d
-              </th>
-              <th scope="col">30-day trend</th>
-              <th scope="col">Latest</th>
-            </tr>
-          </thead>
-          <tbody>
-            {forms.map((form) => (
-              <tr key={form.key}>
-                <th scope="row">
-                  <Link href={`/admin/${form.key}/${query}`}>{form.label}</Link>
-                </th>
-                <td className="num">{form.total}</td>
-                <td className="num">{form.last7Days}</td>
-                <td className="num">{form.last30Days}</td>
-                <td>
-                  <Spark daily={form.daily} />
-                </td>
-                <td className="muted">
-                  {form.latest ? utc(form.latest) : 'None yet'}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-          <tfoot>
-            <tr>
-              <th scope="row">All forms</th>
-              <td className="num">{total}</td>
-              <td className="num">{last7}</td>
-              <td className="num">{last30}</td>
-              <td>
-                <Spark daily={daily} />
-              </td>
-              <td className="muted">{latest ? utc(latest) : 'None yet'}</td>
-            </tr>
-          </tfoot>
-        </table>
-      </div>
-
       <div className="admin-cards">
-        {forms.map((form) => (
-          <section
-            key={form.key}
-            className="admin-panel"
-            aria-labelledby={`stats-${form.key}`}
-          >
-            <h3 id={`stats-${form.key}`}>
-              <Link href={`/admin/${form.key}/${query}`}>{form.label}</Link>{' '}
-              <small>{form.total}</small>
-            </h3>
-            <Breakdown
-              title="By interest"
-              counts={form.byInterest}
-              total={form.total}
-            />
-            <Breakdown
-              title="By timeframe"
-              counts={form.byTimeframe}
-              total={form.total}
-            />
-          </section>
-        ))}
+        <section className="admin-panel" aria-labelledby="stats-product">
+          <h3 id="stats-product">Product</h3>
+          <Breakdown
+            title="By product"
+            counts={stats.byProduct}
+            total={stats.confirmedLetters}
+          />
+          <Breakdown
+            title="By capacity"
+            counts={stats.byCapacity}
+            total={stats.confirmedLetters}
+          />
+        </section>
+        <section className="admin-panel" aria-labelledby="stats-interest">
+          <h3 id="stats-interest">Interest</h3>
+          <Breakdown
+            title="By indicative timing"
+            counts={stats.byTiming}
+            total={stats.confirmedLetters}
+          />
+          <Breakdown
+            title="By type of interest (multiple allowed)"
+            counts={stats.byInterestType}
+            total={stats.confirmedLetters}
+          />
+        </section>
       </div>
     </div>
   );

@@ -1,11 +1,10 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-import { getFormStats, prisma } from '@aurora/db';
+import { getLoiStats, prisma } from '@aurora/db';
 import { pageMetadata } from '@/lib/metadata';
-import AdminFakeToggle from '@/components/AdminFakeToggle';
 import AdminStats from '@/components/AdminStats';
-import { fakeStats } from '@/lib/admin/fake-data';
 import { logout } from '@/lib/admin/actions';
 import { sessionCookie, verifySession } from '@/lib/admin/session';
 
@@ -19,21 +18,15 @@ export const metadata: Metadata = pageMetadata({
 // Rendered on the server for every request, so the stats are always current.
 export const dynamic = 'force-dynamic';
 
-export default async function Page({
-  searchParams,
-}: {
-  searchParams: Promise<{ fake?: string }>;
-}) {
+export default async function Page() {
   // The proxy already redirects visitors without a session; check again here so
   // the page can never render (or query the database) without one.
   if (!verifySession((await cookies()).get(sessionCookie)?.value))
     redirect('/admin/login/');
-  const onlyFake =
-    process.env.NODE_ENV !== 'production' && (await searchParams).fake === '1';
 
-  let forms = null;
+  let stats = null;
   try {
-    forms = (await onlyFake) ? fakeStats() : await getFormStats(prisma);
+    stats = await getLoiStats(prisma);
   } catch (error) {
     console.error(
       'admin stats failed:',
@@ -47,14 +40,17 @@ export default async function Page({
         <header className="admin-header">
           <div>
             <p className="eyebrow">Admin</p>
-            <h1>Submissions</h1>
+            <h1>Letters of Interest</h1>
             <p className="admin-note">
-              Aggregate counts from the site&apos;s four forms. No personal data
-              is shown. Times are UTC.
+              Non-binding expressions of interest, confirmed by the registrant.
+              Email addresses are not verified. Not orders, contracted revenue
+              or a guaranteed pipeline. Aggregate counts only; times are UTC.
             </p>
           </div>
           <div className="admin-header-actions">
-            <AdminFakeToggle path="/admin/" active={onlyFake} />
+            <Link className="button" href="/admin/loi/">
+              View letters
+            </Link>
             <form action={logout}>
               <button className="button" type="submit">
                 Sign out
@@ -62,8 +58,8 @@ export default async function Page({
             </form>
           </div>
         </header>
-        {forms ? (
-          <AdminStats forms={forms} onlyFake={onlyFake} />
+        {stats ? (
+          <AdminStats stats={stats} />
         ) : (
           <p role="alert">
             Stats are unavailable. The database could not be reached.

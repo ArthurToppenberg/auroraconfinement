@@ -8,7 +8,7 @@
     "build": "next build && node ./scripts/write-csp-hashes.mjs",
     "preview": "next start --port 4321",
     "check": "tsc --noEmit",
-    "test": "node --test src/lib/forms/validation.test.ts src/lib/forms/handler.test.ts",
+    "test": "node --test src/lib/loi/schema.test.ts src/lib/loi/letter.test.ts src/lib/loi/handler.test.ts",
     "test:browser": "playwright test",
     "clean": "rm -rf .next dist .turbo node_modules"
   },

@@ -1,8 +1,9 @@
-/** "RESEARCH_PLATFORM" → "Research platform"; null (field not collected) → "—". */
+/** "research-platform" → "Research platform"; null (not given) → "—". */
 export const words = (value: string | null) =>
   value === null
     ? '—'
-    : value.charAt(0) + value.slice(1).toLowerCase().replace(/_/g, ' ');
+    : value.charAt(0).toUpperCase() +
+      value.slice(1).toLowerCase().replace(/[_-]/g, ' ');
 
 export const adminDate = (iso: string) =>
   new Date(iso).toLocaleString('en-GB', {

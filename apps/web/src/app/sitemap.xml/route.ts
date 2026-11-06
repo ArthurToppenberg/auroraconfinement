@@ -8,6 +8,7 @@ const routes = [
   '/model/',
   '/research-platform/',
   '/roadmap/',
+  '/register/',
   '/contact/',
   '/nff/',
   '/privacy/',

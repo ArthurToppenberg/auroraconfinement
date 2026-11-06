@@ -1,7 +1,15 @@
+// Letters of Interest are created only on /register. Everything else (questions,
+// collaboration, investment) goes to the email-only /contact page.
 export const contactHrefs = {
-  productInterest: '/contact?intent=product-interest',
-  collaboration: '/contact?intent=collaboration',
-  generalEnquiry: '/contact?intent=general-enquiry',
+  productInterest: '/register/',
+  collaboration: '/contact/',
+  generalEnquiry: '/contact/',
+} as const;
+
+export const registerHrefs = {
+  exhibitionModel: '/register/?product=exhibition-model',
+  researchPlatform: '/register/?product=research-platform',
+  nff: '/register/?source=nff2026',
 } as const;
 
 export const homeHero = {
@@ -9,7 +17,7 @@ export const homeHero = {
   supporting:
     'We’re developing a tabletop real-plasma model with shaped magnetic fields to support introductory teaching, public engagement and informed conversations about fusion.',
   primaryLabel: 'Register interest',
-  primaryHref: '/contact/?intent=product-interest&interest=exhibition-model',
+  primaryHref: '/register/?product=exhibition-model',
   invitation:
     'Registering interest is free + non-binding, and supports us in getting softfunding, to get started building.',
 } as const;

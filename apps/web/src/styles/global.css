@@ -793,17 +793,6 @@ main:focus {
   padding: clamp(1.25rem, 4vw, 2.5rem);
 }
 
-.submission-type {
-  margin: 0 0 1.5rem;
-  padding: 0;
-  border: 0;
-}
-
-.submission-type legend {
-  margin-bottom: 0.75rem;
-  font-weight: 600;
-}
-
 .submission-options {
   display: grid;
   gap: 0.5rem;
@@ -923,18 +912,6 @@ p.interest-disclaimer {
   width: 1px;
   height: 1px;
   overflow: hidden;
-}
-
-.email-fallback {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.35rem 0.75rem;
-  padding: 1.25rem;
-}
-
-.email-fallback a {
-  min-width: 0;
-  overflow-wrap: anywhere;
 }
 
 /* Compact shared footer. */
@@ -1436,7 +1413,6 @@ p.interest-disclaimer {
   padding-block: clamp(3.5rem, 8vw, 6rem);
 }
 
-.contact-page-grid,
 .nff-top-grid {
   display: grid;
   gap: clamp(2.5rem, 6vw, 5rem);
@@ -1460,40 +1436,17 @@ p.interest-disclaimer {
   line-height: 1.25;
 }
 
-.contact-categories {
-  display: grid;
-  gap: 0.5rem;
-}
-
-.contact-categories > div {
-  padding: 1rem 1.25rem;
-  background: var(--tint);
-}
-
-.contact-form-heading,
 .nff-form-heading {
   margin-bottom: 1.5rem;
 }
 
-.contact-form-heading h2,
 .nff-form-heading h2 {
   max-width: 14ch;
 }
 
-.contact-form-heading > p,
 .nff-form-heading > p {
   max-width: 44ch;
   margin-top: 1rem;
-}
-
-.contact-form-column .form-grid,
-.nff-form-column .form-grid {
-  grid-template-columns: minmax(0, 1fr);
-}
-
-.contact-form-column .interest-form > .button,
-.nff-form-column .interest-form > .button {
-  width: 100%;
 }
 
 .nff-products {
@@ -1984,19 +1937,8 @@ p.interest-disclaimer {
     grid-area: details;
   }
 
-  .contact-page-grid,
   .nff-top-grid {
     grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-  }
-
-  .contact-form-column .form-grid,
-  .nff-form-column .form-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .contact-form-column .interest-form > .button,
-  .nff-form-column .interest-form > .button {
-    width: fit-content;
   }
 
   .footer-statement {
@@ -2869,30 +2811,6 @@ body:has(.admin-page) .site-footer {
 
 .home-closing p {
   margin: 0.75rem 0 0;
-}
-
-.contact-page-grid:has(.model-registration-intro) {
-  max-width: 56rem;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 2rem;
-}
-
-.model-registration-intro h2 {
-  font-size: var(--step-lead);
-  line-height: 1.3;
-}
-
-.model-registration-intro > * + * {
-  margin-top: 1rem;
-}
-
-.model-registration-intro p {
-  margin-bottom: 0;
-}
-
-.model-registration-intro .registration-reassurance {
-  font-size: 1rem;
-  line-height: 1.5;
 }
 
 @media (min-width: 52rem) {
@@ -5329,4 +5247,624 @@ main article[id] {
   margin-top: 0.75rem;
   font-size: 0.875rem;
   line-height: 1.5;
+}
+
+/* Register interest (/register) --------------------------------------- */
+
+.register-top {
+  padding-block: clamp(3rem, 7vw, 5rem);
+}
+
+.register-top-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 2rem;
+  align-items: end;
+}
+
+.register-top h1 {
+  overflow-wrap: anywhere;
+  font-size: var(--step-head);
+}
+
+.register-subtitle {
+  max-width: 24ch;
+  margin-top: 1.25rem;
+  font-size: var(--step-lead);
+  line-height: 1.25;
+}
+
+.register-top-copy {
+  max-width: 54ch;
+}
+
+.register-top-copy > * + * {
+  margin-top: 1rem;
+}
+
+.register-page {
+  /* The letter page hangs off the right edge; clip, never scroll. */
+  overflow-x: clip;
+  padding-block: clamp(1.5rem, 4vw, 3rem) clamp(3rem, 8vw, 6rem);
+}
+
+/* Workspace: the form on the left, the live letter beside it at all times. */
+
+.register-workspace {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1rem;
+}
+
+.register-toggle {
+  position: sticky;
+  top: var(--header-height);
+  z-index: 5;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.25rem;
+  padding: 0.25rem;
+  background: var(--ice-tint);
+}
+
+.register-toggle button {
+  min-height: 2.75rem;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.register-toggle button[aria-pressed='true'] {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+.register-form-pane,
+.register-form {
+  min-width: 0;
+}
+
+.register-form > * + * {
+  margin-top: 1rem;
+}
+
+/* Progress: a real ordered list of anchors; completed steps are marked by fill. */
+
+.register-progress {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.register-progress a {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.5rem 1rem;
+  background: var(--cyan);
+  color: var(--ink);
+  font-size: var(--step-small);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.register-progress a::before {
+  content: '';
+  width: 0.65rem;
+  height: 0.65rem;
+  border: 0.14rem solid currentColor;
+}
+
+.register-progress li[data-done='true'] a {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+.register-progress li[data-done='true'] a::before {
+  background: currentColor;
+}
+
+.register-progress a:hover {
+  outline: 0.125rem solid var(--accent);
+}
+
+/* Cards: each part of the form is one white sheet on the pale page. */
+
+.register-card {
+  overflow-wrap: anywhere;
+  min-width: 0;
+  margin: 0;
+  padding: clamp(1.25rem, 3vw, 2rem);
+  border: 0;
+  background: var(--cyan);
+  color: var(--ink);
+}
+
+.register-card > legend {
+  float: left;
+  width: 100%;
+  padding: 0;
+  font-size: var(--step-lead);
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.register-card > legend + * {
+  clear: both;
+}
+
+.register-card > * + * {
+  margin-top: 1.25rem;
+}
+
+.register-card > legend + .register-card-intro {
+  margin-top: 0.4rem;
+}
+
+.register-card-intro {
+  max-width: 58ch;
+  color: #3d4566;
+  font-size: var(--step-small);
+}
+
+.register-card .form-grid {
+  gap: 1rem;
+}
+
+.register-card .field label,
+.register-card .choice-group > legend {
+  font-size: 0.95rem;
+}
+
+.register-card .field label span,
+.register-card .choice-group > legend span {
+  color: #3d4566;
+  font-weight: 400;
+}
+
+.register-card .field input,
+.register-card .field select,
+.register-card .field textarea {
+  min-height: 3rem;
+  border: 1px solid rgba(10, 16, 48, 0.35);
+  background: var(--ice);
+}
+
+.register-card .field textarea {
+  min-height: 6.5rem;
+}
+
+.register-card .field-help {
+  color: #3d4566;
+  font-size: 0.9rem;
+}
+
+.register-card .field-error {
+  min-height: 0;
+  color: #b0243a;
+  font-weight: 600;
+}
+
+.register-card .field-error:empty {
+  display: none;
+}
+
+.register-card .field [aria-invalid='true'] {
+  border-color: #b0243a;
+  outline-color: #b0243a;
+}
+
+.choice-group {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.choice-group > legend {
+  margin-bottom: 0.75rem;
+  padding: 0;
+  font-weight: 600;
+}
+
+.choice-group[data-invalid='true'] .submission-options label {
+  outline: 0.125rem solid #b0243a;
+}
+
+.register-card .submission-options label {
+  background: var(--ice);
+}
+
+.register-card .submission-options label:has(input:checked) {
+  background: var(--ice-tint);
+}
+
+.register-more {
+  padding: 0.25rem 1rem 1rem;
+  background: var(--ice);
+}
+
+.register-more > summary {
+  min-height: 2.75rem;
+  padding-block: 0.7rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.register-more > * + * {
+  margin-top: 1rem;
+}
+
+.register-more .field input,
+.register-more .field select,
+.register-more .field textarea,
+.register-more .submission-options label {
+  background: var(--cyan);
+}
+
+.register-confidential {
+  padding-inline: 0.25rem;
+  font-size: var(--step-small);
+}
+
+.register-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.register-actions .button {
+  width: 100%;
+  min-height: 3.25rem;
+}
+
+.register-saved h2:focus {
+  outline: none;
+}
+
+/* The viewer: a dark pane holding the letter on white paper. */
+
+.register-preview {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  background: var(--night);
+  color: var(--paper);
+}
+
+.register-preview-bar {
+  padding: 0.9rem clamp(1rem, 3vw, 1.5rem);
+  background: var(--night-tint);
+}
+
+.register-preview-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+}
+
+.register-preview-bar p {
+  display: grid;
+}
+
+.register-peek-button {
+  display: none;
+  min-height: 2.75rem;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  border: 0;
+  background: var(--cyan);
+  color: var(--on-cyan);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.register-preview-bar span {
+  color: var(--cyan-tint);
+  font-size: var(--step-small);
+}
+
+.register-preview-scroll {
+  min-height: 0;
+  padding: clamp(0.75rem, 3vw, 1.5rem);
+  container-type: inline-size;
+}
+
+/* The letter: a white page with a letterhead. */
+
+.letter {
+  /* An A4 page: at least 210:297, growing when the letter is longer. */
+  aspect-ratio: 210 / 297;
+  max-width: 54rem;
+  margin-inline: auto;
+  padding: clamp(1.25rem, 8%, 4.5rem);
+  background: var(--cyan);
+  color: var(--on-ice);
+  font-size: clamp(0.875rem, 1.8cqw, 1.0625rem);
+  line-height: 1.6;
+}
+
+.letter > * + * {
+  margin-top: 1.1rem;
+}
+
+.letter-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.letter-head img {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.letter-head p {
+  display: grid;
+  line-height: 1.25;
+}
+
+.letter-head p span {
+  color: #3d4566;
+  font-size: var(--step-small);
+}
+
+.letter-head .letter-draft {
+  margin-left: auto;
+  padding: 0.3rem 0.7rem;
+  background: var(--magenta);
+  color: var(--on-magenta);
+  font-size: 0.875rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.letter-head .letter-draft span {
+  display: inline;
+  color: inherit;
+  font-size: inherit;
+  font-weight: 400;
+}
+
+.letter-head + * {
+  margin-top: 1.75rem;
+}
+
+.letter h3,
+.letter h2 {
+  font-size: var(--step-lead);
+  line-height: 1.2;
+}
+
+.letter h4 {
+  margin-top: 0.5rem;
+  font-size: 1.125rem;
+}
+
+.letter dl {
+  display: grid;
+  gap: 0.85rem;
+  margin: 0;
+}
+
+.letter dt {
+  font-weight: 600;
+}
+
+.letter dd {
+  margin: 0.1rem 0 0;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}
+
+.letter-section,
+.letter-details {
+  padding: 1rem 1.15rem;
+  background: var(--ice);
+}
+
+.letter-section > * + * {
+  margin-top: 0.85rem;
+}
+
+.letter-placeholder {
+  background: var(--ice-tint);
+  color: #46506f;
+  font-weight: 400;
+}
+
+.letter-footer {
+  color: #3d4566;
+  font-size: var(--step-small);
+}
+
+@media (min-width: 40rem) {
+  .register-actions .button {
+    width: fit-content;
+    padding-inline: 2rem;
+  }
+
+  .letter dl > div {
+    display: grid;
+    grid-template-columns: minmax(8rem, 0.38fr) minmax(0, 1fr);
+    gap: 1rem;
+  }
+
+  .letter dd {
+    margin-top: 0;
+  }
+}
+
+/* Below the side-by-side layout: one pane at a time, switched by the toggle. */
+@media (max-width: 63.99rem) {
+  .register-workspace[data-view='letter'] .register-form-pane,
+  .register-workspace[data-view='form'] .register-preview {
+    display: none;
+  }
+
+  .register-workspace[data-saved='true'] .register-form-pane,
+  .register-workspace[data-saved='true'] .register-preview {
+    display: block;
+  }
+
+  .register-workspace[data-saved='true'] .register-toggle {
+    display: none;
+  }
+}
+
+@media (min-width: 64rem) {
+  .register-top-grid {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: clamp(2.5rem, 6vw, 5rem);
+  }
+
+  /*
+   * The form keeps the width it needs. The letter, an A4 page, sits beside it and
+   * hangs off the right edge: only its left part shows until it is hovered or
+   * focused (or opened with the button), when it slides fully into view.
+   */
+  .register-workspace {
+    --peek: clamp(13rem, 22vw, 20rem);
+    --page: min(48rem, calc(100vw - 4rem));
+    grid-template-columns: minmax(0, 1fr) var(--peek);
+    gap: clamp(1.5rem, 3vw, 2.5rem);
+    align-items: start;
+  }
+
+  .register-toggle {
+    display: none;
+  }
+
+  .register-form {
+    max-width: 56rem;
+  }
+
+  .register-progress {
+    position: sticky;
+    top: var(--header-height);
+    z-index: 4;
+    padding-block: 0.75rem;
+    background: var(--ice);
+  }
+
+  .register-preview {
+    position: sticky;
+    top: calc(var(--header-height) + 0.75rem);
+    z-index: 20;
+    width: var(--page);
+    height: calc(100svh - var(--header-height) - 1.5rem);
+    transition: transform 0.45s var(--ease);
+  }
+
+  .register-preview:hover,
+  .register-preview:focus-within,
+  .register-preview[data-open='true'] {
+    transform: translateX(calc(var(--peek) - var(--page)));
+  }
+
+  .register-preview-scroll {
+    flex: 1;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .register-peek-button {
+    display: inline-flex;
+  }
+}
+
+@media (forced-colors: active) {
+  .letter,
+  .letter-section,
+  .letter-details,
+  .register-card {
+    border: 1px solid CanvasText;
+  }
+}
+
+@media print {
+  .register-top,
+  .register-toggle,
+  .register-progress,
+  .register-form-pane,
+  .register-preview-bar,
+  .letter-draft {
+    display: none !important;
+  }
+
+  .register-workspace {
+    display: block;
+  }
+
+  .register-preview {
+    display: block;
+    height: auto;
+    background: white;
+    color: #101827;
+  }
+
+  .register-preview-scroll {
+    overflow: visible;
+    padding: 0;
+  }
+
+  .letter,
+  .letter-section,
+  .letter-details {
+    background: white;
+    color: #101827;
+  }
+
+  .letter {
+    aspect-ratio: auto;
+    max-width: none;
+    padding: 0;
+    font-size: 10.5pt;
+  }
+}
+
+/* Admin: letters of interest -------------------------------------------- */
+
+.admin-filters,
+.admin-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 0.75rem;
+  margin-block: 1rem 1.5rem;
+}
+
+.admin-filters label,
+.admin-actions label {
+  display: grid;
+  gap: 0.25rem;
+  min-width: 10rem;
+  font-size: var(--step-small);
+}
+
+.admin-actions label:has(textarea) {
+  width: min(100%, 36rem);
+}
+
+.admin-page h2 {
+  margin-top: 2rem;
+}
+
+.admin-history {
+  margin: 0;
+  padding: 1rem 1.25rem;
+  list-style: none;
+}
+
+.admin-history li + li {
+  margin-top: 0.4rem;
 }

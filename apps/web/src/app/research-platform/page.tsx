@@ -11,8 +11,7 @@ export const metadata: Metadata = pageMetadata({
   path: '/research-platform/',
 });
 
-const registrationHref =
-  '/contact/?intent=product-interest&interest=research-platform';
+const registrationHref = '/register/?product=research-platform';
 
 const researchDirections = [
   {
@@ -154,9 +153,7 @@ export default function Page() {
               measurement needs and available infrastructure to help shape the
               platform’s requirements.
             </p>
-            <Link
-              href={`${contactHrefs.collaboration}&interest=research-collaboration`}
-            >
+            <Link href={contactHrefs.collaboration}>
               Discuss a research collaboration
             </Link>
           </div>

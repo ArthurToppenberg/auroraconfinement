@@ -1,31 +1,38 @@
-# Form configuration boundary
+# Register interest (Letter of Interest) configuration
 
-## Current behaviour
+`/register` is the only place a visitor can create a Letter of Interest (LOI). `/contact` is an email-only page: general questions, collaboration and investment enquiries never create an LOI. `/nff` links to `/register?source=nff2026`.
 
-The contact and Nordic Fusion Forum forms normalise and validate fields in the browser, expose errors accessibly, and check a hidden honeypot field. The provider-neutral submission adapter currently returns a normal failure response and offers the confirmed contact email as an alternative. It does not transmit or retain submissions and never reports false success.
+## Behaviour
 
-The NFF form includes the internal source value `nordic-fusion-forum-2026`. The general form uses `contact`. Neither value creates a cookie or visitor identifier.
+- One workspace: the form on the left, the letter beside it at all times. The letter is built live from the answers and marked "Draft — not confirmed" until the visitor confirms. On wide screens only part of the A4 page shows; it slides fully into view on hover, keyboard focus or the "Expand letter" button. On phones a toggle switches between the answers and the letter.
+- The visitor must tick the confirmation statement. Sharing identifying details with investors and grant providers is a separate, optional, unchecked permission.
+- Submitting saves the letter with status `CONFIRMED` (the visitor's own confirmation). **Email addresses are not verified**: there is no verification email and no PDF yet. The success screen says so and offers the browser's print/save-as-PDF.
+- The phone number is an optional contact detail (7–15 digits, `+`, spaces and `-().` allowed). Like the email it is stored on the record only: it is never printed in the letter, and the investor export omits it. The column is nullable: letters without a phone number store null.
+- Unknown answers stay unknown. Quantity, budget and reach are optional and never defaulted.
 
-## Shared form code
+## Code
 
-- `apps/web/src/lib/forms/validation.ts` contains field limits, allowlisted values, normalisation, validation, and honeypot detection.
-- `apps/web/src/lib/forms/adapter.ts` defines the provider-neutral adapter interface and marks the production backend integration point.
-- `apps/web/src/components/InterestForm.tsx` (server component) wraps the form and email fallback, and `apps/web/src/components/InterestFormFields.tsx` (client component) provides the accessible form interface and submit handling.
-- `apps/web/src/lib/forms/validation.test.ts` covers normalisation, required fields, allowlists, and honeypot detection.
+- `apps/web/src/lib/loi/schema.ts`: allowlists, limits, normalisation and validation. Used by the browser and the server.
+- `apps/web/src/lib/loi/letter.ts`: `buildLetter()`, the deterministic template. The preview and the stored snapshot both come from it; the server rebuilds the letter from validated data and ignores any letter text the browser sends. Template, confirmation and sharing wording carry version strings (`TEMPLATE_VERSION` etc.); change the wording only together with a new version.
+- `apps/web/src/lib/loi/handler.ts`: the `/api/register/` handler (same-origin check, JSON only, 48 KiB cap, rate limit, honeypot `website`, validation, insert). `apps/web/src/lib/http.ts` holds the shared rate limiter and request helpers.
+- `apps/web/src/components/RegisterFlow.tsx`, `RegisterFields.tsx`, `LetterPreview.tsx`: the UI. `LetterPreview` renders text only and is also used on the admin detail page.
+- `packages/db/src/loi.ts`: database access.
+
+## Database
+
+Table `LetterOfInterest` (one row per letter version; the confirmed letter is stored as an immutable JSON snapshot with its template version) and `LetterOfInterestEvent` (audit trail: created, sharing changed, withdrawn, exported, follow-up). The verification columns were intentionally left out.
+
+Migrations: `packages/db/prisma/migrations/` holds a single baseline migration. Apply future changes with `pnpm --filter @aurora/db db:migrate` from a development machine; the runtime image does not contain the Prisma CLI.
+
+## Admin
+
+`/admin` (aggregate counts), `/admin/loi/` (filter and list), `/admin/loi/<id>/` (the exact confirmed letter, record, follow-up, sharing and withdrawal changes, history) and `/admin/loi/export/?scope=internal|investor` (CSV). The investor scope only includes confirmed letters with sharing permitted and never includes the email address or phone number. Exports are recorded in each letter's history.
 
 ## Before production
 
-Do not make the adapter return success or imply delivery until all of these are complete:
+1. Rewrite the privacy notice for the new data (controller, legal basis, recipients, retention, deletion, sharing with investors and grant providers). The current text predates this flow.
+2. Have the confirmation and sharing wording reviewed before launch.
+3. Decide whether email verification and PDF output are needed later; the record deliberately does not claim either.
+4. Keep personal form content out of analytics, logs and URLs (the handler logs only an error class name).
 
-1. Approve a hosting architecture and form/email delivery provider.
-2. Add a same-origin server endpoint; never place provider secrets in browser code.
-3. Run the shared normalisation and validation on the server even though the browser also validates.
-4. Reject non-allowlisted structured choices and enforce the documented length limits.
-5. Add hosting-level or endpoint-level rate limiting without stable visitor profiling.
-6. Keep the honeypot and add further spam controls only if demonstrated abuse justifies them.
-7. Do not log message bodies, email addresses, or unnecessary user-agent data.
-8. Configure the recipient, processor terms, access controls, retention period, and deletion procedure.
-9. Add clear success and failure responses and test them with keyboard and assistive technology.
-10. Update the privacy notice with the confirmed controller, provider, transfers, logs, and retention facts.
-
-No database is required for the intended initial design.
+Never store credentials in a `PUBLIC_` variable. Security headers: static ones are set in `apps/web/next.config.mjs`; the Content-Security-Policy is set per request by `apps/web/src/proxy.ts`. `/register` is prerendered, so its inline scripts are allowed by hash (`dist/csp-hashes.json`).

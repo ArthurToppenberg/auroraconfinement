@@ -5,6 +5,7 @@ import type { Page } from '@playwright/test';
 const routes = [
   '/',
   '/about/',
+  '/register/',
   '/contact/',
   '/model/',
   '/research-platform/',
@@ -13,15 +14,14 @@ const routes = [
   '/privacy/',
 ] as const;
 
-// Form endpoints write to the real database, so browser tests always intercept them.
-async function stubFormEndpoint(
+// The register endpoint writes to the real database, so browser tests always stub it.
+async function stubRegisterEndpoint(
   page: Page,
-  form: string,
   response: { status: number; body?: object },
 ) {
-  const requests: URLSearchParams[] = [];
-  await page.route(`**/api/forms/${form}/`, async (route) => {
-    requests.push(new URLSearchParams(route.request().postData() ?? ''));
+  const requests: Record<string, unknown>[] = [];
+  await page.route('**/api/register/', async (route) => {
+    requests.push(JSON.parse(route.request().postData() ?? '{}'));
     await route.fulfill({
       status: response.status,
       contentType: 'application/json',
@@ -61,7 +61,7 @@ test.describe('responsive release baseline', () => {
 
         if (route === '/' && viewport.width <= 430) {
           const hero = page.locator('.home-hero');
-          for (const label of ['Register institutional interest']) {
+          for (const label of ['Register interest']) {
             const link = hero.getByRole('link', { name: label });
             await expect(link).toBeVisible();
             const box = await link.boundingBox();
@@ -151,203 +151,238 @@ test('Miguel audio plays only while M, I, and G are held', async ({ page }) => {
   await page.keyboard.up('g');
 });
 
-test('contact form provides accessible validation and an honest failure result', async ({
-  page,
-}) => {
-  const requests = await stubFormEndpoint(page, 'contact-collaboration', {
-    status: 500,
-  });
-  await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto('/contact/');
-  await page.getByRole('button', { name: 'Register your interest' }).click();
-  await expect(page.getByLabel('Name')).toHaveAttribute('aria-invalid', 'true');
-  await expect(
-    page.getByText('Please correct the highlighted fields.'),
-  ).toBeVisible();
-
-  await page.getByLabel('Discuss a collaboration').check();
-  await page.getByLabel('Name (required)').fill('Test Researcher');
-  await page.getByLabel('Work email (required)').fill('researcher@example.org');
+async function fillDetails(page: Page) {
+  await page.getByLabel('Full name (required)').fill('Ada Researcher');
+  await page.getByLabel('Work email (required)').fill('ada@example.org');
+  await page.getByLabel('Phone number').fill('+45 12 34 56 78');
   await page
-    .getByLabel('Collaboration area (required)')
-    .selectOption('research-collaboration');
+    .getByLabel('Job title or role (required)')
+    .fill('Laboratory Director');
   await page
-    .getByLabel('What would you like to discuss?')
-    .fill('A discussion about an experimental research platform.');
-  await page.getByRole('button', { name: 'Send enquiry' }).click();
-  await expect(
-    page.getByText(
-      'We could not send your enquiry. Please try again later or email contact@auroraconfinement.com.',
-    ),
-  ).toBeVisible();
-  expect(requests).toHaveLength(1);
-  expect(requests[0]?.get('interest')).toBe('research-collaboration');
-});
+    .getByLabel('Organisation or institution (required)')
+    .fill('Example University');
+  await page.getByLabel('Country (required)').fill('Denmark');
+  await page.getByLabel(/personal professional interest/).check();
+  await page.getByRole('checkbox', { name: 'Demonstration' }).check();
+  await page
+    .getByLabel('Primary use (required)')
+    .selectOption('university-teaching');
+  await page
+    .getByLabel('What would you use it for, and who would benefit? (required)')
+    .fill('Teaching plasma physics to first-year students.');
+  await page
+    .getByLabel('Indicative timing (required)')
+    .selectOption('within-12-months');
+}
 
-test('contact enquiry types remain distinct', async ({ page }) => {
-  await page.goto('/contact/');
-  const form = page.locator('[data-interest-form]');
-
-  await expect(form.getByLabel('Register product interest')).toBeChecked();
-  await expect(form.getByLabel('Product of interest (required)')).toBeVisible();
-  await expect(
-    form.getByText(
-      'Submitting this form is a non-binding expression of interest and does not create an obligation to purchase.',
-    ),
-  ).toBeVisible();
-
-  await form.getByLabel('Send a general enquiry').check();
-  await expect(form.getByLabel('Product of interest (required)')).toHaveCount(
-    0,
-  );
-  await expect(form.locator('input[name="interest"]')).toHaveValue(
-    'general-enquiry',
-  );
-  await expect(
-    form.getByRole('button', { name: 'Send enquiry' }),
-  ).toBeVisible();
-  await expect(
-    form.getByText('non-binding expression of interest'),
-  ).toHaveCount(0);
-});
-
-test('NFF form validates institutional interest without false storage success', async ({
+test('register shows validation errors and moves focus to the first one', async ({
   page,
 }) => {
-  await stubFormEndpoint(page, 'nff-interest', { status: 500 });
-  await page.goto('/nff/');
-  const form = page.locator('[data-interest-form]');
-  await expect(form.locator('input[name="source"]')).toHaveValue(
-    'nordic-fusion-forum-2026',
+  await page.goto('/register/');
+  await page
+    .getByRole('button', { name: 'Confirm and save my letter' })
+    .click();
+  const name = page.getByLabel('Full name (required)');
+  await expect(name).toHaveAttribute('aria-invalid', 'true');
+  await expect(name).toBeFocused();
+  await expect(page.locator('#reg-fullName-error')).toHaveText(
+    'Enter your full name.',
   );
-  await form.getByRole('button', { name: 'Register your interest' }).click();
-  await expect(form.getByLabel('Organisation (required)')).toHaveAttribute(
-    'aria-invalid',
-    'true',
-  );
-
-  await form.getByLabel('Name (required)').fill('Test Researcher');
-  await form.getByLabel('Organisation (required)').fill('Example University');
-  await form.getByLabel('Role (required)').fill('Laboratory Director');
-  await form.getByLabel('Work email (required)').fill('researcher@example.org');
-  await form
-    .getByLabel('Area of interest (required)')
-    .selectOption('research-platform');
-  await form
-    .getByLabel('Intended application (required)')
-    .fill('Hands-on experiments and researcher training.');
-  await form
-    .getByLabel('Approximate timeframe (required)')
-    .selectOption('within-1-to-3-years');
-  await form.getByRole('button', { name: 'Register your interest' }).click();
-
-  await expect(
-    form.getByText(
-      'We could not send your enquiry. Please try again later or email contact@auroraconfinement.com.',
-    ),
-  ).toBeVisible();
-  await expect(
-    form.getByText('Thank you. We have recorded your interest'),
-  ).toHaveCount(0);
 });
 
-test('a stored submission shows success and clears the form', async ({
+test('register shows the letter live beside the form and saves once confirmed', async ({
   page,
 }) => {
-  const requests = await stubFormEndpoint(page, 'contact-general-enquiry', {
+  const requests = await stubRegisterEndpoint(page, {
     status: 200,
-    body: { ok: true, message: 'Thank you. We have received your message.' },
-  });
-  await page.goto('/contact/');
-  const form = page.locator('[data-interest-form]');
-  await form.getByLabel('Send a general enquiry').check();
-  await form.getByLabel('Name (required)').fill('Test Researcher');
-  await form.getByLabel('Work email (required)').fill('researcher@example.org');
-  await form
-    .getByLabel('What would you like to discuss?')
-    .fill('A question about the initiative.');
-  await form.getByRole('button', { name: 'Send enquiry' }).click();
-
-  await expect(
-    form.getByText('Thank you. We have received your message.'),
-  ).toBeVisible();
-  await expect(form.getByLabel('Name (required)')).toHaveValue('');
-  expect(requests[0]?.get('submissionType')).toBe('general-enquiry');
-});
-
-test('server field errors are shown on the matching field', async ({
-  page,
-}) => {
-  await stubFormEndpoint(page, 'contact-general-enquiry', {
-    status: 422,
     body: {
-      ok: false,
-      message: 'Please correct the highlighted fields.',
-      errors: { email: 'Enter a valid email address.' },
+      ok: true,
+      message: 'Your letter has been saved.',
+      reference: 'LOI-2026-ABC234',
     },
   });
-  await page.goto('/contact/');
-  const form = page.locator('[data-interest-form]');
-  await form.getByLabel('Send a general enquiry').check();
-  await form.getByLabel('Name (required)').fill('Test Researcher');
-  await form.getByLabel('Work email (required)').fill('researcher@example.org');
-  await form
-    .getByLabel('What would you like to discuss?')
-    .fill('A question about the initiative.');
-  await form.getByRole('button', { name: 'Send enquiry' }).click();
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto('/register/?product=exhibition-model');
+  const letter = page.getByRole('article');
 
-  const email = form.getByLabel('Work email (required)');
-  await expect(email).toHaveAttribute('aria-invalid', 'true');
-  await expect(email).toBeFocused();
+  // Before anything is typed the letter is already there, with prompts.
+  await expect(letter).toBeVisible();
+  await expect(letter).toContainText(
+    'Non-binding Letter of Interest — Exhibition model',
+  );
+  await expect(letter).toContainText('[full name]');
+  await expect(letter).toContainText('Draft');
+  await expect(letter).toContainText('Added on confirmation');
+  await expect(letter).toContainText(
+    'No permission given to share identifying details',
+  );
+
+  // The preview stays in view while the page scrolls.
+  await page.getByLabel('Full name (required)').fill('Ada Researcher');
+  await expect(letter).toContainText('Ada Researcher');
+  await expect(letter).not.toContainText('[full name]');
+  await page.mouse.wheel(0, 1200);
+  await expect(letter).toBeInViewport();
+
+  await fillDetails(page);
+  await expect(letter).toContainText(
+    'Teaching plasma physics to first-year students.',
+  );
+  await expect(letter).toContainText(
+    'This letter records non-binding interest only.',
+  );
+  await expect(letter).toContainText('Confirmed by: Ada Researcher');
+
+  // Sharing and confirmation both start unchecked; confirmation is required.
+  const sharing = page.getByLabel(/may share this letter/);
+  const confirm = page.getByLabel(
+    /I confirm that this letter accurately reflects/,
+  );
+  await expect(sharing).not.toBeChecked();
+  await expect(confirm).not.toBeChecked();
+  await page
+    .getByRole('button', { name: 'Confirm and save my letter' })
+    .click();
+  await expect(confirm).toBeFocused();
+  expect(requests).toHaveLength(0);
+
+  await sharing.check();
+  await expect(letter).toContainText(
+    'My email address will be omitted from shared copies.',
+  );
+  await confirm.check();
+  await page
+    .getByRole('button', { name: 'Confirm and save my letter' })
+    .click();
+  await expect(
+    page.getByRole('heading', { name: 'Your letter is saved' }),
+  ).toBeVisible();
+  await expect(page.getByText('LOI-2026-ABC234').first()).toBeVisible();
+  await expect(letter).not.toContainText('Draft');
+  expect(requests).toHaveLength(1);
+  expect(requests[0]).toMatchObject({
+    fullName: 'Ada Researcher',
+    email: 'ada@example.org',
+    phone: '+45 12 34 56 78',
+    product: 'exhibition-model',
+    sharing: true,
+    confirmed: true,
+    source: 'register',
+  });
 });
 
-test('contact CTAs preserve and apply their intent context', async ({
+test('register letter peeks beside the form and slides into view on hover, focus or the button', async ({
   page,
 }) => {
-  await page.goto('/contact/?intent=product-interest');
-  await expect(page.getByLabel('Register product interest')).toBeChecked();
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto('/register/?product=exhibition-model');
+  const letter = page.getByRole('article');
+  const aside = page.getByRole('complementary', { name: 'Letter preview' });
+  const right = async () => {
+    const box = await letter.boundingBox();
+    return box ? box.x + box.width : 0;
+  };
 
-  await page.goto('/contact/?intent=collaboration');
-  await expect(page.getByLabel('Discuss a collaboration')).toBeChecked();
+  // Partly hidden: the page runs off the right edge of the window, and the form
+  // keeps a comfortable width.
+  expect(await right()).toBeGreaterThan(1440);
+  const form = await page.getByLabel('Full name (required)').boundingBox();
+  expect(form!.width).toBeGreaterThan(300);
 
-  await page.goto('/contact/?intent=general-enquiry');
-  await expect(page.getByLabel('Send a general enquiry')).toBeChecked();
+  // Hover slides it fully into view, with an A4 page shape.
+  await aside.hover();
+  await expect.poll(right).toBeLessThanOrEqual(1440);
+  const box = await letter.boundingBox();
+  expect(box!.height / box!.width).toBeGreaterThanOrEqual(1.4);
+
+  // Moving away tucks it back.
+  await page.mouse.move(300, 300);
+  await expect.poll(right).toBeGreaterThan(1440);
+
+  // Keyboard: the button opens and closes it.
+  const button = page.getByRole('button', { name: 'Expand letter' });
+  await button.focus();
+  await button.press('Enter');
+  await expect(
+    page.getByRole('button', { name: 'Collapse letter' }),
+  ).toHaveAttribute('aria-expanded', 'true');
+  await expect.poll(right).toBeLessThanOrEqual(1440);
 });
 
-test('contact and NFF desktop headings align', async ({ page }) => {
-  for (const width of [1024, 1440]) {
-    await page.setViewportSize({ width, height: 1000 });
+test('register on a phone switches between the answers and the letter', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/register/?product=exhibition-model');
+  await page.getByLabel('Full name (required)').fill('Ada Researcher');
+  await expect(page.getByRole('article')).toBeHidden();
+  await page.getByRole('button', { name: 'Letter preview' }).click();
+  await expect(page.getByRole('article')).toContainText('Ada Researcher');
+  await expect(page.getByLabel('Full name (required)')).toBeHidden();
+  await page.getByRole('button', { name: 'Your answers' }).click();
+  await expect(page.getByLabel('Full name (required)')).toHaveValue(
+    'Ada Researcher',
+  );
+});
 
-    await page.goto('/contact/');
-    const contactHeadings = await Promise.all([
-      page
-        .getByRole('heading', { name: 'Tell us what you are exploring.' })
-        .boundingBox(),
-      page
-        .getByRole('heading', { name: 'Register your interest.' })
-        .boundingBox(),
-    ]);
-    expect(contactHeadings[0]).not.toBeNull();
-    expect(contactHeadings[1]).not.toBeNull();
-    expect(
-      Math.abs(contactHeadings[0]!.y - contactHeadings[1]!.y),
-    ).toBeLessThanOrEqual(1);
+test('register gives separate sections for each product when both are chosen', async ({
+  page,
+}) => {
+  await page.goto('/register/?product=both');
+  await expect(
+    page.getByRole('group', { name: 'Exhibition model' }).first(),
+  ).toBeVisible();
+  await expect(
+    page.getByRole('group', { name: 'Research platform' }).first(),
+  ).toBeVisible();
+  await expect(page.getByLabel('Primary use (required)')).toHaveCount(2);
+});
 
-    await page.goto('/nff/');
-    const nffHeadings = await Promise.all([
-      page
-        .getByRole('heading', { name: 'Thank you for the conversation.' })
-        .boundingBox(),
-      page
-        .getByRole('heading', { name: 'Continue the conversation' })
-        .boundingBox(),
-    ]);
-    expect(nffHeadings[0]).not.toBeNull();
-    expect(nffHeadings[1]).not.toBeNull();
-    expect(Math.abs(nffHeadings[0]!.y - nffHeadings[1]!.y)).toBeLessThanOrEqual(
-      1,
-    );
-  }
+test('register reports an honest failure and keeps the answers', async ({
+  page,
+}) => {
+  await stubRegisterEndpoint(page, {
+    status: 500,
+    body: {
+      ok: false,
+      message:
+        'We could not save your letter. Please try again later or email contact@auroraconfinement.com.',
+    },
+  });
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/register/?product=exhibition-model&source=nff2026');
+  await fillDetails(page);
+  await page
+    .getByLabel(/I confirm that this letter accurately reflects/)
+    .check();
+  await page
+    .getByRole('button', { name: 'Confirm and save my letter' })
+    .click();
+  await expect(
+    page
+      .getByRole('status')
+      .filter({ hasText: 'We could not save your letter' }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole('button', { name: 'Confirm and save my letter' }),
+  ).toBeVisible();
+  await expect(page.getByLabel('Full name (required)')).toHaveValue(
+    'Ada Researcher',
+  );
+});
+
+test('register can be reached from the contact page and contact has no form', async ({
+  page,
+}) => {
+  await page.goto('/contact/');
+  await expect(page.locator('form')).toHaveCount(0);
+  await page
+    .getByRole('link', { name: 'register interest', exact: true })
+    .click();
+  await expect(page).toHaveURL(/\/register\/$/);
+  await expect(
+    page.getByRole('heading', { level: 1, name: 'Register interest' }),
+  ).toBeVisible();
 });
 
 test('concept images always carry the exact visible caption', async ({

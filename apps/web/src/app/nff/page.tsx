@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { pageMetadata } from '@/lib/metadata';
-import InterestForm from '@/components/InterestForm';
+import Link from 'next/link';
+import { registerHrefs } from '@/content/site';
 import EventFigure from '@/components/EventFigure';
 
 export const metadata: Metadata = pageMetadata({
@@ -32,10 +33,16 @@ export default function Page() {
             <div className="nff-form-heading">
               <h2>Continue the conversation</h2>
               <p>
-                Tell us how our work could be relevant to your organisation.
+                Create a non-binding Letter of Interest describing how our work
+                could be relevant to your organisation. It takes a few minutes
+                and you review the full letter before confirming.
+              </p>
+              <p className="button-row">
+                <Link className="button primary" href={registerHrefs.nff}>
+                  Register interest
+                </Link>
               </p>
             </div>
-            <InterestForm variant="nff" />
           </div>
         </div>
       </section>
