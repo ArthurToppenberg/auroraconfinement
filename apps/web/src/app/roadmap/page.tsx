@@ -1,3 +1,4 @@
+import InterestDisclaimer from '@/components/InterestDisclaimer';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { pageMetadata } from '@/lib/metadata';
@@ -86,14 +87,26 @@ export default function Page() {
     <div className="roadmap-page field-ice">
       <header className="roadmap-intro shell">
         <h1>Two tracks. One direction.</h1>
-        <p>
-          Developing tangible tools for plasma education and experimental
-          research.
-        </p>
-        <p className="roadmap-current">
-          Current work: simulations, virtual models, institutional requirements
-          and funding.
-        </p>
+        <div className="roadmap-intro-details">
+          <div className="roadmap-intro-copy">
+            <p>
+              Developing tangible tools for plasma education and experimental
+              research.
+            </p>
+            <p className="roadmap-current">
+              Current work: simulations, virtual models, institutional
+              requirements, and funding.
+            </p>
+          </div>
+          <aside
+            className="roadmap-final-note"
+            aria-label="Milestone qualifications"
+          >
+            Milestones are indicative and depend on funding, partners, supplier
+            lead times and test results. Research-platform development requires
+            a separate programme and budget.
+          </aside>
+        </div>
       </header>
       <section
         className="roadmap-programme shell"
@@ -157,19 +170,23 @@ export default function Page() {
             ))}
           </ol>
           <div className="roadmap-track-actions">
-            <Link href={homeHero.primaryHref}>
-              Register exhibition interest <span aria-hidden="true">↗</span>
-            </Link>
-            <Link href={contactHrefs.collaboration}>
-              Discuss research or investment <span aria-hidden="true">↗</span>
-            </Link>
+            <div className="roadmap-track-action">
+              <Link className="button primary" href={homeHero.primaryHref}>
+                Register exhibition interest
+              </Link>
+              <InterestDisclaimer />
+            </div>
+            <div className="roadmap-track-action">
+              <Link
+                className="button primary"
+                href={contactHrefs.collaboration}
+              >
+                Discuss research or investment
+              </Link>
+              <InterestDisclaimer />
+            </div>
           </div>
         </RoadmapMotion>
-        <p className="roadmap-final-note">
-          Milestones are indicative and depend on funding, partners, supplier
-          lead times and test results. Research-platform development requires a
-          separate programme and budget.
-        </p>
       </section>
     </div>
   );

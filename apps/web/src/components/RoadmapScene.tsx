@@ -67,6 +67,7 @@ export default function RoadmapScene({
         <>
           <g className="roadmap-assembly">
             <ellipse cx="65" cy="40" rx="29" ry="13" />
+            <ellipse cx="65" cy="40" rx="14" ry="6" />
             <path d="M36 40v27q29 18 58 0V40 M45 29q-12 13 0 25 M62 27q-10 14 0 27 M81 29q12 13 0 25 M46 76v10 M84 76v10" />
           </g>
           <g className="roadmap-assembly roadmap-assembly-later">

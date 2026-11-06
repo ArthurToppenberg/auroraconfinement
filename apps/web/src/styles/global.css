@@ -3460,11 +3460,18 @@ body:has(.admin-page) .site-footer {
   line-height: 1.1;
   text-wrap: pretty;
 }
-.roadmap-page .roadmap-intro > p {
-  max-width: 65ch;
-  margin: 1rem 0 0;
+.roadmap-page .roadmap-intro-details {
+  display: grid;
+  align-items: start;
+  gap: 1.25rem 2rem;
+  margin-top: 1.25rem;
 }
-.roadmap-page .roadmap-intro > .roadmap-current {
+.roadmap-page .roadmap-intro-copy p {
+  max-width: 65ch;
+  margin: 0;
+}
+.roadmap-page .roadmap-intro-copy > .roadmap-current {
+  margin-top: 0.75rem;
   font-size: 0.875rem;
   line-height: 1.6;
   color: var(--deep);
@@ -3600,8 +3607,30 @@ body:has(.admin-page) .site-footer {
   font-weight: 600;
 }
 .roadmap-page .roadmap-final-note {
-  max-width: 95ch;
-  margin-top: 1.5rem;
+  max-width: 52ch;
+  justify-self: end;
+  padding: 1rem 1.25rem;
+  background: rgb(223 226 245 / 50%);
+  color: rgb(10 16 48 / 70%);
+}
+.roadmap-page .roadmap-track-action {
+  display: grid;
+  align-content: start;
+  justify-items: start;
+  gap: 1rem;
+  min-width: 0;
+}
+.roadmap-page .roadmap-track-action .registration-notice {
+  max-width: 52ch;
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+}
+@media (min-width: 52rem) {
+  .roadmap-page .roadmap-intro-details {
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  }
 }
 .roadmap-page .roadmap-plasma-ring {
   fill: var(--magenta);
