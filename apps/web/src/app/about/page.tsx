@@ -1,4 +1,3 @@
-import InterestDisclaimer from '@/components/InterestDisclaimer';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { pageMetadata } from '@/lib/metadata';
@@ -129,8 +128,10 @@ export default function Page() {
       <TeamMotivation>
         <div className="team-closing-inner">
           <div>
-            <h2>Interested in using the model?</h2>
-            <InterestDisclaimer />
+            <h2>Let's get started!</h2>
+            <p>
+              Registering interest is free + non-binding, and supports us in getting softfunding, to get started building.
+            </p>
           </div>
           <div className="button-row">
             <Link className="button primary" href={homeHero.primaryHref}>
