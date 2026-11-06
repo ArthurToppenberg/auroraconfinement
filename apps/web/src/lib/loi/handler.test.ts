@@ -55,7 +55,7 @@ describe('register endpoint', () => {
     assert.equal(loi.phone, '+45 12 34 56 78');
     assert.ok(!JSON.stringify(loi.letterText).includes('12 34 56 78'));
     assert.equal(loi.timing, 'within-12-months');
-    assert.equal(loi.sharingPermitted, false);
+    assert.equal(loi.sharingPermitted, true);
     assert.equal(loi.letterText.details[1]?.value, loi.reference);
     assert.deepEqual(body.letter, loi.letterText);
   });
@@ -102,6 +102,17 @@ describe('register endpoint', () => {
     const { stored, options } = setup();
     const response = await handleRegisterPost(
       post({ ...validForm(), confirmed: false }),
+      options,
+    );
+    assert.equal(response.status, 422);
+    assert.ok((await response.json()).errors.confirmed);
+    assert.equal(stored.length, 0);
+  });
+
+  it('rejects missing sharing permission without storing or upgrading it', async () => {
+    const { stored, options } = setup();
+    const response = await handleRegisterPost(
+      post(validForm({ sharing: false })),
       options,
     );
     assert.equal(response.status, 422);

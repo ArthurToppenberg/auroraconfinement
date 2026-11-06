@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { CookieSettingsButton } from '@/components/LinkedInConsent';
 import { contactEmail, homeHero } from '@/content/site';
 
 export default function Footer() {
@@ -69,6 +70,7 @@ export default function Footer() {
         <div className="footer-utility">
           <p>&copy; {new Date().getFullYear()} Aurora Confinement</p>
           <Link href="/privacy">Privacy Notice</Link>
+          <CookieSettingsButton />
         </div>
       </div>
     </footer>

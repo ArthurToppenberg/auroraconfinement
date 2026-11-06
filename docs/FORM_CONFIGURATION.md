@@ -4,9 +4,9 @@
 
 ## Behaviour
 
-- One workspace: the form on the left, the letter beside it at all times. The letter is built live from the answers and marked "Draft — not confirmed" until the visitor confirms. On wide screens only part of the A4 page shows; it slides fully into view on hover, keyboard focus or the "Expand letter" button. On phones a toggle switches between the answers and the letter.
-- The visitor must tick the confirmation statement. Sharing identifying details with investors and grant providers is a separate, optional, unchecked permission.
-- Submitting saves the letter with status `CONFIRMED` (the visitor's own confirmation). **Email addresses are not verified**: there is no verification email and no PDF yet. The success screen says so and offers the browser's print/save-as-PDF.
+- One workspace: the form on the left, the letter beside it at all times. The letter is built live from the answers and marked "Draft — not confirmed" until the visitor confirms. On wide screens only part of the A4 page shows; it slides fully into view on hover or keyboard focus. On phones a toggle switches between the answers and the letter.
+- The single, initially unchecked confirmation currently includes confidential investor/grant-provider sharing. The server requires both confirmed and sharing flags. The consent/conditionality assessment remains open; see `PRIVACY_REVIEW.md`. Historical permissions are not upgraded.
+- Submitting saves the letter with status `CONFIRMED` (the visitor's own confirmation). **Email addresses are not verified**: there is no verification email, receipt email or server-generated PDF delivery. The success screen says so and offers the browser's print/save-as-PDF.
 - The phone number is an optional contact detail (7–15 digits, `+`, spaces and `-().` allowed). Like the email it is stored on the record only: it is never printed in the letter, and the investor export omits it. The column is nullable: letters without a phone number store null.
 - Unknown answers stay unknown. Quantity, budget and reach are optional and never defaulted.
 
@@ -30,7 +30,7 @@ Migrations: `packages/db/prisma/migrations/` holds a single baseline migration. 
 
 ## Before production
 
-1. Rewrite the privacy notice for the new data (controller, legal basis, recipients, retention, deletion, sharing with investors and grant providers). The current text predates this flow.
+1. Finalise the rewritten privacy notice using the factual decisions and operational/legal review in `PRIVACY_REVIEW.md`. It now covers the LOI flow but is explicitly unfinished pending those facts.
 2. Have the confirmation and sharing wording reviewed before launch.
 3. Decide whether email verification and PDF output are needed later; the record deliberately does not claim either.
 4. Keep personal form content out of analytics, logs and URLs (the handler logs only an error class name).

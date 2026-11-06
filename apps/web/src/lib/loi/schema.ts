@@ -248,7 +248,7 @@ export interface LoiForm {
   product: Product | '';
   interestTypes: InterestType[];
   sections: Record<SectionKey, ProductSection>;
-  /** Optional permission to share identifying details (separate from confirming). */
+  /** Explicit confidential-sharing permission. Required for new LOIs; never defaulted. */
   sharing: boolean;
   /** The required confirmation statement. */
   confirmed: boolean;
@@ -565,7 +565,9 @@ export function validateDetails(form: LoiForm): FieldErrors {
 /** Full validation for submission: the details plus the confirmation statement. */
 export function validateSubmission(form: LoiForm): FieldErrors {
   const errors = validateDetails(form);
-  if (!form.confirmed) errors['confirmed'] = 'Confirm the letter to submit it.';
+  if (!form.confirmed || !form.sharing)
+    errors['confirmed'] =
+      'Confirm the letter and confidential sharing to submit this LOI, or contact us for a private enquiry.';
   return errors;
 }
 

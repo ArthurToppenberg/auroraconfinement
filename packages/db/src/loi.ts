@@ -411,8 +411,8 @@ export async function exportRows(
     timing: toKebab(row.timing),
     budgetStatus: row.budgetStatus ? toKebab(row.budgetStatus) : '',
     sharingPermitted: row.sharingPermitted ? 'yes' : 'no',
-    followUp: toKebab(row.followUp),
-    source: row.source ?? '',
+    followUp: scope === 'investor' ? '' : toKebab(row.followUp),
+    source: scope === 'investor' ? '' : (row.source ?? ''),
     letter: render(row.letterText),
   }));
 }

@@ -15,6 +15,7 @@ export function validForm(overrides: Partial<LoiForm> = {}): LoiForm {
     product: 'exhibition-model',
     interestTypes: ['demonstration'],
     confirmed: true,
+    sharing: true,
   });
   Object.assign(form.sections['exhibition-model'], {
     primaryUse: 'university-teaching',
