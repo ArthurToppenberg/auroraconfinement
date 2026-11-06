@@ -4141,6 +4141,7 @@ main article[id] {
 }
 
 .team-page .team-sdg-alignment {
+  margin-top: clamp(2rem, 4vw, 3rem);
   padding-top: 1.25rem;
   border-top: 1px solid rgb(247 248 255 / 18%);
 }
@@ -4988,29 +4989,35 @@ main article[id] {
   padding-top: clamp(1.5rem, 3vw, 2rem);
 }
 
-/* Align achievement images, captions, headings and copy without cropping photos. */
+/* Align achievement copy without stretching the image/caption layout. */
+.team-page .event-item .event-figure img {
+  display: block;
+}
+
 @media (min-width: 52rem) {
   @supports (grid-template-rows: subgrid) {
+    .team-page .event-pair {
+      grid-auto-rows: max-content;
+      align-content: start;
+      align-items: stretch;
+      row-gap: 1.25rem;
+    }
+
     .team-page .event-pair > .event-item {
       display: grid;
-      grid-row: span 4;
+      grid-row: span 3;
       grid-template-rows: subgrid;
-      align-self: stretch;
+      align-content: start;
       row-gap: 1.25rem;
     }
 
     .team-page .event-item > .event-figure {
-      display: grid;
-      grid-row: span 2;
-      grid-template-rows: subgrid;
-      align-self: stretch;
-      align-items: start;
-      row-gap: 0.75rem;
+      display: block;
+      align-self: start;
     }
 
     .team-page .event-item > h3,
-    .team-page .event-item > p,
-    .team-page .event-item .event-figure figcaption {
+    .team-page .event-item > p {
       margin: 0;
     }
   }
