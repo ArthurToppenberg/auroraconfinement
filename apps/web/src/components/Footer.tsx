@@ -69,8 +69,10 @@ export default function Footer() {
         </div>
         <div className="footer-utility">
           <p>&copy; {new Date().getFullYear()} Aurora Confinement</p>
-          <Link href="/privacy">Privacy Notice</Link>
-          <CookieSettingsButton />
+          <div className="footer-privacy-links">
+            <Link href="/privacy">Privacy Notice</Link>
+            <CookieSettingsButton />
+          </div>
         </div>
       </div>
     </footer>
