@@ -1,6 +1,6 @@
 # Privacy operations
 
-Owner: Etienne Gras, contact@auroraconfinement.com. Operational instructions prepared 6 November 2026; they do not assert that the historic backlog, infrastructure configuration or provider agreements have already been reviewed. Analytics remains running at the user's explicit instruction.
+Owner: Etienne Gras, contact@auroraconfinement.com. Operational instructions prepared 6 November 2026; they do not assert that the historic backlog, infrastructure configuration or provider agreements have already been reviewed. On 10 November the user superseded the keep-running instruction: the Umami script and its CSP allowances have been removed from source. Deploy to stop production collection; historical analytics data has not been deleted.
 
 ## Rights requests and withdrawal
 
@@ -19,8 +19,8 @@ Owner: Etienne Gras, contact@auroraconfinement.com. Operational instructions pre
 - Etienne should run a monthly review before records reach expiry, rather than add an extra month after the deadline. Until a scheduler and a reliable last-meaningful-contact field exist, use a controlled register to track each record's deadline. Never infer substantive contact merely from the latest audit event.
 - Document any necessary longer exception with its purpose, restricted data set, basis and review/end date. Possible future fundraising alone is not an indefinite exception.
 - Withdrawn consent does not automatically justify keeping the whole letter for another 24 months. Assess minimal evidence separately.
-- Logs, backups and analytics need operator-confirmed, purpose-specific periods. Suggested settings to discuss: 30 days for routine technical logs/backups, 12 months for analytics. These are recommendations, not assertions of deployed settings or universal legal limits.
-- Self-hosted Umami documentation describes retention as indefinite unless deletion is configured. Ask its operator what is actually scheduled; do not assume the site's 24-month policy controls another database.
+- User reports no own routine access logs or separate backups. Verify provider-managed records and recovery copies separately; this report does not cover Prisma snapshots, LOI audit history or temporary in-memory rate counters. Do not invent a blanket deletion period for providers.
+- The removed Umami service may still contain historical records. Ask its operator to confirm the data held and erase it where no continuing lawful purpose exists. Record the outcome; removing the browser script does not perform that deletion.
 
 ## Disclosure register
 
@@ -41,3 +41,15 @@ Obtain a provider/service/location/subprocessor inventory and the actual applica
 Cloudflare DPA: https://www.cloudflare.com/cloudflare-customer-dpa/
 Umami retention description: https://docs.umami.is/docs/faq
 Datatilsynet deletion: https://www.datatilsynet.dk/regler-og-vejledning/behandlingssikkerhed/sletning
+
+## Provider and access follow-up, 10 November 2026
+
+- Controller: Etienne, Denmark, sole decision-maker. Website origin: Contabo in Germany. Database: Prisma Postgres, eu-central-1 (Frankfurt). Incoming contact email: Cloudflare routing to personal Gmail. Outgoing replies and Gmail contract/region remain to be confirmed.
+- Account administrators named by the user: Etienne and Arthur Toppenberg; user reports both accepted DPA. Obtain service-specific coverage and Arthur's access scope/country before treating this as a completed Article 28 inventory. Do not publish a personal destination mailbox or access credentials.
+- Confirm Prisma plan and Backups tab. Official documentation describes automatic daily active-day snapshots on Starter, Pro and Business, with 7/7/30-day retention respectively. Do not assume the plan, zero backups, or any overwrite period for this project without checking.
+- Where recovery snapshots exist, reapply valid erasures on restore and restrict stale copies until expiry. Do not disable backups or service logs as part of this factual review.
+- The 24-month retention policy still needs a working operational review/deletion process. Provider answers do not resolve the separate required combined confirmation/sharing issue.
+
+### Clarified internal role
+
+Arthur is a team member under Etienne's direct instructions, administering server and database from Denmark. Etienne alone operates the LOI admin interface and administers Cloudflare/mail. Privileged database access may still expose LOI data. Use the internal confidentiality/access instruction and least-privilege accounts; do not label Arthur an independent external processor merely because he administers infrastructure. Reassess if he begins providing services independently. No agreement has yet been signed and vendor DPA acceptance is unknown. Prisma is on the Free plan; do not apply a paid-plan snapshot period to it without evidence.

@@ -23,14 +23,14 @@ export default function Page() {
       <section className="section field-night">
         <div className="shell prose">
           <p>
-            Last updated: <time dateTime="2026-11-06">6 November 2026</time>
+            Last updated: <time dateTime="2026-11-10">10 November 2026</time>
           </p>
           <p className="notice">
-            <strong>Notice being finalised.</strong> Provider locations,
-            legal-basis assessments and technical retention/deletion
-            arrangements still need confirmation. The sections below describe
-            the current website and LOI flow; this is not yet a complete final
-            notice for production reliance.
+            <strong>Notice being finalised.</strong> Provider agreement and
+            transfer details, legal-basis assessments and provider-managed
+            retention arrangements still need confirmation. The sections below
+            describe the current website and LOI flow; this is not yet a
+            complete final notice for production reliance.
           </p>
 
           <h2 id="controller">Who is responsible</h2>
@@ -42,13 +42,6 @@ export default function Page() {
           <p>
             <strong>Data controller: Etienne Gras</strong>, operating the Aurora
             Confinement initiative.
-          </p>
-          <p>
-            Skodsborgvej 190, st. 3101
-            <br />
-            2850 Nærum
-            <br />
-            Denmark
           </p>
           <p>
             Email for privacy questions and rights requests:{' '}
@@ -105,8 +98,10 @@ export default function Page() {
             in-memory rate-limit counters to limit abuse. Its time window is ten
             minutes; inactive counter entries may remain in memory until cleanup
             or a server restart. The LOI record does not contain an IP-address
-            field. Infrastructure access logs and their retention still need to
-            be confirmed.
+            field. We do not operate routine website access logs or separate
+            backups. This does not include the LOI audit history described above
+            or technical records and recovery copies that providers may keep
+            under their own service arrangements.
           </p>
 
           <h2 id="purposes">Why we use information and the legal bases</h2>
@@ -137,8 +132,8 @@ export default function Page() {
             <li>
               <strong>Security and abuse prevention:</strong> the proposed basis
               is legitimate interests under Article 6(1)(f), specifically
-              protecting the website, its users and records. Provider logging,
-              analytics and any terminal-device access need their own documented
+              protecting the website, its users and records. Provider logging
+              and any terminal-device access need their own documented
               assessment, including applicable Danish cookie rules.
             </li>
             <li>
@@ -200,58 +195,57 @@ export default function Page() {
 
           <h2 id="providers">Who else receives information</h2>
           <p>
-            Authorised Aurora team members can access relevant records for
-            administration and follow-up. Infrastructure administrators and
-            service providers may process information to operate the website,
-            database, email and security services.
+            Etienne Gras, based in Denmark, administers LOIs and enquiries and
+            decides how the information is used. Authorised technical
+            administrators and service providers may process information as
+            needed to operate the website, database, email and security
+            services. Arthur Toppenberg administers the server and database from
+            Denmark as a team member under Etienne's instructions. Etienne alone
+            uses the LOI administration interface and manages Cloudflare and the
+            contact mailbox. Database administration may nevertheless provide
+            technical access to stored LOI information; such access must be
+            limited to necessary technical work on instructions.
           </p>
           <ul>
             <li>
-              <strong>Cloudflare:</strong> domain and website delivery/proxy
-              services. Public domain records also identify Cloudflare's email
-              routing servers for incoming email.
+              <strong>Contabo:</strong> hosts the website's origin server in
+              Germany, behind Cloudflare.
             </li>
             <li>
-              <strong>Website origin and database:</strong> the documented setup
-              uses a shared server behind Cloudflare and Caddy. LOIs are stored
-              in a PostgreSQL database. PostgreSQL is the database technology,
-              not the name of its hosting provider; the server/database operator
-              and countries still need confirmation.
+              <strong>Prisma Postgres:</strong> hosts the LOI database. The
+              project's selected database region is eu-central-1, Frankfurt,
+              Germany, on the Free plan. This database-region setting is not a
+              guarantee that all provider support, account or technical
+              processing stays there.
             </li>
             <li>
-              <strong>Email:</strong> Cloudflare routes incoming email. The
-              destination mailbox provider and any outgoing email provider,
-              including their storage locations, still need confirmation.
-              Routing records do not identify the final mailbox.
+              <strong>Cloudflare:</strong> provides domain and website
+              delivery/proxy services and routes incoming email.
             </li>
             <li>
-              <strong>Analytics:</strong> self-hosted Umami at{' '}
-              <code>stats.arthurtoppenberg.dk</code>. Its server operator,
-              hosting country and deployed settings still need confirmation.
-              This does not mean the Umami Cloud service receives the data.
-            </li>
-            <li>
-              <strong>Backups and support:</strong> providers, access
-              arrangements, locations and processor agreements still need
-              confirmation.
+              <strong>Google Gmail:</strong> receives incoming enquiries
+              forwarded through Cloudflare to the controller's personal Gmail
+              mailbox. A specific email storage region has not been confirmed.
             </li>
           </ul>
           <p>
-            These services can receive connection/request information. A Danish
-            domain does not establish EEA-only processing. Where a recipient
-            acts as an independent controller, it is responsible for its own
-            subsequent processing and notices.
+            These services can receive connection/request information as well as
+            the information needed to provide their respective services.
+            Provider-managed technical records and recovery copies may exist
+            even where we have not enabled our own access logs or backups.
+            Applicable contracting entities, processing agreements, support
+            access and transfer arrangements are being checked. A hosting or
+            database region does not establish EEA-only processing. Where a
+            recipient acts as an independent controller, it is responsible for
+            its own subsequent processing and notices.
           </p>
-          <h3>Analytics</h3>
+          <h3>Website analytics</h3>
           <p>
-            The site loads a self-hosted Umami analytics script from{' '}
-            <code>stats.arthurtoppenberg.dk</code>, configured for the
-            production domain. That service receives requests from your browser
-            and is intended to measure website use. Its deployed collection
-            settings, operator, storage, retention and legal basis still need
-            confirmation. Being described as cookieless does not establish that
-            no personal data is processed or that consent is never required. The
-            LOI form does not send its field values as analytics events.
+            This version of the website does not load the previously used Umami
+            analytics script or send website analytics requests to that service.
+            Disabling the script does not erase historical analytics records;
+            their deletion or remaining retention must be confirmed with the
+            former service operator.
           </p>
           <h3>LinkedIn content</h3>
           <p>
@@ -260,7 +254,7 @@ export default function Page() {
             consent panel over the blurred post placeholders. Decline LinkedIn
             leaves the original-post links available and does not block the rest
             of this website. The panel controls LinkedIn content only; it does
-            not change the analytics service described above.
+            not enable website analytics.
           </p>
           <p>
             When you allow embeds, LinkedIn receives your IP address and browser
@@ -303,15 +297,26 @@ export default function Page() {
 
           <h2 id="transfers">Transfers outside the EEA</h2>
           <p>
-            The provider and recipient location inventory is not yet complete,
-            so we cannot state that all data remains in the European Economic
-            Area. Before a restricted international transfer, the controller
-            must identify the destination and applicable protection, such as an
-            applicable adequacy decision or appropriate contractual safeguards
-            and any supplementary measures. The applicable destinations and
-            safeguards, and how to obtain a copy, must be added here once
-            verified. Sharing permission alone is not an international-transfer
-            safeguard.
+            Our website origin server and selected LOI database region are in
+            Germany. Cloudflare, Google, Prisma and LinkedIn may nevertheless
+            involve processing or access outside the European Economic Area. The
+            database-region setting does not cover every provider activity. Our
+            service-specific destination and safeguard inventory is still being
+            completed; we cannot claim that all information stays in the EEA.
+          </p>
+          <p>
+            Before a restricted international transfer, the applicable
+            destination and protection must be established, such as a relevant
+            adequacy decision or appropriate contractual safeguards and any
+            necessary supplementary measures. A general provider policy or
+            acceptance of a data-processing agreement alone does not identify
+            the safeguard for every transfer. Contact us for information about
+            the arrangements relevant to your data. Ordinary LOI sharing
+            permission is not an international-transfer safeguard. See also{' '}
+            <a href="https://policies.google.com/privacy/frameworks">
+              Google's transfer framework information
+            </a>
+            .
           </p>
 
           <h2 id="retention">How long information is kept</h2>
@@ -350,13 +355,14 @@ export default function Page() {
             database, emails and exported copies.
           </p>
           <p>
-            <strong>Technical logs, analytics and backups:</strong> their actual
-            periods must be confirmed with the operators. The 24-month LOI
-            policy is not a blanket retention period for these services; they
-            require purpose-specific, normally shorter periods. Backups must
-            support effective erasure where technically possible and reapply
-            deletions after a restore. The backup overwrite cycle and procedure
-            still need confirmation.
+            <strong>Technical records and recovery copies:</strong> we do not
+            operate routine website access logs or separate backups.
+            Provider-managed logs, recovery snapshots and their actual retention
+            remain to be confirmed. The 24-month LOI policy does not determine
+            their overwrite periods. If a recovery copy is restored, applicable
+            erasures must be reapplied. Historical analytics retention and
+            deletion must be addressed separately with the former operator; this
+            website no longer loads its analytics script.
           </p>
 
           <h2 id="rights">Your rights and how to use them</h2>

@@ -22,7 +22,10 @@ for (const width of [390, 1440]) {
     );
     await expect(main).toContainText('withdraw sharing permission');
     await expect(main).toContainText('Cloudflare');
-    await expect(main).toContainText('Umami');
+    await expect(main).toContainText('Contabo');
+    await expect(main).toContainText('Prisma Postgres');
+    await expect(main).toContainText('Google Gmail');
+    await expect(main).toContainText('does not load the previously used Umami');
     await expect(main).toContainText('LinkedIn');
     await expect(main).not.toContainText(
       'Submissions are not orders, purchases, reservations, commitments, or Letters of Intent.',
@@ -52,11 +55,16 @@ for (const width of [390, 1440]) {
   });
 }
 
-test('LinkedIn consent gates embeds, persists a choice and supports withdrawal without changing analytics', async ({
+test('LinkedIn consent gates embeds, persists a choice and supports withdrawal with website analytics disabled', async ({
   page,
 }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   const linkedinRequests: string[] = [];
+  const analyticsRequests: string[] = [];
+  page.on('request', (request) => {
+    if (request.url().includes('stats.arthurtoppenberg.dk'))
+      analyticsRequests.push(request.url());
+  });
   await page.route('https://www.linkedin.com/**', async (route) => {
     linkedinRequests.push(route.request().url());
     await route.fulfill({
@@ -65,13 +73,18 @@ test('LinkedIn consent gates embeds, persists a choice and supports withdrawal w
     });
   });
   await page.goto('/about/', { waitUntil: 'domcontentloaded' });
+  const policy = (await page.request.get('/about/')).headers()[
+    'content-security-policy'
+  ];
+  expect(policy).toBeTruthy();
+  expect(policy).not.toContain('stats.arthurtoppenberg.dk');
   const banner = page.getByRole('region', { name: 'Allow LinkedIn posts?' });
   await expect(banner).toBeVisible();
   await expect(page.locator('iframe[src*="linkedin.com"]')).toHaveCount(0);
   expect(linkedinRequests).toEqual([]);
   await expect(
     page.locator('script[src="https://stats.arthurtoppenberg.dk/script.js"]'),
-  ).toHaveCount(1);
+  ).toHaveCount(0);
   await page
     .getByRole('button', { name: 'Accept LinkedIn', exact: true })
     .click();
@@ -98,7 +111,8 @@ test('LinkedIn consent gates embeds, persists a choice and supports withdrawal w
   await expect(page.getByLabel('Full name (required)')).toBeVisible();
   await expect(
     page.locator('script[src="https://stats.arthurtoppenberg.dk/script.js"]'),
-  ).toHaveCount(1);
+  ).toHaveCount(0);
+  expect(analyticsRequests).toEqual([]);
 });
 
 for (const width of [390, 1440]) {
