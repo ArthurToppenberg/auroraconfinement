@@ -77,6 +77,13 @@ describe('validation', () => {
     assert.ok(validateSubmission(form)['confirmed']);
   });
 
+  it('requires explicit sharing for a new LOI without changing detail validation', () => {
+    const form = normaliseForm(validForm({ sharing: false }));
+    assert.deepEqual(validateDetails(form), {});
+    assert.ok(validateSubmission(form)['confirmed']);
+    assert.equal(form.sharing, false);
+  });
+
   it('flags every missing required field', () => {
     const errors = validateDetails(normaliseForm({}));
     for (const key of [

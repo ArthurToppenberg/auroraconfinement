@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import type { ReactNode } from 'react';
 import Footer from '@/components/Footer';
+import LinkedInConsent from '@/components/LinkedInConsent';
 import PageTracker from '@/components/PageTracker';
 import Header from '@/components/Header';
 import MiguelEasterEgg from '@/components/MiguelEasterEgg';
@@ -27,15 +28,17 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <a className="skip-link" href="#main-content">
           Skip to main content
         </a>
-        <Header />
-        <main id="main-content" tabIndex={-1}>
-          {children}
-        </main>
-        <Footer />
-        <PageTracker />
-        <MiguelEasterEgg />
-        <StaEasterEgg />
-        <Reveal />
+        <LinkedInConsent>
+          <Header />
+          <main id="main-content" tabIndex={-1}>
+            {children}
+          </main>
+          <Footer />
+          <PageTracker />
+          <MiguelEasterEgg />
+          <StaEasterEgg />
+          <Reveal />
+        </LinkedInConsent>
       </body>
     </html>
   );

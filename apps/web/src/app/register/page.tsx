@@ -25,24 +25,13 @@ export default function Page() {
           </div>
           <div className="register-top-copy">
             <p>
-              Tell us how you or your organisation could use Aurora
-              Confinement’s technology. Your personalised letter appears beside
-              the form as you write, so you see exactly what you are confirming.
-              With your permission, we may share it confidentially with
-              prospective investors and grant providers as evidence of potential
-              demand.
+              Tell us how you would use our technology, then review and save
+              your letter. Free to register, with no purchase commitment.
             </p>
-            <p>
-              Registration is free. This is not an order, reservation or
-              commitment to purchase. Our products are in development;
-              specifications, pricing and availability are subject to
-              development and validation.
-            </p>
-            <p>
-              <Link href="/contact/">Just have a question? Contact us.</Link>{' '}
+            <p className="register-top-links">
+              <Link href="/contact/">Contact us</Link>
               <span className="registration-privacy">
-                How we handle your data:{' '}
-                <Link href="/privacy/">Privacy Notice</Link>.
+                <Link href="/privacy/">Privacy Notice</Link>
               </span>
             </p>
           </div>

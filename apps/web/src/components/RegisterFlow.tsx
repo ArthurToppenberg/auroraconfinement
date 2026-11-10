@@ -6,7 +6,7 @@ import LetterPreview from '@/components/LetterPreview';
 import RegisterFields from '@/components/RegisterFields';
 import {
   buildLetter,
-  confirmationStatement,
+  confirmationSummary,
   sharingStatement,
 } from '@/lib/loi/letter';
 import type { Letter } from '@/lib/loi/letter';
@@ -66,8 +66,10 @@ export default function RegisterFlow({
     letter: Letter;
   } | null>(null);
   const [view, setView] = useState<'form' | 'letter'>('form');
-  const [open, setOpen] = useState(false);
   const [errorTick, setErrorTick] = useState(0);
+  const [activeStep, setActiveStep] = useState(0);
+  const formElement = useRef<HTMLFormElement>(null);
+  const tracker = useRef<HTMLOListElement>(null);
   const savedHeading = useRef<HTMLHeadingElement>(null);
 
   // Exactly what the server will normalise and store; the preview is built from it.
@@ -101,10 +103,75 @@ export default function RegisterFlow({
         : '#section-interest',
       done:
         sections.length > 0 &&
-        !Object.keys(issues).some((key) => key.includes('.')),
+        sections.every((key) =>
+          ['primaryUse', 'application', 'timing'].every(
+            (field) => !issues[`${key}.${field}`],
+          ),
+        ),
     },
-    { label: 'Confirm', href: '#section-confirm', done: form.confirmed },
+    {
+      label: 'Confirm',
+      href: '#section-confirm',
+      done: form.confirmed && form.sharing,
+    },
   ];
+
+  // Track the section being edited or scrolled into view, independently of completion.
+  useEffect(() => {
+    const element = formElement.current;
+    if (!element || view !== 'form' || saved) return;
+    const cards = Array.from(
+      element.querySelectorAll<HTMLElement>('.register-card'),
+    );
+    const stepFor = (id: string) =>
+      id === 'section-details'
+        ? 0
+        : id === 'section-interest'
+          ? 1
+          : id.startsWith('section-product-')
+            ? 2
+            : 3;
+    let frame = 0;
+    const readPosition = () => {
+      const header =
+        document.querySelector('header')?.getBoundingClientRect().bottom ?? 0;
+      const toggle = document.querySelector('.register-toggle');
+      const toggleHeight =
+        toggle && getComputedStyle(toggle).display !== 'none'
+          ? toggle.getBoundingClientRect().height
+          : 0;
+      const trackerHeight =
+        tracker.current &&
+        getComputedStyle(tracker.current).position === 'sticky'
+          ? tracker.current.getBoundingClientRect().height
+          : 0;
+      const boundary = Math.max(0, header) + toggleHeight + trackerHeight + 32;
+      let current = cards[0];
+      for (const card of cards) {
+        if (card.getBoundingClientRect().top <= boundary) current = card;
+      }
+      if (current) setActiveStep(stepFor(current.id));
+    };
+    const onScroll = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(readPosition);
+    };
+    const onFocus = (event: FocusEvent) => {
+      if (!(event.target instanceof Element)) return;
+      const card = event.target.closest('.register-card');
+      if (card) setActiveStep(stepFor(card.id));
+    };
+    element.addEventListener('focusin', onFocus);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    readPosition();
+    return () => {
+      cancelAnimationFrame(frame);
+      element.removeEventListener('focusin', onFocus);
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+    };
+  }, [normalised.product, view, saved]);
 
   useEffect(() => {
     if (errorTick === 0) return;
@@ -257,13 +324,47 @@ export default function RegisterFlow({
             </p>
           </div>
         ) : (
-          <form className="register-form" onSubmit={submit} noValidate>
-            <ol className="register-progress" aria-label="Progress">
-              {progress.map((item) => (
+          <form
+            ref={formElement}
+            className="register-form"
+            onSubmit={submit}
+            noValidate
+          >
+            <ol
+              ref={tracker}
+              className="register-progress"
+              aria-label="Form sections"
+            >
+              {progress.map((item, index) => (
                 <li key={item.label} data-done={item.done ? 'true' : undefined}>
-                  <a href={item.href}>
-                    {item.label}
-                    {item.done && <span className="sr-only"> (complete)</span>}
+                  <a
+                    href={item.href}
+                    aria-current={activeStep === index ? 'step' : undefined}
+                    onClick={() => {
+                      const target = document.getElementById(
+                        item.href.slice(1),
+                      );
+                      setActiveStep(
+                        item.href === '#section-interest' ? 1 : index,
+                      );
+                      target?.focus({ preventScroll: true });
+                    }}
+                  >
+                    <span className="register-step-number" aria-hidden="true">
+                      {index + 1}
+                    </span>
+                    <span>{item.label}</span>
+                    {item.done && (
+                      <>
+                        <span
+                          className="register-step-check"
+                          aria-hidden="true"
+                        >
+                          ✓
+                        </span>
+                        <span className="sr-only"> (complete)</span>
+                      </>
+                    )}
                   </a>
                 </li>
               ))}
@@ -276,42 +377,21 @@ export default function RegisterFlow({
               setSection={setSection}
             />
 
-            <fieldset className="register-card" id="section-confirm">
+            <fieldset
+              className="register-card"
+              id="section-confirm"
+              tabIndex={-1}
+            >
               <legend>Confirm and save</legend>
               <p className="register-card-intro">
-                Check the letter beside this form. It records your stated
-                interest and the capacity you selected. When you confirm, we add
-                the confirmation date and a reference ID. Nothing else is added
-                or changed.
+                Review your letter, then confirm below.
               </p>
 
-              <div className="submission-options">
-                <label>
-                  <input
-                    type="checkbox"
-                    checked={form.sharing}
-                    aria-describedby="reg-sharing-help"
-                    onChange={(event) =>
-                      update({ sharing: event.target.checked })
-                    }
-                  />
-                  <span>
-                    <strong>Optional.</strong> {sharingStatement}
-                  </span>
-                </label>
-              </div>
-              <p className="field-help" id="reg-sharing-help">
-                Not a condition of registering interest. You can change or
-                withdraw this permission by emailing {contactEmail}; the change
-                applies to future sharing, and copies already lawfully shared
-                may not be recallable. Without it, your letter is kept
-                internally and only anonymised aggregate figures are reported.
-                Public testimonials, logos and marketing updates are never
-                included.
-              </p>
-
-              <div className="submission-options">
-                <label>
+              <div className="register-consent">
+                <label
+                  className="register-consent-label"
+                  htmlFor="reg-confirmed"
+                >
                   <input
                     id="reg-confirmed"
                     type="checkbox"
@@ -320,22 +400,53 @@ export default function RegisterFlow({
                     aria-invalid={errors['confirmed'] ? true : undefined}
                     aria-describedby="reg-confirmed-error"
                     onChange={(event) =>
-                      update({ confirmed: event.target.checked })
+                      update({
+                        confirmed: event.target.checked,
+                        sharing: event.target.checked,
+                      })
                     }
                   />
                   <span>
-                    <strong>Required.</strong> {confirmationStatement}
+                    {confirmationSummary}{' '}
+                    <span className="field-help">(required)</span>
                   </span>
                 </label>
+                <p className="field-error" id="reg-confirmed-error">
+                  {errors['confirmed']}
+                </p>
+                <details className="register-consent-details">
+                  <summary>Read more</summary>
+                  <p className="field-help">
+                    This letter creates no obligation to purchase, pay, supply
+                    or participate. Your typed name records your stated
+                    interest; it does not verify your identity or institutional
+                    authority.
+                  </p>
+                  <a
+                    className="register-consent-link"
+                    href="/register/confirmation/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    About this confirmation
+                    <span className="sr-only"> (opens in a new tab)</span>
+                  </a>
+                  <p className="field-help">
+                    {sharingStatement} Your phone number is also excluded from
+                    shared copies. Permission for confidential sharing is part
+                    of submitting this LOI.
+                  </p>
+                  <a
+                    className="register-consent-link"
+                    href="/register/sharing/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Sharing details
+                    <span className="sr-only"> (opens in a new tab)</span>
+                  </a>
+                </details>
               </div>
-              <p className="field-error" id="reg-confirmed-error">
-                {errors['confirmed']}
-              </p>
-              <p className="field-help">
-                Confirming with your typed name is a record of your stated
-                interest. It is not a qualified electronic signature or proof of
-                institutional authority, and your email address is not verified.
-              </p>
 
               <div className="register-actions">
                 <button
@@ -346,6 +457,13 @@ export default function RegisterFlow({
                   Confirm and save my letter
                 </button>
               </div>
+              <p className="field-help">
+                Prefer a private enquiry? <a href="/contact/">Contact us</a>.
+              </p>
+              <p className="field-help register-save-help">
+                You’ll see a confirmation and your saved letter on the next
+                screen.
+              </p>
               <p
                 className="form-status"
                 role="status"
@@ -358,11 +476,7 @@ export default function RegisterFlow({
         )}
       </div>
 
-      <aside
-        className="register-preview"
-        aria-label="Letter preview"
-        data-open={open ? 'true' : undefined}
-      >
+      <aside className="register-preview" aria-label="Letter preview">
         <div className="register-preview-bar">
           <p>
             <strong>Your letter</strong>
@@ -370,15 +484,6 @@ export default function RegisterFlow({
               {saved ? 'Confirmed and saved' : 'Draft · updates as you type'}
             </span>
           </p>
-          <button
-            type="button"
-            className="register-peek-button"
-            aria-expanded={open}
-            aria-controls="register-letter"
-            onClick={() => setOpen((current) => !current)}
-          >
-            {open ? 'Collapse letter' : 'Expand letter'}
-          </button>
         </div>
         <div
           className="register-preview-scroll"

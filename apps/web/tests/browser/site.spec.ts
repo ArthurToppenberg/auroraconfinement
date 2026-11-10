@@ -12,6 +12,8 @@ const routes = [
   '/roadmap/',
   '/nff/',
   '/privacy/',
+  '/register/confirmation/',
+  '/register/sharing/',
 ] as const;
 
 // The register endpoint writes to the real database, so browser tests always stub it.
@@ -168,7 +170,7 @@ async function fillDetails(page: Page) {
     .getByLabel('Primary use (required)')
     .selectOption('university-teaching');
   await page
-    .getByLabel('What would you use it for, and who would benefit? (required)')
+    .getByLabel('Intended application (required)')
     .fill('Teaching plasma physics to first-year students.');
   await page
     .getByLabel('Indicative timing (required)')
@@ -208,13 +210,13 @@ test('register shows the letter live beside the form and saves once confirmed', 
   // Before anything is typed the letter is already there, with prompts.
   await expect(letter).toBeVisible();
   await expect(letter).toContainText(
-    'Non-binding Letter of Interest — Exhibition model',
+    'Non-binding Letter of Interest: Exhibition model',
   );
   await expect(letter).toContainText('[full name]');
   await expect(letter).toContainText('Draft');
   await expect(letter).toContainText('Added on confirmation');
   await expect(letter).toContainText(
-    'No permission given to share identifying details',
+    'On confirmation and submission: Aurora Confinement may share this letter',
   );
 
   // The preview stays in view while the page scrolls.
@@ -233,12 +235,8 @@ test('register shows the letter live beside the form and saves once confirmed', 
   );
   await expect(letter).toContainText('Confirmed by: Ada Researcher');
 
-  // Sharing and confirmation both start unchecked; confirmation is required.
-  const sharing = page.getByLabel(/may share this letter/);
-  const confirm = page.getByLabel(
-    /I confirm that this letter accurately reflects/,
-  );
-  await expect(sharing).not.toBeChecked();
+  // One unchecked confirmation explicitly includes confidential sharing.
+  const confirm = page.getByLabel(/I confirm this non-binding letter/);
   await expect(confirm).not.toBeChecked();
   await page
     .getByRole('button', { name: 'Confirm and save my letter' })
@@ -246,11 +244,10 @@ test('register shows the letter live beside the form and saves once confirmed', 
   await expect(confirm).toBeFocused();
   expect(requests).toHaveLength(0);
 
-  await sharing.check();
+  await confirm.check();
   await expect(letter).toContainText(
     'My email address will be omitted from shared copies.',
   );
-  await confirm.check();
   await page
     .getByRole('button', { name: 'Confirm and save my letter' })
     .click();
@@ -271,7 +268,7 @@ test('register shows the letter live beside the form and saves once confirmed', 
   });
 });
 
-test('register letter peeks beside the form and slides into view on hover, focus or the button', async ({
+test('register letter peeks beside the form and opens on hover or keyboard focus', async ({
   page,
 }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
@@ -299,14 +296,14 @@ test('register letter peeks beside the form and slides into view on hover, focus
   await page.mouse.move(300, 300);
   await expect.poll(right).toBeGreaterThan(1440);
 
-  // Keyboard: the button opens and closes it.
-  const button = page.getByRole('button', { name: 'Expand letter' });
-  await button.focus();
-  await button.press('Enter');
-  await expect(
-    page.getByRole('button', { name: 'Collapse letter' }),
-  ).toHaveAttribute('aria-expanded', 'true');
+  // The scrollable letter region remains keyboard-accessible without an expand button.
+  await page
+    .getByRole('region', { name: 'Letter preview (scrollable)' })
+    .focus();
   await expect.poll(right).toBeLessThanOrEqual(1440);
+  await expect(page.getByRole('button', { name: 'Expand letter' })).toHaveCount(
+    0,
+  );
 });
 
 test('register on a phone switches between the answers and the letter', async ({
@@ -352,9 +349,7 @@ test('register reports an honest failure and keeps the answers', async ({
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/register/?product=exhibition-model&source=nff2026');
   await fillDetails(page);
-  await page
-    .getByLabel(/I confirm that this letter accurately reflects/)
-    .check();
+  await page.getByLabel(/I confirm this non-binding letter/).check();
   await page
     .getByRole('button', { name: 'Confirm and save my letter' })
     .click();
@@ -458,4 +453,180 @@ test('reduced motion removes meaningful transitions', async ({ page }) => {
     ? Number.parseFloat(duration)
     : Number.parseFloat(duration) * 1000;
   expect(milliseconds).toBeLessThanOrEqual(0.01);
+});
+
+for (const width of [390, 1440]) {
+  test(`register consent links preserve answers and checkbox state at ${width}px`, async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto('/register/?product=exhibition-model', {
+      waitUntil: 'domcontentloaded',
+    });
+    await page.screenshot({ path: `/tmp/aurora-loi-top-${width}.png` });
+    await page.getByLabel('Full name (required)').fill('Ada Researcher');
+    const confirm = page.locator('#reg-confirmed');
+    await expect(confirm).not.toBeChecked();
+    const controls = page.locator('#section-confirm input[type="checkbox"]');
+    await expect(controls.nth(0)).toHaveAttribute('id', 'reg-confirmed');
+    await expect(controls).toHaveCount(1);
+    await page.getByText('Read more', { exact: true }).click();
+
+    for (const [name, heading] of [
+      ['About this confirmation', 'About this confirmation'],
+      ['Sharing details', 'Sharing details'],
+    ] as const) {
+      const link = page.getByRole('link', {
+        name: `${name} (opens in a new tab)`,
+      });
+      await link.focus();
+      const popupPromise = page.waitForEvent('popup');
+      await link.press('Enter');
+      const popup = await popupPromise;
+      await expect(
+        popup.getByRole('heading', { name: heading, exact: true }),
+      ).toBeVisible();
+      await popup.close();
+      await expect(confirm).not.toBeChecked();
+      await expect(page.getByLabel('Full name (required)')).toHaveValue(
+        'Ada Researcher',
+      );
+    }
+    await confirm.focus();
+    await confirm.press('Space');
+    await expect(confirm).toBeChecked();
+    await expect(
+      page.getByRole('article', { includeHidden: true }),
+    ).toContainText('My email address will be omitted from shared copies.');
+    await confirm.press('Space');
+    await expect(confirm).not.toBeChecked();
+    await expect(
+      page.getByRole('article', { includeHidden: true }),
+    ).toContainText(
+      'On confirmation and submission: Aurora Confinement may share this letter',
+    );
+    await confirm.press('Space');
+    await page.getByText('Read more', { exact: true }).click();
+    const label = page.locator('label[for="reg-confirmed"]');
+    expect((await label.boundingBox())!.height).toBeGreaterThanOrEqual(44);
+    await page.screenshot({ path: `/tmp/aurora-loi-confirm-${width}.png` });
+  });
+}
+
+test('register saves explicit sharing permission and preserves the letter for printing', async ({
+  page,
+}) => {
+  const requests = await stubRegisterEndpoint(page, {
+    status: 200,
+    body: { ok: true, reference: 'LOI-2026-PRIVATE' },
+  });
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto('/register/?product=exhibition-model');
+  await fillDetails(page);
+  const letter = page.getByRole('article');
+  await page.locator('#reg-confirmed').check();
+  const before = await letter.innerText();
+  await page
+    .getByRole('button', { name: 'Confirm and save my letter' })
+    .click();
+  await expect(
+    page.getByRole('heading', { name: 'Your letter is saved' }),
+  ).toBeVisible();
+  expect(requests).toHaveLength(1);
+  expect(requests[0]).toMatchObject({ sharing: true, confirmed: true });
+  await expect(letter).toContainText(
+    'My email address will be omitted from shared copies.',
+  );
+  // Draft labels and completion metadata may differ; substantive content must not.
+  const normalise = (value: string) =>
+    value
+      .replace(/Draft\s+not confirmed\s*/, '')
+      .replace(/Added on confirmation/g, 'META')
+      .replace(/\d{4}-\d{2}-\d{2} \d{2}:\d{2} UTC/g, 'META')
+      .replace(/LOI-2026-PRIVATE/g, 'META')
+      .replace(/\s+/g, ' ')
+      .trim();
+  expect(normalise(await letter.innerText())).toBe(normalise(before));
+  await page.emulateMedia({ media: 'print' });
+  await expect(letter).toBeVisible();
+  await expect(page.locator('.register-form-pane')).toBeHidden();
+});
+
+test('LOI form and detail pages pass accessibility checks and enlarged-text reflow', async ({
+  page,
+}) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.setViewportSize({ width: 320, height: 800 });
+  for (const path of [
+    '/register/?product=exhibition-model',
+    '/register/confirmation/',
+    '/register/sharing/',
+  ]) {
+    await page.goto(path, { waitUntil: 'domcontentloaded' });
+    const results = await new AxeBuilder({ page }).analyze();
+    expect(results.violations, path).toEqual([]);
+    await page.locator('html').evaluate((element) => {
+      element.style.fontSize = '200%';
+    });
+    expect(
+      await page.evaluate(
+        () =>
+          document.documentElement.scrollWidth -
+          document.documentElement.clientWidth,
+      ),
+      path,
+    ).toBeLessThanOrEqual(0);
+  }
+});
+
+test('register numbered progress follows navigation and required-field completion', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto('/register/?product=both');
+  const tracker = page.getByRole('list', { name: 'Form sections' });
+  const links = tracker.getByRole('link');
+  await expect(links).toHaveCount(4);
+  await expect(links.nth(0)).toContainText('1');
+  await expect(links.nth(3)).toContainText('4');
+  await expect(links.nth(0)).toHaveAttribute('aria-current', 'step');
+  await expect(tracker.locator('[data-done="true"]')).toHaveCount(0);
+  await links.nth(1).click();
+  await expect(page.locator('#section-interest')).toBeFocused();
+  await expect(links.nth(1)).toHaveAttribute('aria-current', 'step');
+  await page
+    .getByRole('checkbox', { name: 'Demonstration', exact: true })
+    .check();
+  await expect(links.nth(1)).toContainText('complete');
+  // Both products must have their required answers; optional questions remain blank.
+  for (const key of ['exhibition-model', 'research-platform']) {
+    const card = page.locator(`#section-product-${key}`);
+    await card
+      .getByLabel('Primary use (required)')
+      .selectOption(
+        key === 'exhibition-model' ? 'university-teaching' : 'research',
+      );
+    await card
+      .getByLabel('Intended application (required)')
+      .fill('Teaching and evaluating plasma.');
+    await card
+      .getByLabel('Indicative timing (required)')
+      .selectOption('within-12-months');
+    if (key === 'exhibition-model')
+      await expect(links.nth(2)).not.toContainText('complete');
+  }
+  await expect(links.nth(2)).toContainText('complete');
+  await page.locator('#reg-research-platform-application').clear();
+  await expect(links.nth(2)).not.toContainText('complete');
+  await links.nth(3).focus();
+  await links.nth(3).press('Enter');
+  await expect(page.locator('#section-confirm')).toBeFocused();
+  await expect(links.nth(3)).toHaveAttribute('aria-current', 'step');
+  await page.locator('#reg-confirmed').check();
+  await expect(links.nth(3)).toContainText('complete');
+  await page.getByLabel('Full name (required)').focus();
+  await expect(links.nth(0)).toHaveAttribute('aria-current', 'step');
+  await page.locator('#section-interest').scrollIntoViewIfNeeded();
+  await expect(links.nth(1)).toHaveAttribute('aria-current', 'step');
+  await page.screenshot({ path: '/tmp/aurora-loi-progress-desktop.png' });
 });

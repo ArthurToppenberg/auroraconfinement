@@ -33,6 +33,7 @@ interface Common {
   label: string;
   required?: boolean | undefined;
   help?: string | undefined;
+  placeholder?: string | undefined;
   errors: FieldErrors;
 }
 
@@ -91,6 +92,7 @@ function TextField({
   label,
   required,
   help,
+  placeholder,
   errors,
   value,
   onChange,
@@ -116,6 +118,7 @@ function TextField({
         name={name}
         type={type}
         value={value}
+        placeholder={placeholder}
         maxLength={maxLength}
         autoComplete={autoComplete}
         inputMode={inputMode}
@@ -134,6 +137,7 @@ function AreaField({
   label,
   required,
   help,
+  placeholder,
   errors,
   value,
   onChange,
@@ -155,6 +159,7 @@ function AreaField({
         name={name}
         rows={rows}
         value={value}
+        placeholder={placeholder}
         maxLength={maxLength}
         aria-required={required || undefined}
         aria-invalid={error ? true : undefined}
@@ -253,6 +258,7 @@ function RadioGroup({
 function CheckGroup({
   name,
   label,
+  compactLegend = false,
   required,
   help,
   errors,
@@ -260,6 +266,7 @@ function CheckGroup({
   onChange,
   options,
 }: Common & {
+  compactLegend?: boolean;
   value: readonly string[];
   onChange: (value: string[]) => void;
   options: readonly Option[];
@@ -273,7 +280,17 @@ function CheckGroup({
       aria-describedby={describedBy(id, help, error)}
     >
       <legend>
-        {label} {required ? <span>(required)</span> : <span>(optional)</span>}
+        {compactLegend ? (
+          <>
+            <span className="sr-only">{label} </span>
+            <span>(optional: check boxes)</span>
+          </>
+        ) : (
+          <>
+            {label}{' '}
+            {required ? <span>(required)</span> : <span>(optional)</span>}
+          </>
+        )}
       </legend>
       <div className="submission-options">
         {options.map((option) => (
@@ -308,6 +325,21 @@ const options = <T extends string>(
 const capitalise = (text: string) =>
   text.charAt(0).toUpperCase() + text.slice(1);
 
+const questionPrompts: Record<string, string> = {
+  portability: 'Would it stay in one place or travel between events?',
+  setting: 'e.g. Lecture theatre, museum or visitor centre',
+  operator: 'e.g. Teaching staff or trained exhibition guides',
+  frequency: 'e.g. Weekly classes or 30-minute demonstrations',
+  teachingMaterials: 'What teaching guides or supporting materials would help?',
+  installationSupport:
+    'What setup, training or ongoing support would you need?',
+  researchQuestion: 'What would your team investigate?',
+  diagnostics: 'What would you need to measure?',
+  infrastructure: 'What laboratory equipment and facilities are available?',
+  accessModel: 'e.g. Joint research, shared access or a dedicated system',
+  technicalRequirements: 'What capabilities would your research require?',
+};
+
 function SectionFields({
   sectionKey,
   section,
@@ -332,11 +364,9 @@ function SectionFields({
     <fieldset
       className="register-card register-product"
       id={`section-product-${sectionKey}`}
+      tabIndex={-1}
     >
       <legend>{labels.product[sectionKey]}</legend>
-      <p className="register-card-intro">
-        Short answers are enough. Detail can follow in conversation.
-      </p>
       <div className="form-grid">
         <SelectField
           name={n('primaryUse')}
@@ -353,7 +383,7 @@ function SectionFields({
           name={n('timing')}
           label="Indicative timing"
           required
-          help="Your preference. It is not a delivery commitment by Aurora Confinement."
+          help="Your preferred timing, subject to availability."
           errors={errors}
           value={section.timing}
           onChange={(value) =>
@@ -363,7 +393,8 @@ function SectionFields({
         />
         <AreaField
           name={n('application')}
-          label="What would you use it for, and who would benefit?"
+          label="Intended application"
+          placeholder="How would you use the model, and who would benefit?"
           required
           errors={errors}
           value={section.application}
@@ -373,7 +404,7 @@ function SectionFields({
         <AreaField
           name={n('usefulness')}
           label="Why this would be useful"
-          help="The unmet need or what you use today. A sentence or two is enough."
+          placeholder="What need would this meet, or what do you use today?"
           errors={errors}
           value={section.usefulness}
           maxLength={limits.usefulness}
@@ -382,6 +413,7 @@ function SectionFields({
         />
         <TextField
           name={n('preferredDate')}
+          placeholder="e.g. Autumn 2027 or a named exhibition"
           label="Preferred date or relevant event"
           errors={errors}
           value={section.preferredDate}
@@ -399,6 +431,7 @@ function SectionFields({
         <div className="form-grid">
           <TextField
             name={n('quantity')}
+            placeholder="e.g. 2"
             label="Indicative quantity"
             errors={errors}
             value={section.quantity}
@@ -409,7 +442,7 @@ function SectionFields({
           <TextField
             name={n('quantityUnit')}
             label="Unit"
-            help="For example models or installations."
+            placeholder="e.g. models or installations"
             errors={errors}
             value={section.quantityUnit}
             maxLength={limits.unit}
@@ -417,6 +450,7 @@ function SectionFields({
           />
           <TextField
             name={n('reach')}
+            placeholder="e.g. 200"
             label="Expected reach"
             errors={errors}
             value={section.reach}
@@ -427,7 +461,7 @@ function SectionFields({
           <TextField
             name={n('reachUnit')}
             label="Reach unit"
-            help="For example students, visitors, events or research users."
+            placeholder="e.g. students or visitors"
             errors={errors}
             value={section.reachUnit}
             maxLength={limits.unit}
@@ -456,7 +490,7 @@ function SectionFields({
           <TextField
             name={n('budgetAmount')}
             label="Indicative budget"
-            help="An amount or range, for example 40,000–60,000."
+            placeholder="e.g. 40,000–60,000"
             errors={errors}
             value={section.budgetAmount}
             maxLength={limits.budgetAmount}
@@ -491,6 +525,7 @@ function SectionFields({
         <CheckGroup
           name={n('conditions')}
           label="Conditions for proceeding"
+          compactLegend
           errors={errors}
           value={section.conditions}
           onChange={(value) =>
@@ -501,7 +536,8 @@ function SectionFields({
         <div className="form-grid">
           <AreaField
             name={n('conditionsNote')}
-            label="Other conditions or requirements"
+            label="Requirements"
+            placeholder="What would need to be in place for you to proceed?"
             errors={errors}
             value={section.conditionsNote}
             maxLength={limits.conditionsNote}
@@ -516,16 +552,13 @@ function SectionFields({
         open={Object.keys(section.specific).length > 0 || undefined}
       >
         <summary>{labels.product[sectionKey]} questions (optional)</summary>
-        <p className="field-help">
-          Short answers are enough. We can establish detailed specifications
-          later.
-        </p>
         <div className="form-grid">
           {productQuestions[sectionKey].map((question) => (
             <AreaField
               key={question.key}
               name={n(`specific.${question.key}`)}
               label={question.label}
+              placeholder={questionPrompts[question.key]}
               errors={errors}
               value={section.specific[question.key] ?? ''}
               maxLength={limits.specific}
@@ -556,26 +589,23 @@ export default function RegisterFields({
 }) {
   return (
     <>
-      <fieldset className="register-card" id="section-details">
+      <fieldset className="register-card" id="section-details" tabIndex={-1}>
         <legend>Your details</legend>
-        <p className="register-card-intro">
-          Who is making this statement. Your name, role and organisation are
-          attributed in the letter.
-        </p>
         <div className="form-grid">
           <TextField
             name="fullName"
+            placeholder="e.g. Alex Jensen"
             label="Full name"
             required
             errors={errors}
             value={form.fullName}
             maxLength={limits.fullName}
             autoComplete="name"
-            help="This is the name attributed to your letter."
             onChange={(value) => update({ fullName: value })}
           />
           <TextField
             name="email"
+            placeholder="e.g. alex@university.com"
             label="Work email"
             required
             type="email"
@@ -583,7 +613,7 @@ export default function RegisterFields({
             value={form.email}
             maxLength={limits.email}
             autoComplete="email"
-            help="Used to contact you about this letter. It is omitted from any copy shared with others."
+            help="For follow-up. Excluded from shared copies."
             onChange={(value) => update({ email: value })}
           />
           <TextField
@@ -594,11 +624,13 @@ export default function RegisterFields({
             value={form.phone}
             maxLength={limits.phone}
             autoComplete="tel"
-            help="Optional. Used to contact you about this letter, with the country code if abroad. It is omitted from any copy shared with others."
+            placeholder="Include country code"
+            help="For follow-up calls. Excluded from shared copies."
             onChange={(value) => update({ phone: value })}
           />
           <TextField
             name="role"
+            placeholder="e.g. Lecturer or research lead"
             label="Job title or role"
             required
             errors={errors}
@@ -609,17 +641,18 @@ export default function RegisterFields({
           />
           <TextField
             name="organisation"
+            placeholder="e.g. University or Company name"
             label="Organisation or institution"
             required
             errors={errors}
             value={form.organisation}
             maxLength={limits.organisation}
             autoComplete="organization"
-            help="Naming your institution does not mean it endorses this letter."
             onChange={(value) => update({ organisation: value })}
           />
           <TextField
             name="department"
+            placeholder="e.g. Department of Physics"
             label="Department or research group"
             errors={errors}
             value={form.department}
@@ -628,13 +661,14 @@ export default function RegisterFields({
           />
           <TextField
             name="country"
+            placeholder="e.g. Denmark"
             label="Country"
             required
             errors={errors}
             value={form.country}
             maxLength={limits.country}
             autoComplete="country-name"
-            help="Where the use would take place or where your institution is based."
+            help="Country of your institution or intended use."
             onChange={(value) => update({ country: value })}
           />
         </div>
@@ -668,16 +702,13 @@ export default function RegisterFields({
         </div>
       </fieldset>
 
-      <fieldset className="register-card" id="section-interest">
+      <fieldset className="register-card" id="section-interest" tabIndex={-1}>
         <legend>Product and type of interest</legend>
-        <p className="register-card-intro">
-          Choose the product and the kind of interest you want to record.
-        </p>
         <RadioGroup
           name="product"
           label="Product of interest"
           required
-          help="The exhibition model and research platform are in development. Interest in one is not counted as interest in the other."
+          help="Both products are in development."
           errors={errors}
           value={form.product}
           onChange={(value) => update({ product: value as LoiForm['product'] })}

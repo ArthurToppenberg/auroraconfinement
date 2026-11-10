@@ -4,9 +4,14 @@
 import { activeSections, labels, productQuestions } from './schema.ts';
 import type { LoiForm, ProductSection, SectionKey } from './schema.ts';
 
-export const TEMPLATE_VERSION = 'loi-2026-11-a';
-export const CONFIRMATION_WORDING_VERSION = 'confirm-2026-11-a';
-export const SHARING_WORDING_VERSION = 'sharing-2026-11-a';
+export const TEMPLATE_VERSION = 'loi-2026-11-c';
+// Version d records the single required confirmation and confidential-sharing permission.
+// The full confirmation and sharing statements remain unchanged.
+export const CONFIRMATION_WORDING_VERSION = 'confirm-2026-11-d';
+export const SHARING_WORDING_VERSION = 'sharing-2026-11-d';
+
+export const confirmationSummary =
+  'I confirm this non-binding letter reflects my interest and stated capacity, and allow confidential sharing with prospective investors and grant providers for fundraising and due diligence.';
 
 export const confirmationStatement =
   'I confirm that this letter accurately reflects my interest and my stated capacity to make this statement. I understand that it is non-binding and creates no obligation to purchase, pay, supply or participate.';
@@ -230,14 +235,18 @@ export function buildLetter(form: LoiForm, meta: LetterMeta): Letter {
     { label: 'Reference', value: meta.reference ?? addedOnConfirmation },
     {
       label: 'Sharing permission',
-      value: form.sharing ? sharingStatement : sharingNotPermitted,
+      value: form.sharing
+        ? sharingStatement
+        : preview
+          ? `On confirmation and submission: ${sharingStatement}`
+          : sharingNotPermitted,
     },
   ];
 
   const capacityMissing = preview && !form.capacity;
   return {
     templateVersion: TEMPLATE_VERSION,
-    title: `Non-binding Letter of Interest — ${productLabel || 'Aurora Confinement'}`,
+    title: `Non-binding Letter of Interest: ${productLabel || 'Aurora Confinement'}`,
     to: 'Aurora Confinement, a student-led initiative in formation (not yet an incorporated company)',
     opening,
     capacity: form.capacity
@@ -252,7 +261,7 @@ export function buildLetter(form: LoiForm, meta: LetterMeta): Letter {
     confirmedBy: form.fullName || (preview ? '[Full name]' : ''),
     ...(preview && !form.fullName && { confirmedByPlaceholder: true }),
     details,
-    footer: `Aurora Confinement · ${meta.contactEmail} · Template ${TEMPLATE_VERSION}`,
+    footer: `Aurora Confinement · ${meta.contactEmail}`,
   };
 }
 

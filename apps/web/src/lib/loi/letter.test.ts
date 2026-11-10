@@ -12,7 +12,7 @@ describe('buildLetter', () => {
     const letter = buildLetter(normaliseForm(validForm()), meta);
     assert.equal(
       letter.title,
-      'Non-binding Letter of Interest — Exhibition model',
+      'Non-binding Letter of Interest: Exhibition model',
     );
     assert.equal(
       letter.capacity,
@@ -106,7 +106,10 @@ describe('buildLetter', () => {
   });
 
   it('never claims verification, endorsement or stronger permissions', () => {
-    const letter = buildLetter(normaliseForm(validForm()), meta);
+    const letter = buildLetter(
+      normaliseForm(validForm({ sharing: false })),
+      meta,
+    );
     assert.doesNotMatch(text(letter), /verified/i);
     assert.match(
       letter.disclaimer,
@@ -114,6 +117,24 @@ describe('buildLetter', () => {
     );
     assert.match(
       letter.details[2]?.value ?? '',
+      /No permission given to share/,
+    );
+  });
+
+  it('previews the required sharing scope conditionally before confirmation', () => {
+    const form = normaliseForm(validForm({ confirmed: false, sharing: false }));
+    const draft = buildLetter(form, { ...meta, preview: true });
+    const scope = draft.details[2]?.value ?? '';
+    assert.match(scope, /^On confirmation and submission:/);
+    assert.match(
+      scope,
+      /confidentially with prospective investors and grant providers/,
+    );
+    assert.match(scope, /My email address will be omitted/);
+    assert.doesNotMatch(scope, /internal purposes only/);
+    const historical = buildLetter(form, meta);
+    assert.match(
+      historical.details[2]?.value ?? '',
       /No permission given to share/,
     );
   });

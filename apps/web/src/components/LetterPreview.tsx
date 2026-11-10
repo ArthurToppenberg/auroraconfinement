@@ -5,7 +5,7 @@ interface LetterPreviewProps {
   /** Heading level for the letter title; the page's own headings sit above it. */
   as?: 'h2' | 'h3';
   id?: string;
-  /** Shows the "DRAFT — NOT CONFIRMED" marking. Never set on a confirmed letter. */
+  /** Shows the "DRAFT: NOT CONFIRMED" marking. Never set on a confirmed letter. */
   draft?: boolean;
 }
 
