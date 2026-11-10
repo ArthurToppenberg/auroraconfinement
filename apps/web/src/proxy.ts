@@ -26,14 +26,14 @@ let staticScriptSrc: string | undefined;
 function staticHashes(): string {
   if (staticScriptSrc) return staticScriptSrc;
   if (process.env.NODE_ENV !== 'production')
-    return "script-src 'self' 'unsafe-inline' 'unsafe-eval'";
+    return `script-src 'self' ${statsOrigin} 'unsafe-inline' 'unsafe-eval'`;
   try {
     const hashes = JSON.parse(
       readFileSync(join(process.cwd(), 'dist', 'csp-hashes.json'), 'utf8'),
     ) as string[];
     return (staticScriptSrc = `script-src 'self' ${hashes.join(' ')}`);
   } catch {
-    return "script-src 'self'";
+    return `script-src 'self' ${statsOrigin}`;
   }
 }
 
