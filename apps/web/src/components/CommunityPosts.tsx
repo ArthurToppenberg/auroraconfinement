@@ -42,6 +42,9 @@ export default function CommunityPosts() {
           <h2 id="community-posts-heading" tabIndex={-1}>
             Seen in the fusion community:
           </h2>
+          <p className="community-post-note">
+            Adblocker might hide LinkedIn posts
+          </p>
         </div>
         <div
           className="community-post-stage"

@@ -42,8 +42,24 @@ export default function Reveal() {
     }
     root.classList.add('reveal-ready');
 
+    const loopingScenes = document.querySelectorAll(
+      '.fusion-vision-renewables, .research-direction-icon',
+    );
+    const motionObserver = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        entry.target.toggleAttribute(
+          'data-motion-offscreen',
+          !entry.isIntersecting,
+        );
+      }
+    });
+    for (const scene of loopingScenes) motionObserver.observe(scene);
+
     return () => {
       observer.disconnect();
+      motionObserver.disconnect();
+      for (const scene of loopingScenes)
+        scene.removeAttribute('data-motion-offscreen');
       for (const element of elements) {
         element.classList.remove('reveal', 'is-in');
       }

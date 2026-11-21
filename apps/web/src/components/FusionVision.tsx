@@ -1,5 +1,5 @@
 import AnimatedNumbers from './AnimatedNumbers';
-import type { ComponentType } from 'react';
+import { useId, type ComponentType } from 'react';
 import VisionPowerCable from '@/components/VisionPowerCable';
 import VisionBenefitIcon, {
   type VisionBenefitKind,
@@ -321,6 +321,9 @@ const cards: readonly MotivationCard[] = [
 ];
 
 export default function FusionVision() {
+  const panelClipId = useId();
+  const sunlightId = useId();
+  const panelOutline = 'M102 82h82l-16 36H86Z';
   const renewablesIllustration = (
     <svg
       className="fusion-vision-renewables"
@@ -335,6 +338,23 @@ export default function FusionVision() {
       aria-hidden="true"
       focusable="false"
     >
+      <defs>
+        <clipPath id={panelClipId}>
+          <path d={panelOutline} />
+        </clipPath>
+        <linearGradient
+          id={sunlightId}
+          gradientUnits="userSpaceOnUse"
+          x1="62"
+          y1="91"
+          x2="80"
+          y2="99"
+        >
+          <stop stopColor="#bff5ff" stopOpacity="0" />
+          <stop offset="0.5" stopColor="#e6fbff" stopOpacity="0.65" />
+          <stop offset="1" stopColor="#bff5ff" stopOpacity="0" />
+        </linearGradient>
+      </defs>
       <circle cx="55" cy="45" r="4" />
       <g className="vision-windmill-blades">
         <path d="M53 41 51 10q1-6 4-1l4 32" />
@@ -342,8 +362,17 @@ export default function FusionVision() {
         <path d="M53 41 51 10q1-6 4-1l4 32" transform="rotate(240 55 45)" />
       </g>
       <path d="m52 50-4 83h14l-4-83 M103 118v15 M155 118v15 M8 133h184" />
+      <g clipPath={`url(#${panelClipId})`}>
+        <path
+          className="vision-solar-ray"
+          d="M66 82h22l-16 36H50Z"
+          fill={`url(#${sunlightId})`}
+          stroke="none"
+        />
+      </g>
       <g className="fusion-vision-renewable-panel">
-        <path d="M102 82h82l-16 36H86Z M97 94h82 M91 106h82 M122 82l-16 36 M142 82l-16 36 M162 82l-16 36" />
+        <path d={panelOutline} />
+        <path d="M97 94h82 M91 106h82 M122 82l-16 36 M142 82l-16 36 M162 82l-16 36" />
       </g>
     </svg>
   );
@@ -518,8 +547,8 @@ export default function FusionVision() {
               <li key={benefit.title}>
                 <svg
                   viewBox="0 0 24 24"
-                  width="22"
-                  height="22"
+                  width="48"
+                  height="48"
                   aria-hidden="true"
                   focusable="false"
                 >

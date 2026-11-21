@@ -1,6 +1,7 @@
 import InterestDisclaimer from '@/components/InterestDisclaimer';
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { useId } from 'react';
 import { pageMetadata } from '@/lib/metadata';
 import { contactHrefs } from '@/content/site';
 
@@ -15,21 +16,28 @@ const registrationHref = '/register/?product=research-platform';
 
 const researchDirections = [
   {
+    scene: 'confinement',
     title: 'Explore magnetic confinement',
     text: 'Investigate stellarator fields and plasma behaviour.',
     diagram:
-      'M8 32a24 14 0 1 0 48 0 24 14 0 1 0-48 0 M19 32a13 6 0 1 0 26 0 13 6 0 1 0-26 0',
+      'M8 32a24 14 0 1 0 48 0 24 14 0 1 0-48 0 M20 32a12 5 0 1 0 24 0 12 5 0 1 0-24 0',
+    detail:
+      'M14 32C13 29 17 26 20 27S23 23 27 24S31 20 35 23S39 24 42 25S45 25 48 28S51 34 48 36S45 35 42 39S39 39 35 40S31 43 27 40S24 41 20 37S15 36 14 32Z',
   },
   {
+    scene: 'diagnostics',
     title: 'Develop diagnostics',
     text: 'Explore plasma measurements and experimental instrumentation.',
-    diagram:
-      'M8 12h48v36H8Z M14 32h8l5-12 9 23 5-11h9 M24 48v8 M40 48v8 M18 56h28',
+    diagram: 'M8 12h48v36H8Z M24 48v8 M40 48v8 M18 56h28',
+    detail:
+      'M-22 32h8l5-12 9 23 5-11h9 8l5-12 9 23 5-11h9 8l5-12 9 23 5-11h9 8l5-12 9 23 5-11h9',
   },
   {
+    scene: 'experience',
     title: 'Build research experience',
     text: 'Connect simulation and theory with practical experiments.',
     diagram: 'M8 12h16q8 0 8 7 0-7 8-7h16v38H40q-8 0-8 6 0-6-8-6H8Z M32 19v37',
+    detail: 'M15 23h9 M15 31h9 M15 39h9 M40 23h9 M40 31h9 M40 39h9',
   },
 ] as const;
 
@@ -68,6 +76,8 @@ const questions = [
 ] as const;
 
 export default function Page() {
+  const diagnosticsClipId = useId();
+  const plasmaClipId = useId();
   return (
     <>
       <section className="exhibition-hero chapter field-ice" id="platform">
@@ -117,18 +127,71 @@ export default function Page() {
             {researchDirections.map((direction) => (
               <article key={direction.title}>
                 <svg
+                  className="research-direction-icon"
                   viewBox="0 0 64 64"
-                  width="64"
-                  height="64"
+                  width="136"
+                  height="136"
                   fill="none"
                   stroke="currentColor"
-                  strokeWidth="2"
+                  strokeWidth="1.4"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   aria-hidden="true"
                   focusable="false"
                 >
+                  {direction.scene === 'diagnostics' && (
+                    <defs>
+                      <clipPath id={diagnosticsClipId}>
+                        <rect x="13" y="16" width="38" height="29" />
+                      </clipPath>
+                    </defs>
+                  )}
+                  {direction.scene === 'confinement' && (
+                    <defs>
+                      <clipPath id={plasmaClipId}>
+                        <path d={direction.diagram} clipRule="evenodd" />
+                      </clipPath>
+                    </defs>
+                  )}
+                  <g
+                    clipPath={
+                      direction.scene === 'diagnostics'
+                        ? `url(#${diagnosticsClipId})`
+                        : direction.scene === 'confinement'
+                          ? `url(#${plasmaClipId})`
+                          : undefined
+                    }
+                  >
+                    {direction.scene === 'confinement' ? (
+                      <g transform="translate(32 32) scale(1 .5)">
+                        <g className="research-direction-motion research-plasma">
+                          <path
+                            d={direction.detail}
+                            transform="scale(1 2) translate(-32 -32)"
+                          />
+                        </g>
+                      </g>
+                    ) : (
+                      <path
+                        className={
+                          direction.scene === 'diagnostics'
+                            ? 'research-direction-motion research-direction-detail-diagnostics'
+                            : undefined
+                        }
+                        d={direction.detail}
+                      />
+                    )}
+                  </g>
                   <path d={direction.diagram} />
+                  {direction.scene === 'experience' && (
+                    <g className="research-direction-motion research-book-page">
+                      <path
+                        className="research-book-page-sheet"
+                        d="M32 19q0-7 8-7h16v38H40q-8 0-8 6Z"
+                      />
+                      <path d="M40 23h9 M40 31h9 M40 39h9" />
+                    </g>
+                  )}
                 </svg>
                 <h3>{direction.title}</h3>
                 <p>{direction.text}</p>
