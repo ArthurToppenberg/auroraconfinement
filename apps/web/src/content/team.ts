@@ -143,6 +143,6 @@ export const teamMembers: readonly TeamMember[] = [
     name: 'Manon Johansson Chantel',
     linkedInUrl: 'https://www.linkedin.com/in/hanna-manon-johansson-chatel/',
     discipline: 'MSc Quantum Physics, KU',
-    focus: ['Particle physics', 'Risk modelling and analysis', 'Governance'],
+    focus: ['Particle physics', 'Risk & Model Validation', 'Governance'],
   },
 ];
