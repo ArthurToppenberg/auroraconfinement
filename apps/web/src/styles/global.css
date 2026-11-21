@@ -4778,6 +4778,15 @@ main article[id] {
   min-width: 0;
 }
 
+.home-evidence-icon {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.home-evidence-icon-accent {
+  stroke: var(--deep);
+}
+
 .home-evidence-strip dt {
   font-size: 2rem;
   font-weight: 600;

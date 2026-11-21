@@ -9,6 +9,7 @@ import HeroBenefits from '@/components/HeroBenefits';
 import ModelApplications from '@/components/ModelApplications';
 import EventFigure from '@/components/EventFigure';
 import CountUp from '@/components/CountUp';
+import HomeEvidenceIcon from '@/components/HomeEvidenceIcon';
 import { homeHero, projectStatus, universityResearch } from '@/content/site';
 import AnimatedNumbers from '@/components/AnimatedNumbers';
 
@@ -118,6 +119,7 @@ export default function Page() {
           <dl className="home-evidence-strip">
             <div>
               <dt>
+                <HomeEvidenceIcon scene="engineers" />
                 <CountUp as="span" value={100000} grouped />
               </dt>
               <dd>
@@ -128,6 +130,7 @@ export default function Page() {
             </div>
             <div>
               <dt>
+                <HomeEvidenceIcon scene="awareness" />
                 <CountUp as="span" value={19} suffix="%" />
               </dt>
               <dd>
@@ -141,6 +144,7 @@ export default function Page() {
             </div>
             <div>
               <dt>
+                <HomeEvidenceIcon scene="laboratories" />
                 <AnimatedNumbers text={universityResearch.metric} />
               </dt>
               <dd>{universityResearch.description}</dd>
