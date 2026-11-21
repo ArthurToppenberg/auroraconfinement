@@ -15,20 +15,26 @@ export const metadata: Metadata = pageMetadata({
 
 const learningPoints = [
   {
+    scene: 'plasma',
     title: 'Introduce plasma',
     text: 'Give introductory explanations a visible starting point.',
     diagram: 'M8 32c8-24 16 24 24 0s16 24 24 0 M8 42h48',
+    trace: 'M8 32c8-24 16 24 24 0s16 24 24 0',
   },
   {
+    scene: 'fields',
     title: 'Explain shaped magnetic fields',
     text: 'Relate shaped fields to magnetic confinement concepts.',
     diagram:
       'M8 32a24 14 0 1 0 48 0 24 14 0 1 0-48 0 M19 32a13 6 0 1 0 26 0 13 6 0 1 0-26 0 M18 21l6-2-1 6',
+    trace: 'M32 18a24 14 0 1 1 0 28 24 14 0 1 1 0-28',
   },
   {
+    scene: 'fusion',
     title: 'Connect to fusion',
     text: 'Explain why plasma and confinement matter in fusion research.',
     diagram: 'M8 22h12l12 10 12-10h12 M8 42h12l12-10 12 10h12 M27 32h10',
+    trace: 'M8 22h12l24 20h12',
   },
 ] as const;
 
@@ -148,18 +154,24 @@ export default function Page() {
             {learningPoints.map((point) => (
               <article key={point.title}>
                 <svg
+                  className="exhibition-learning-icon"
                   viewBox="0 0 64 64"
-                  width="64"
-                  height="64"
+                  width="136"
+                  height="136"
                   fill="none"
                   stroke="currentColor"
-                  strokeWidth="2"
+                  strokeWidth="1.4"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   aria-hidden="true"
                   focusable="false"
                 >
                   <path d={point.diagram} />
+                  <path
+                    className={`exhibition-learning-trace exhibition-learning-trace-${point.scene}`}
+                    d={point.trace}
+                    pathLength="1"
+                  />
                 </svg>
                 <h3>{point.title}</h3>
                 <p>{point.text}</p>

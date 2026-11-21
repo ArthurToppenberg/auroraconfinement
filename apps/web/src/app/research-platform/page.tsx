@@ -198,9 +198,6 @@ export default function Page() {
               </article>
             ))}
           </div>
-          <p className="research-direction-note">
-            Intended capabilities, subject to development and testing.
-          </p>
         </div>
       </section>
 

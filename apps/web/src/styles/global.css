@@ -3002,13 +3002,6 @@ body:has(.admin-page) .site-footer {
   color: var(--magenta);
 }
 
-.research-direction-note {
-  max-width: 70ch;
-  margin: 2rem 0 0;
-  font-size: 0.875rem;
-  line-height: 1.5;
-}
-
 .research-applications {
   display: grid;
   gap: 2rem;
@@ -3055,12 +3048,6 @@ body:has(.admin-page) .site-footer {
   padding-top: 1.25rem;
 }
 
-.exhibition-page .exhibition-learning-grid svg {
-  width: 3rem;
-  height: 3rem;
-  margin-bottom: 0.75rem;
-}
-
 .exhibition-page .exhibition-questions details {
   padding-block: 1rem;
 }
@@ -3086,19 +3073,66 @@ body:has(.admin-page) .site-footer {
   line-height: 1.5;
 }
 
-.research-directions > article {
+.exhibition-learning-grid > article {
   text-align: center;
 }
 
-.research-directions h3 {
+.exhibition-learning-grid h3 {
   text-wrap: balance;
 }
 
-.research-compact .research-direction-icon {
+.exhibition-learning-grid
+  :is(.exhibition-learning-icon, .research-direction-icon) {
   display: block;
   width: clamp(6rem, 10vw, 8.5rem);
   height: auto;
   margin: 0 auto 0.75rem;
+}
+
+.exhibition-learning-trace {
+  opacity: 0;
+  stroke: var(--deep-tint);
+  stroke-width: 2.6;
+  stroke-dasharray: 0.18 1.82;
+}
+
+@keyframes exhibition-learning-travel {
+  0% {
+    stroke-dashoffset: 0.2;
+  }
+
+  100% {
+    stroke-dashoffset: -1;
+  }
+}
+
+@keyframes exhibition-learning-orbit {
+  to {
+    stroke-dashoffset: -1;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .exhibition-learning-trace {
+    opacity: 0.85;
+  }
+
+  .exhibition-learning-trace-plasma {
+    animation: exhibition-learning-travel 5s linear infinite;
+  }
+
+  .exhibition-learning-trace-fields {
+    stroke-dasharray: 0.16 0.84;
+    animation: exhibition-learning-orbit 12s linear infinite;
+  }
+
+  .exhibition-learning-trace-fusion {
+    animation: exhibition-learning-travel 6s linear infinite;
+  }
+
+  .exhibition-learning-icon[data-motion-offscreen] .exhibition-learning-trace {
+    animation-play-state: paused;
+  }
 }
 
 .research-plasma {
@@ -3178,7 +3212,6 @@ body:has(.admin-page) .site-footer {
   }
 }
 
-.research-compact .research-direction-note,
 .research-compact .applications-cta {
   margin-top: 1.5rem;
 }

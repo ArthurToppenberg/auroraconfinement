@@ -43,7 +43,7 @@ export default function Reveal() {
     root.classList.add('reveal-ready');
 
     const loopingScenes = document.querySelectorAll(
-      '.fusion-vision-renewables, .research-direction-icon',
+      '.fusion-vision-renewables, .research-direction-icon, .exhibition-learning-icon',
     );
     const motionObserver = new IntersectionObserver((entries) => {
       for (const entry of entries) {
