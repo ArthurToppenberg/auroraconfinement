@@ -1,4 +1,5 @@
 import { teamMembers } from '@/content/team';
+import LinkedInIcon from '@/components/LinkedInIcon';
 
 interface TeamGridProps {
   label: string;
@@ -25,7 +26,20 @@ export default function TeamGrid({ label, showRoles = true }: TeamGridProps) {
             decoding="async"
           />
           <div className="team-card-copy">
-            <h3>{member.name}</h3>
+            <div className="team-card-name">
+              <h3>{member.name}</h3>
+              {member.linkedInUrl && (
+                <a
+                  className="team-profile-link"
+                  href={member.linkedInUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`${member.name} on LinkedIn (opens in a new tab)`}
+                >
+                  <LinkedInIcon />
+                </a>
+              )}
+            </div>
             <p className="team-discipline">{member.discipline}</p>
             {showRoles && member.focus && member.focus.length > 0 && (
               <ul className="team-focus">
